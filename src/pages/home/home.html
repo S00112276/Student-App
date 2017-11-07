@@ -1,32 +1,25 @@
 <ion-header>
   <ion-navbar color="dark">
-    <ion-buttons start>
-      <button ion-button icon-only menuToggle>
-        <ion-icon name="md-menu"></ion-icon>
-      </button>
-    </ion-buttons>
     <ion-title>
-      Student Life
+      Home
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  <h2>Welcome to Student-App Home</h2>
-
+<ion-content class="card-background-page">
   <ion-card (click)="openPage('TimetablePage')">
-    <img src="assets/img/timetable.png" />
-    <div class="card-title">Timetable</div>
+    <img class="full-image" src="assets/imgs/timetable.png" />
+    <div class="card-title"></div>
   </ion-card>
   <ion-card (click)="openPage('ChatPage')">
-    <img src="assets/img/diary.png" />
-    <div class="card-title">Chat</div>
+    <img class="full-image" src="assets/imgs/chat.png" />
+    <div class="card-title"></div>
   </ion-card>
   <ion-card (click)="openPage('DiaryPage')">
-    <img src="assets/img/events.jpg" />
-    <div class="card-title">Diary</div>
+    <img class="full-image" src="assets/imgs/diary.png" />
+    <div class="card-title"></div>
   </ion-card>
-
-  <button ion-button color="primary" (click)="logout()">Logout</button>
-
+  <!--<button ion-button block color="primary" (click)="logout()">
+    Logout
+  </button>-->
 </ion-content>
