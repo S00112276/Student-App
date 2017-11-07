@@ -1,24 +1,18 @@
-import { HomePage } from '../home/home';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-signup',
-  templateUrl: 'signup.html',
+  selector: 'page-timetable',
+  templateUrl: 'timetable.html',
 })
-export class SignupPage {
+export class TimetablePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
-  }
-
-  signup() {
-    // Api connections
-    this.navCtrl.push(HomePage);
+    console.log('ionViewDidLoad TimetablePage');
   }
 
 }

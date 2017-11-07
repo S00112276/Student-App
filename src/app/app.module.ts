@@ -9,7 +9,9 @@ import { SignupPage } from '../pages/signup/signup';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
+import { TimetablePage } from '../pages/timetable/timetable';
+import { ChatPage } from '../pages/chat/chat';
+import { DiaryPage } from '../pages/diary/diary';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -23,7 +25,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TimetablePage,
+    ChatPage,
+    DiaryPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,9 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TimetablePage,
+    ChatPage,
+    DiaryPage
   ],
   providers: [
     StatusBar,

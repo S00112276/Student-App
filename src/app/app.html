@@ -1,1 +1,24 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content">
+    <ion-header>
+        <ion-toolbar color="dark">
+            <ion-title>Menu</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <button ion-item menuToggle (click)="openPage('TimetablePage')">
+                Timetable
+            </button>
+            <button ion-item menuToggle (click)="openPage('ChatPage')">
+                Chat
+            </button>
+            <button ion-item menuToggle (click)="openPage('ChatPage')">
+                Diary
+            </button>
+            <button ion-button color="primary" (click)="logout()">
+                Logout
+            </button>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #content></ion-nav>
