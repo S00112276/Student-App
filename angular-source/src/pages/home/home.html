@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>
+      Home
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<div *ngFor="let user of users">
+  <h1>{{user.name}}
+  {{user.password}}
+  {{user.studentID}}</h1>
+</div>
+<ion-content class="card-background-page">
+  <ion-card (click)="openPage('TimetablePage')">
+    <img class="full-image" src="assets/imgs/timetable.png" />
+    <div class="card-title"></div>
+  </ion-card>
+  <ion-card (click)="openPage('ChatPage')">
+    <img class="full-image" src="assets/imgs/chat.png" />
+    <div class="card-title"></div>
+  </ion-card>
+  <ion-card (click)="openPage('DiaryPage')">
+    <img class="full-image" src="assets/imgs/diary.png" />
+    <div class="card-title"></div>
+  </ion-card>
+  <!--<button ion-button block color="primary" (click)="logout()">
+    Logout
+  </button>-->
+</ion-content>
