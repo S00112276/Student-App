@@ -5,15 +5,12 @@
     </ion-title>
   </ion-navbar>
 </ion-header>
-<div *ngFor="let user of users">
-  <h1>{{user.name}}
-  {{user.password}}
-  {{user.studentID}}</h1>
-</div>
 <ion-content class="card-background-page">
   <ion-card (click)="openPage('TimetablePage')">
     <img class="full-image" src="assets/imgs/timetable.png" />
-    <div class="card-title"></div>
+    <div class="card-title" *ngFor="let user of users">   <h1>{{user.name}}
+      {{user.password}}
+      {{user.studentID}}</h1></div>
   </ion-card>
   <ion-card (click)="openPage('ChatPage')">
     <img class="full-image" src="assets/imgs/chat.png" />
