@@ -18,7 +18,14 @@
     "nodemon": "^1.12.1"
   },
   "dependencies": {
-    "express": "^4.16.2",
-    "mongoose": "^4.12.4"
+    "bcrypt": "*",
+    "body-parser":"*",
+    "cors":"*",
+    "express": "*",
+    "jsonwebtoken": "*",
+    "lodash.isplainobject": "*",
+    "mongoose": "*",
+    "passport": "*",
+    "passport-jwt": "*"
   }
 }

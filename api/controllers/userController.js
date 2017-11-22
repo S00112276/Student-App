@@ -1,52 +1,68 @@
-'use strict';
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const config = require('../../config/database');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+var isPlainObject = require('lodash.isplainobject');
 
-var mongoose = require('mongoose'),
-    User = mongoose.model('Users');
+const User = require('../models/UserModel');
 
-// Return all users 
-exports.list_all_users = function (req, res) {
-    User.find({}, function (err, user) {
-        if (err)
-            res.send(err);
-        res.json(user);
+exports.registerUser = function(req, res, next) {
+    let newUser = new User({
+        name: req.body.name,
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+    });
+    
+    User.addUser(newUser, (err, user) => {
+        if(err){
+            res.json({success: false, msg: 'Failed to register user'});
+        }
+        else {
+            res.json({success: true, msg: 'User registered'});
+        }
     });
 };
 
-// Create a user
-exports.create_a_user = function (req, res) {
-    var new_user = new User(req.body);
-    new_user.save({}, function (err, user) {
-        if (err)
-            res.send(err);
-        res.json(user);
-    });
-};
+exports.AuthenticateUser = function(req, res, next) {
+    const username = req.body.username;
+    const password = req.body.password;
 
-// Return a user based on _id
-exports.read_a_user = function (req, res) {
-    User.findById(req.params.userId, function (err, user) {
-        if (err)
-            res.send(err);
-        res.json(user);
-    });
-};
+    User.getUserByUsername(username, (err, user) => {
+        if(err) throw err;
+        if(!user){
+            return res.json({success: false, msg: 'User not found'})
+        }
 
-// Update an existing user
-exports.update_a_user = function (req, res) {
-    User.findOneAndUpdate({ _id: req.params.userId }, req.body,
-        { new: true }, function (err, user) {
-            if (err)
-                res.send(err);
-            res.json(user);
+        User.comparePassword(password, user.password, (err, isMatch) => {
+            if(err) throw err;
+            if(isMatch){
+                const token = jwt.sign({ data:user }, config.secret, {
+                    expiresIn: 604800
+                });
+
+                res.json({
+                    success: true,
+                    token: 'JWT ' + token,
+                    user: {
+                        id: user._id,
+                        name: user.name,
+                        username: user.username,
+                        email: user.email
+                    }
+                });
+            }
+            else {
+                return res.json({ success: false, msg: 'Wrong password' });
+            }
         });
+    });
 };
 
-// Delete a user based on _id
-exports.delete_a_user = function (req, res) {
-    User.findOneAndRemove({userId:req.params.userId},
-         function (err, user) {
-        if (err)
-            res.send(err);
-        res.json(user);
-    });
+// Profile
+exports.GetProfile = passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    res.json({ user: req.user });
 };

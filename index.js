@@ -1,33 +1,61 @@
-var express = require('express'),
-app = express(),
-port = process.env.PORT || 3000;
+const passport = require('passport');
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const app = express();
+//const transactionRoutes = require('./api/routes/TransactionsRoutes');
+const userRoutes = require('./api/routes/UserRoutes');
+const port = 3000;
+//const transactionModel = require('./api/models/TransactionsModel');
+const userModel = require('./api/models/UserModel');
+const config = require('./config/database');
+const path = require('path');
 
-// Connect the database by adding a url to the mongoose instance connection
-mongoose = require('mongoose');
+// Connect to Database
+mongoose.connect(config.database);
 
-// load the created model - product
-Product = require('./api/models/userModel'),
-
-bodyParser = require('body-parser');
-
-// Providing a Connect/Express middleware
-const cors = require('cors')
-app.use(cors());
-
-// Mongoose instance connection url connection
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://Breakpoint:breakpoint@breakpoint-shard-00-00-ti5q0.mongodb.net:27017,breakpoint-shard-00-01-ti5q0.mongodb.net:27017,breakpoint-shard-00-02-ti5q0.mongodb.net:27017/student-app?ssl=true&replicaSet=Breakpoint-shard-0&authSource=admin');
-
-
-app.use(bodyParser.urlencoded({ extended: true }));
-// Register the route
-var routes = require('./api/routes/userRoutes');
-routes(app);
-
-app.use(function (req, res) {
-res.status(404).send({ url: req.originalUrl + ' not found' })
+// On error
+mongoose.connection.on('error', (err) => {
+    console.log('Database error: ' + err);
 });
 
-app.listen(port);
+// On connection
+mongoose.connection.on('connected', () => {
+    console.log('Connected to database ' + config.database); 
+});
 
-console.log('user RESTful API server started on: ' + port);
+// CORS Middleware
+app.use(cors());
+
+// Set Static Folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Body Parser Middleware
+app.use(bodyParser.json());
+
+// Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
+
+app.use('/user', userRoutes);
+//app.use('/transactions', transactionRoutes)
+
+//transactionRoutes(app);
+userRoutes(app);
+
+app.use(function (req, res) {
+    res.status(404).send({ url: req.originalUrl + ' not found' })
+});
+
+// Index Route
+app.get('/', (req, res) => {
+    res.send('Invalid Endpoint');
+});
+
+// Start Server
+app.listen(port, () => {
+    console.log('Server started on port ' + port);
+});
