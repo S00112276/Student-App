@@ -1,14 +1,15 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const config = require('../../config/database');
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
 const express = require('express');
 const router = express.Router();
-var isPlainObject = require('lodash.isplainobject');
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+const config = require('../../config/database');
+const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+//var isPlainObject = require('lodash.isplainobject');
 
 const User = require('../models/UserModel');
 
+// Register
 exports.registerUser = function(req, res, next) {
     let newUser = new User({
         name: req.body.name,
@@ -27,6 +28,7 @@ exports.registerUser = function(req, res, next) {
     });
 };
 
+// Autherticate
 exports.AuthenticateUser = function(req, res, next) {
     const username = req.body.username;
     const password = req.body.password;
@@ -62,7 +64,16 @@ exports.AuthenticateUser = function(req, res, next) {
     });
 };
 
+//const Auth = passport.authenticate('jwt', {session:false});
 // Profile
-exports.GetProfile = passport.authenticate('jwt', {session:false}), (req, res, next) => {
+ exports.GetProfile = passport.authenticate('jwt', {session:false}), (req, res, next) => {
     res.json({ user: req.user });
-};
+};  
+
+/* exports.GetProfile(passport.authenticate('jwt', {session:false}), (req, res, next) => {
+    res.json({ user: req.user });
+});  */
+
+/* exports.GetProfile = function(Auth, req, res, next) {
+    res.json({ user: req.user });
+}; */

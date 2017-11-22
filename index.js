@@ -4,10 +4,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const app = express();
-//const transactionRoutes = require('./api/routes/TransactionsRoutes');
 const userRoutes = require('./api/routes/UserRoutes');
 const port = 3000;
-//const transactionModel = require('./api/models/TransactionsModel');
 const userModel = require('./api/models/UserModel');
 const config = require('./config/database');
 const path = require('path');
@@ -57,5 +55,5 @@ app.get('/', (req, res) => {
 
 // Start Server
 app.listen(port, () => {
-    console.log('Server started on port ' + port);
+    console.log('SERVER STARTED ON PORT ' + port);
 });
