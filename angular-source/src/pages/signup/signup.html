@@ -1,29 +1,38 @@
 <ion-content padding>
 
-  <ion-list>
-
+  <form>
+    <h1 text-center>Your Details</h1>
     <ion-item>
-      <ion-label fixed>Name</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-label fixed>First Name</ion-label>
+      <ion-input type="text" name="name" [(ngModel)]="firstName" placeholder="John"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label fixed>Email</ion-label>
-      <ion-input type="email"></ion-input>
+        <ion-label fixed>Last Name</ion-label>
+        <ion-input type="text" name="name" [(ngModel)]="lastName" placeholder="Doe"></ion-input>
+      </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Username</ion-label>
+      <ion-input type="text" name="username" [(ngModel)]="username" placeholder="Username"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>Student ID</ion-label>
-      <ion-input type="text"></ion-input>
+      <ion-input type="text" name="studentID" [(ngModel)]="studentID" placeholder="S00123456"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label fixed>Password</ion-label>
-      <ion-input type="password"></ion-input>
+      <ion-input type="password" name="password" [(ngModel)]="password" placeholder="******"></ion-input>
     </ion-item>
 
-    <button ion-button block color="primary" (click)="signup()">Signup</button>
+    <ion-item>
+        <ion-label fixed>Confirm</ion-label>
+        <ion-input type="password" name="password" [(ngModel)]="password" placeholder="******"></ion-input>
+      </ion-item>
 
-
-  </ion-list>
+    <button ion-button block color="primary" type="submit" (click)="signup()">Sign Up</button>
+  </form>
+  <p class="important">Verification Email will be Sent to College Email</p>
 </ion-content>

@@ -9,16 +9,22 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SignupPage {
 
+  firstName: String;
+  lastName: String;
+  username: String;
+  email: String; // Set to stuentID + "@mail.itsligo.ie"
+  password: String;
+  studentID: String;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SignupPage');
   }
 
+  // When SignUp is clicked goes to HomePage
   signup() {
     // Api connections
     this.navCtrl.push(HomePage);
   }
-
 }
