@@ -1,14 +1,19 @@
 const passport = require('passport');
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const app = express();
-const userRoutes = require('./api/routes/UserRoutes');
-const port = 3000;
-const userModel = require('./api/models/UserModel');
-const config = require('./config/database');
 const path = require('path');
+// Set port on 3000
+const port = process.env.PORT || 3000;
+// Database
+const config = require('./config/database');
+// Routes
+const userRoutes = require('./api/routes/userRoutes');
+// Model
+//const userModel = require('./api/models/userModel');
+
 
 // Connect to Database
 mongoose.connect(config.database);
@@ -30,27 +35,20 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Body Parser Middleware
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 // Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
-
 require('./config/passport')(passport);
 
-app.use('/user', userRoutes);
-//app.use('/transactions', transactionRoutes)
+app.use('/users', userRoutes);
 
-//transactionRoutes(app);
-userRoutes(app);
+//userRoutes(app);
 
 app.use(function (req, res) {
     res.status(404).send({ url: req.originalUrl + ' not found' })
-});
-
-// Index Route
-app.get('/', (req, res) => {
-    res.send('Invalid Endpoint');
 });
 
 // Start Server

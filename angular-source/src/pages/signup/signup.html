@@ -1,20 +1,20 @@
 <ion-content padding>
 
-  <form>
+  <form (submit)="onSignUpSubmit()">
     <h1 text-center>Your Details</h1>
     <ion-item>
       <ion-label fixed>First Name</ion-label>
-      <ion-input type="text" name="name" [(ngModel)]="firstName" placeholder="John"></ion-input>
+      <ion-input type="text" name="firstName" [(ngModel)]="firstName" placeholder="John" required></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label fixed>Last Name</ion-label>
-        <ion-input type="text" name="name" [(ngModel)]="lastName" placeholder="Doe"></ion-input>
+        <ion-input type="text" name="lastName" [(ngModel)]="lastName" placeholder="Doe"></ion-input>
       </ion-item>
 
     <ion-item>
       <ion-label fixed>Username</ion-label>
-      <ion-input type="text" name="username" [(ngModel)]="username" placeholder="Username"></ion-input>
+      <ion-input type="text" name="username" [(ngModel)]="username" placeholder="JohnD"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -27,12 +27,12 @@
       <ion-input type="password" name="password" [(ngModel)]="password" placeholder="******"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
         <ion-label fixed>Confirm</ion-label>
         <ion-input type="password" name="password" [(ngModel)]="password" placeholder="******"></ion-input>
-      </ion-item>
+      </ion-item> -->
 
-    <button ion-button block color="primary" type="submit" (click)="signup()">Sign Up</button>
+    <button ion-button block color="primary" type="submit">Sign Up</button>
   </form>
   <p class="important">Verification Email will be Sent to College Email</p>
 </ion-content>

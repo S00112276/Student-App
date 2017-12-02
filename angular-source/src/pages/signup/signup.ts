@@ -1,6 +1,10 @@
 import { HomePage } from '../home/home';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+import { AuthService } from '../shared/auth.service'
+import { ValidateService } from '../shared/validate.service';
+import { Console } from '@angular/core/src/console';
 
 @IonicPage()
 @Component({
@@ -8,23 +12,113 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
-
+  // Decalre Variables
   firstName: String;
   lastName: String;
   username: String;
-  email: String; // Set to stuentID + "@mail.itsligo.ie"
   password: String;
   studentID: String;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+   // Declare Services
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public alertCtrl: AlertController,
+    private validateService: ValidateService, 
+    private authService: AuthService
+  ) { }
 
   ionViewDidLoad() {
   }
 
-  // When SignUp is clicked goes to HomePage
-  signup() {
-    // Api connections
-    this.navCtrl.push(HomePage);
+  // SignUp Button Clicked
+  onSignUpSubmit(){
+    console.log("Sign Up Submit");
+    const user = {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.studentID + "@mail.itsligo.ie",
+      username: this.username,
+      studentId: this.studentID,
+      password: this.password
+    }
+
+    // Required Fields
+    if(!this.validateService.validateRegister(user)) {
+      console.log("Validating Register Failed");
+      let alert = this.alertCtrl.create({
+        title: 'Failed to Register',
+        subTitle: 'Please fill out all the fields',
+        buttons: ['OK']
+      });
+      alert.present();
+      return false;
+    }
+
+    // Validate StudentID
+    if (!this.validateService.validateUserID(user.studentId)) {
+      console.log("Validating StudentID Failed");
+      let alert = this.alertCtrl.create({
+        title: 'Failed to Register',
+        subTitle: 'Incorrect StudentID Format',
+        buttons: ['OK']
+      });
+      alert.present();
+      return false;
+    }
+
+    // Register User
+    if(user.studentId.startsWith("S") || user.studentId.startsWith("s"))
+    {
+      this.authService.registerStudent(user).subscribe(data => {
+        if (data.success) {
+          console.log("Student Registered");
+            let alert = this.alertCtrl.create({
+              title: 'Registered Successfully',
+              subTitle: 'Please check your college email to verify your Student ID',
+              buttons: ['OK']
+            });
+          this.navCtrl.push(HomePage);
+        } else {
+          let alert = this.alertCtrl.create({
+            title: 'Registration Unsuccessful',
+            subTitle: 'Please Try Again',
+            buttons: ['OK']
+          });
+        }
+      });
+    }
+    else if(user.studentId.startsWith("L") || user.studentId.startsWith("l"))
+    {
+
+    }
+    else 
+      {
+        console.log("StudentId does not start with either S or L");
+        let alert = this.alertCtrl.create({
+          title: 'Failed to Register',
+          subTitle: 'Incorrect StudentID Format',
+          buttons: ['OK']
+        });
+        alert.present();
+        return false;
+      }
+    // this.authService.registerUser(user).subscribe(data => {
+    //   if (data.success) {
+    //     console.log("User Registered");
+    //       let alert = this.alertCtrl.create({
+    //         title: 'Registered Successfully',
+    //         subTitle: 'Please check your college email to verify your Student ID',
+    //         buttons: ['OK']
+    //       });
+    //     this.navCtrl.push(HomePage);
+    //   } else {
+    //     let alert = this.alertCtrl.create({
+    //       title: 'Registration Unsuccessful',
+    //       subTitle: 'Please Try Again',
+    //       buttons: ['OK']
+    //     });
+    //   }
+    // });
   }
 }

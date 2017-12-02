@@ -1,4 +1,3 @@
-import { UserService } from '../pages/shared/user.service';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -6,6 +5,12 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
+// Services
+import { UserService } from '../pages/shared/user.service';
+import { AuthService } from '../pages/shared/auth.service';
+import { ValidateService } from '../pages/shared/validate.service';
+
+// Components
 import { WelcomePage } from '../pages/welcome/welcome';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
@@ -53,6 +58,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   providers: [
     UserService,
+    AuthService,
+    ValidateService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}

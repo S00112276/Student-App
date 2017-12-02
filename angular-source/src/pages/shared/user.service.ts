@@ -1,4 +1,4 @@
-import { IUser } from '../home/user';
+//import { IUser } from '../home/user';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -12,11 +12,11 @@ export class UserService {
 
   constructor(private _http: HttpClient) { }
 
-  getUsers(): Observable<IUser[]> {
-    return this._http.get<IUser[]>(this._userUrl)
-      .do(data => console.log('All: ' + JSON.stringify(data)))
-      .catch(this.handleError);
-  }
+  // getUsers(): Observable<IUser[]> {
+  //   return this._http.get<IUser[]>(this._userUrl)
+  //     .do(data => console.log('All: ' + JSON.stringify(data)))
+  //     .catch(this.handleError);
+  // }
 
 
   private handleError(err: HttpErrorResponse) {

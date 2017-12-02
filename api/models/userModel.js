@@ -4,16 +4,30 @@ const config = require('../../config/database');
 
 // User Schema
 const UserSchema = mongoose.Schema({
-    name: {
+    // _id: {
+    //     Schema.ObjectId
+    // },
+    firstName: {
+        type: String
+    },
+    lastName: {
         type: String
     },
     email : {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        lowercase: true
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
+    },
+    studentId: {
+        type: String,
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -27,12 +41,13 @@ module.exports.getUserById = function(id, callback) {
     User.findById(id, callback);
 }
 
-module.exports.getUserByUsername = function(username, callback) {
-    const query = {username : username}
+module.exports.getUserByStudentId = function(id, callback) {
+    const query = { id : id }
     User.findOne(query, callback);
 }
 
 module.exports.addUser = function (newUser, callback){
+    // genSalt = a random key to hash the password
     bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
             if(err) throw err;
