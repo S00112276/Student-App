@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const config = require('../../config/database');
 
-// Student Schema
-const StudentSchema = mongoose.Schema({
+// Lecturer Schema
+const LecturerSchema = mongoose.Schema({
     // _id: {
     //     Schema.ObjectId
     // },
@@ -35,24 +35,24 @@ const StudentSchema = mongoose.Schema({
     }
 });
 
-const Student = module.exports = mongoose.model('Student', StudentSchema);
+const Lecturer = module.exports = mongoose.model('Lecturer', LecturerSchema);
 
 module.exports.getUserById = function(id, callback) {
-    Student.findById(id, callback);
+    Lecturer.findById(id, callback);
 }
 
 module.exports.getUserById = function(id, callback) {
     const query = { id : id }
-    Student.findOne(query, callback);
+    Lecturer.findOne(query, callback);
 }
 
-module.exports.addUser = function (newStudent, callback){
+module.exports.addUser = function (newLecturer, callback){
     // genSalt = a random key to hash the password
     bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newStudent.password, salt, (err, hash) => {
+        bcrypt.hash(newLecturer.password, salt, (err, hash) => {
             if(err) throw err;
-            newStudent.password = hash;
-            newStudent.save(callback);
+            newLecturer.password = hash;
+            newLecturer.save(callback);
         });
     });
 }

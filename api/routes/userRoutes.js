@@ -21,6 +21,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config/database');
 const User = require('../models/userModel');
 const Student = require('../models/studentModel');
+const Lecturer = require('../models/lecturerModel');
 
 // Register Student
 router.post('/registerstudent', (req, res, next) => {
@@ -35,7 +36,7 @@ router.post('/registerstudent', (req, res, next) => {
 
     Student.addUser(newUser, (err, user) => {
         if(err){
-        res.json({ success: false, msg: 'Failed to register student' });
+        res.json({ success: false, msg: 'Failed to register student: ' + err });
         }
         else {
             res.json({ success: true, msg: 'Student registered!' });
@@ -44,26 +45,48 @@ router.post('/registerstudent', (req, res, next) => {
 });
 // End Register Student
 
-// Register
-router.post('/register', (req, res, next) => {
-    let newUser = new User({
+// Register Lecturer
+router.post('/registerlecturer', (req, res, next) => {
+    let newUser = new Lecturer({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.studentId + "@mail.itsligo.ie",
+        email: req.body.lecturerId + "@mail.itsligo.ie",
         username: req.body.username,
-        studentId: req.body.studentId,
+        lecturerId: req.body.lecturerId,
         password: req.body.password
     });
 
-    User.addUser(newUser, (err, user) => {
+    Lecturer.addUser(newUser, (err, user) => {
         if(err){
-        res.json({ success: false, msg: 'Failed to register user' });
+        res.json({ success: false, msg: 'Failed to register lecturer: ' +  err});
         }
         else {
-            res.json({ success: true, msg: 'User registered!' });
+            res.json({ success: true, msg: 'Lecturer registered!' });
         }
     });
 });
+// End Register Lecturer
+
+// // Register
+// router.post('/register', (req, res, next) => {
+//     let newUser = new User({
+//         firstName: req.body.firstName,
+//         lastName: req.body.lastName,
+//         email: req.body.studentId + "@mail.itsligo.ie",
+//         username: req.body.username,
+//         studentId: req.body.studentId,
+//         password: req.body.password
+//     });
+
+//     User.addUser(newUser, (err, user) => {
+//         if(err){
+//         res.json({ success: false, msg: 'Failed to register user' });
+//         }
+//         else {
+//             res.json({ success: true, msg: 'User registered!' });
+//         }
+//     });
+// });
 
 // Authentication
 router.post('/authenticate', (req, res, next) => {
@@ -71,7 +94,7 @@ router.post('/authenticate', (req, res, next) => {
     const password = req.body.password;
 
     // Call method from User & retrieve student by studentId
-    User.getUserByStudentId(email, (err, user) => {
+    User.getUserById(email, (err, user) => {
         if(err) throw err;
         
         if(!user) {

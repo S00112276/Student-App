@@ -28,8 +28,7 @@ export class SignupPage {
     private authService: AuthService
   ) { }
 
-  ionViewDidLoad() {
-  }
+  ionViewDidLoad() { }
 
   // SignUp Button Clicked
   onSignUpSubmit(){
@@ -55,7 +54,7 @@ export class SignupPage {
       return false;
     }
 
-    // Validate StudentID
+    // Validate ID
     if (!this.validateService.validateUserID(user.studentId)) {
       console.log("Validating StudentID Failed");
       let alert = this.alertCtrl.create({
@@ -68,6 +67,7 @@ export class SignupPage {
     }
 
     // Register User
+    // Student
     if(user.studentId.startsWith("S") || user.studentId.startsWith("s"))
     {
       this.authService.registerStudent(user).subscribe(data => {
@@ -78,6 +78,7 @@ export class SignupPage {
               subTitle: 'Please check your college email to verify your Student ID',
               buttons: ['OK']
             });
+            alert.present();
           this.navCtrl.push(HomePage);
         } else {
           let alert = this.alertCtrl.create({
@@ -88,9 +89,28 @@ export class SignupPage {
         }
       });
     }
+    // Lecturer
     else if(user.studentId.startsWith("L") || user.studentId.startsWith("l"))
     {
-
+      this.authService.registerLecturer(user).subscribe(data => {
+        console.log("Out of auth service: " + data);
+        if (data.success) {
+          console.log("Lecturer Registered");
+            let alert = this.alertCtrl.create({
+              title: 'Registered Successfully',
+              subTitle: 'Please check your college email to verify your Lecturer ID',
+              buttons: ['OK']
+            });
+            alert.present();
+          this.navCtrl.push(HomePage);
+        } else {
+          let alert = this.alertCtrl.create({
+            title: 'Registration Unsuccessful',
+            subTitle: 'Please Try Again',
+            buttons: ['OK']
+          });
+        }
+      });
     }
     else 
       {

@@ -1,19 +1,19 @@
 <ion-content padding>
 
-  <ion-list>
-
-    <ion-item>
-      <ion-label fixed>Username</ion-label>
-      <ion-input type="text" value=""></ion-input>
-    </ion-item>
-
-    <ion-item>
+  <form (submit)='Login()'>
+      <!-- ID --> 
+      <h1 text-center>Login</h1>
+      <ion-item>
+        <ion-label fixed>Email</ion-label>
+        <ion-input type="text" name="email" [(ngModel)]="email" placeholder="S00123456@mail.itsligo.ie"></ion-input>
+      </ion-item>
+      <!-- Password -->
+      <ion-item>
         <ion-label fixed>Password</ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
       </ion-item>
 
-      <button ion-button block color="primary" (click)="login()">Login</button>
-      
+      <button ion-button block color="primary" type="submit">Login</button>
+  </form>
 
-  </ion-list>
 </ion-content>

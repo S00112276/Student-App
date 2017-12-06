@@ -23,15 +23,25 @@ export class AuthService {
             .map(res => res.json());
     }
 
-    // Register User
-    registerUser(user) {
-        console.log("Register User: " + user.firstName + " in auth.service.ts");
+    // Register Lecturer
+    registerLecturer(user) {
+        console.log("Register Lecturer: " + user.firstName + " in auth.service.ts");
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        let ep = this.prepEndpoint('users/register');
+        let ep = this.prepEndpoint('users/registerlecturer');
         return this.http.post(ep, user, { headers: headers })
             .map(res => res.json());
     }
+
+    // // Register User
+    // registerUser(user) {
+    //     console.log("Register User: " + user.firstName + " in auth.service.ts");
+    //     let headers = new Headers();
+    //     headers.append('Content-Type', 'application/json');
+    //     let ep = this.prepEndpoint('users/register');
+    //     return this.http.post(ep, user, { headers: headers })
+    //         .map(res => res.json());
+    // }
 
     // Authenticate User
     authUser(user) {
