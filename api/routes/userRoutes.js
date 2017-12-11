@@ -88,36 +88,36 @@ router.post('/registerlecturer', (req, res, next) => {
 //     });
 // });
 
-// Authentication
-router.post('/authenticate', (req, res, next) => {
+// Authenticate Lecturer
+router.post('/authenticatelecturer', (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
     // Call method from User & retrieve student by studentId
-    User.getUserById(email, (err, user) => {
+    Lecturer.getUserById(email, (err, lectuerer) => {
         if(err) throw err;
         
-        if(!user) {
-            return res.json({ success: false, msg: 'User not found' });
+        if(!lectuerer) {
+            return res.json({ success: false, msg: 'Lecturer not found' });
         }
 
-        User.comparePassword(password, user.password, (err, isMatch) => {
+        User.comparePassword(password, lectuerer.password, (err, isMatch) => {
             if(err) throw err;
 
             if(isMatch) {
-                const token = jwt.sign({ data: user }, config.secret, {
+                const token = jwt.sign({ data: lectuerer }, config.secret, {
                     expiresIn: 86400 // 1 day in seconds
                 });
                 res.json({
                     success: true,
                     token: 'JWT '+ token,
                     user: {
-                        id: user._id,
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        email: user.email,
-                        username: user.username,
-                        studentId: user.studentId
+                        id: lectuerer._id,
+                        firstName: lectuerer.firstName,
+                        lastName: lectuerer.lastName,
+                        email: lectuerer.email,
+                        username: lectuerer.username,
+                        studentId: lectuerer.studentId
                     }
                 });
             }
@@ -127,6 +127,46 @@ router.post('/authenticate', (req, res, next) => {
         });
     });
 });
+
+// // Authentication
+// router.post('/authenticate', (req, res, next) => {
+//     const email = req.body.email;
+//     const password = req.body.password;
+
+//     // Call method from User & retrieve student by studentId
+//     User.getUserByStudentId(email, (err, user) => {
+//         if(err) throw err;
+        
+//         if(!user) {
+//             return res.json({ success: false, msg: 'User not found' });
+//         }
+
+//         User.comparePassword(password, user.password, (err, isMatch) => {
+//             if(err) throw err;
+
+//             if(isMatch) {
+//                 const token = jwt.sign({ data: user }, config.secret, {
+//                     expiresIn: 86400 // 1 day in seconds
+//                 });
+//                 res.json({
+//                     success: true,
+//                     token: 'JWT '+ token,
+//                     user: {
+//                         id: user._id,
+//                         firstName: user.firstName,
+//                         lastName: user.lastName,
+//                         email: user.email,
+//                         username: user.username,
+//                         studentId: user.studentId
+//                     }
+//                 });
+//             }
+//             else {
+//                 return res.json({ success: false, msg: 'Incorrect Password' });
+//             }
+//         });
+//     });
+// });
 
 // Profile
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
