@@ -24,7 +24,7 @@ const LecturerSchema = mongoose.Schema({
         required: true,
         unique: true
     },
-    studentId: {
+    lecturerId: {
         type: String,
         required: true,
         unique: true
