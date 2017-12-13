@@ -9,7 +9,10 @@ table {
   }
   /* Zebra striping */
   tr:nth-of-type(odd) { 
-    background: #eee; 
+    background: rgb(243, 243, 243); 
+  }
+  tr:nth-of-type(even) { 
+    background: white; 
   }
   th { 
     background: #333; 
