@@ -50,9 +50,9 @@ router.post('/registerlecturer', (req, res, next) => {
     let newLecturer = new Lecturer({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email: req.body.lecturerId + "@mail.itsligo.ie",
+        email: req.body.studentId + "@mail.itsligo.ie",
         username: req.body.username,
-        lecturerId: req.body.lecturerId,
+        lecturerId: req.body.studentId,
         password: req.body.password
     });
 
