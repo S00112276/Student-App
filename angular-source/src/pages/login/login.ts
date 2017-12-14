@@ -31,7 +31,6 @@ export class LoginPage {
     }
 
     this.authService.authLecturer(user).subscribe(data => {
-      console.log("authService/authUser " + data.msg);
       if(data.success) {
         this.authService.storeUserData(data.token, data.user);
         let alert = this.alertCtrl.create({
@@ -44,9 +43,10 @@ export class LoginPage {
       } else {
         let alert = this.alertCtrl.create({
           title: 'Login Unsuccessful',
-          subTitle: 'Please check that you have entered your details correctly.',
+          subTitle: data.msg,
           buttons: ['OK']
         });
+        alert.present();
       }
     });
   }
