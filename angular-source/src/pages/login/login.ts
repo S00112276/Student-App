@@ -26,12 +26,12 @@ export class LoginPage {
   Login() {
     // Create user Object for Login
     const user = {
-      email: this.email,
+      email: this.email.toLowerCase(),
       password: this.password
     }
 
-    this.authService.authUser(user).subscribe(data => {
-      console.log("authService/authUser" + data);
+    this.authService.authLecturer(user).subscribe(data => {
+      console.log("authService/authUser " + data.msg);
       if(data.success) {
         this.authService.storeUserData(data.token, data.user);
         let alert = this.alertCtrl.create({
