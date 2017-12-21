@@ -17,6 +17,7 @@ export class SignupPage {
   lastName: String;
   username: String;
   password: String;
+  confirmPassword: String;
   studentID: String;
 
    // Declare Services
@@ -32,19 +33,18 @@ export class SignupPage {
 
   // SignUp Button Clicked
   onSignUpSubmit(){
-    console.log("Sign Up Submit");
     const user = {
       firstName: this.firstName,
       lastName: this.lastName,
       email: this.studentID + "@mail.itsligo.ie",
       username: this.username,
       studentId: this.studentID,
-      password: this.password
+      password: this.password,
+      confirmPassword: this.confirmPassword
     }
 
     // Required Fields
     if(!this.validateService.validateRegister(user)) {
-      console.log("Validating Register Failed");
       let alert = this.alertCtrl.create({
         title: 'Failed to Register',
         subTitle: 'Please fill out all the fields',
@@ -56,10 +56,20 @@ export class SignupPage {
 
     // Validate ID
     if (!this.validateService.validateUserID(user.studentId)) {
-      console.log("Validating StudentID Failed");
       let alert = this.alertCtrl.create({
         title: 'Failed to Register',
         subTitle: 'Incorrect StudentID Format',
+        buttons: ['OK']
+      });
+      alert.present();
+      return false;
+    }
+
+    // Validate Password
+    if(!this.validateService.validatePassword(user)) {
+      let alert = this.alertCtrl.create({
+        title: 'Failed to Register',
+        subTitle: 'Passwords Must Match!',
         buttons: ['OK']
       });
       alert.present();
@@ -72,7 +82,6 @@ export class SignupPage {
     {
       this.authService.registerStudent(user).subscribe(data => {
         if (data.success) {
-          console.log("Student Registered");
             let alert = this.alertCtrl.create({
               title: 'Registered Successfully',
               subTitle: 'Please check your college email to verify your Student ID',
@@ -95,7 +104,6 @@ export class SignupPage {
       this.authService.registerLecturer(user).subscribe(data => {
         console.log("Out of auth service: " + data);
         if (data.success) {
-          console.log("Lecturer Registered");
             let alert = this.alertCtrl.create({
               title: 'Registered Successfully',
               subTitle: 'Please check your college email to verify your Lecturer ID',

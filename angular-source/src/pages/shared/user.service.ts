@@ -9,6 +9,8 @@ import 'rxjs/add/operator/do';
 @Injectable()
 export class UserService {
   private _userUrl = 'http://localhost:3000/users';
+  // Heroku
+  //private _userUrl = 'https://breakpoint-app.herokuapp.com/';
 
   constructor(private _http: HttpClient) { }
 

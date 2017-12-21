@@ -3,6 +3,10 @@
   <form (submit)="onSignUpSubmit()">
     <h1 text-center>Your Details</h1>
     <ion-item>
+      
+    </ion-item>
+
+    <ion-item>
       <ion-label fixed>First Name</ion-label>
       <ion-input type="text" name="firstName" [(ngModel)]="firstName" placeholder="John" required></ion-input>
     </ion-item>
@@ -27,10 +31,10 @@
       <ion-input type="password" name="password" [(ngModel)]="password" placeholder="******"></ion-input>
     </ion-item>
 
-    <!-- <ion-item>
-        <ion-label fixed>Confirm</ion-label>
-        <ion-input type="password" name="password" [(ngModel)]="password" placeholder="******"></ion-input>
-      </ion-item> -->
+    <ion-item>
+      <ion-label fixed>Password</ion-label>
+      <ion-input type="password" name="password" [(ngModel)]="confirmPassword" placeholder="******"></ion-input>
+    </ion-item> 
 
     <button ion-button block color="primary" type="submit">Sign Up</button>
   </form>

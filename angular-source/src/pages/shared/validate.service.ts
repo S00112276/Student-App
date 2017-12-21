@@ -11,6 +11,7 @@ export class ValidateService {
             || user.username == undefined
             || user.studentId == undefined
             || user.password == undefined
+
         ) {
             return false;
         }
@@ -23,5 +24,15 @@ export class ValidateService {
     validateUserID(userID) {
         const re = new RegExp('^[slSL][0-9]{8}$');
         return re.test(userID);
+    }
+
+    // Validate Password
+    validatePassword(user) {
+        if(user.password != user.confirmPassword) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 }

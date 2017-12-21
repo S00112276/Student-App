@@ -15,7 +15,6 @@ export class AuthService {
 
     // Register Student
     registerStudent(user) {
-        console.log("Register Student: " + user.firstName + " in auth.service.ts");
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let ep = this.prepEndpoint('users/registerstudent');
@@ -25,7 +24,6 @@ export class AuthService {
 
     // Register Lecturer
     registerLecturer(user) {
-        console.log("Register Lecturer: " + user.firstName + " in auth.service.ts");
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let ep = this.prepEndpoint('users/registerlecturer');
@@ -94,6 +92,8 @@ export class AuthService {
             return ep;
         } else {
             return 'http://localhost:3000/' + ep;
+            // Heroku
+            //return 'https://breakpoint-app.herokuapp.com/' + ep;
         }
     }
 
