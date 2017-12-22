@@ -13,6 +13,15 @@ export class AuthService {
         this.isDev = false;
     }
 
+    // Send Validation Email
+    sendValEmail(user) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let ep = this.prepEndpoint('email/sendemail');
+        return this.http.post(ep, user, { headers: headers })
+        .map(res => res.json());
+    }
+
     // Register Student
     registerStudent(user) {
         let headers = new Headers();

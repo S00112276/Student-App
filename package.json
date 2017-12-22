@@ -19,8 +19,9 @@
   },
   "dependencies": {
     "bcrypt": "2.3.0",
-    "body-parser":"*",
-    "cors":"*",
+    "body-parser": "*",
+    "cors": "*",
+    "emailjs": "^1.0.12",
     "express": "*",
     "jsonwebtoken": "*",
     "lodash.isplainobject": "*",

@@ -13,6 +13,7 @@ const port = process.env.PORT || 3000;
 const config = require('./config/database');
 // Routes
 const userRoutes = require('./api/routes/userRoutes');
+const emailRoutes = require('./api/routes/emailRoutes');
 // Model
 //const userModel = require('./api/models/userModel');
 
@@ -46,6 +47,7 @@ app.use(passport.session());
 require('./config/passport')(passport);
 
 app.use('/users', userRoutes);
+app.use('/email', emailRoutes);
 
 //userRoutes(app);
 
