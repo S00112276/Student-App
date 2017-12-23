@@ -35,8 +35,7 @@ export class SignupPage {
     const user =  {
       firstName:this.firstName, 
       lastName:this.lastName, 
-      email:this.studentID + "@mail.itsligo.ie", 
-      //email: this.studentID + "@mail.itsligo.ie",
+      email: this.studentID + "@mail.itsligo.ie",
       username:this.username, 
       studentId:this.studentID, 
       password:this.password, 
@@ -44,6 +43,8 @@ export class SignupPage {
     }
 
     // Required Fields
+      // For Development:  
+      this.navCtrl.push(HomePage); //(When Not In Dev Comment Out) 
     if ( ! this.validateService.validateRegister(user)) {
       let alert = this.alertCtrl.create( {
         title:'Failed to Register', 

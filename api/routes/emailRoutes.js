@@ -10,12 +10,12 @@ router.post('/sendEmail', (req, res) =>  {
     var data =  {
     from:'Breakpoint <EducationStation@BreakPoint.ie>', 
     to:'breakpoint@outlook.ie', 
-    subject:'Test',
+    subject:'Welcome ' + req.body.firstName,
     text:'Hi ' + req.body.firstName +
         '\n\nWelcome to Education Station!' + 
         '\n\nWe hope you will enjoy our app, and please let us know if you have any problems or have some ideas for us!' +
         '\nJust contact us on breakpoint@outlook.ie' +
-        '\n\nLove,\nThe BreakPoint Team'
+        '\n\nHappy Studies,\nThe BreakPoint Team'
     }; 
  
     mailgun.messages().send(data, function (error, body) {
