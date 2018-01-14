@@ -1,28 +1,25 @@
 <ion-header>
-  <ion-navbar color="dark">
+  <ion-navbar hideBackButton color="energy">
     <ion-title>
       Home
     </ion-title>
   </ion-navbar>
 </ion-header>
 <ion-content class="card-background-page">
-  <ion-card (click)="openPage('TimetablePage')">
-    <img class="full-image" src="assets/imgs/timetable.png" />
-    <div class="card-title" *ngFor="let user of users">
-      <h1>
-        {{user.name}} {{user.password}} {{user.studentID}}
-      </h1>
-    </div>
-  </ion-card>
-  <ion-card (click)="openPage('ChatPage')">
-    <img class="full-image" src="assets/imgs/chat.png" />
-    <div class="card-title"></div>
-  </ion-card>
-  <ion-card (click)="openPage('DiaryPage')">
-    <img class="full-image" src="assets/imgs/diary.png" />
-    <div class="card-title"></div>
-  </ion-card>
-  <!--<button ion-button block color="primary" (click)="logout()">
-    Logout
-  </button>-->
+
+    <ion-card (click)="openPage('TimetablePage')" style="background-color: #2A2C43">
+      <div class="card-title">Timetable</div>
+      <div class="card-subtitle">Classes and Exams</div>
+    </ion-card>
+  
+    <ion-card (click)="openPage('ChatPage')"  style="background-color: #677077">
+      <div class="card-title">Chat</div>
+      <div class="card-subtitle">Talk with friends</div>
+    </ion-card>
+  
+    <ion-card (click)="openPage('DiaryPage')"  style="background-color: #B5B5B7">
+      <div class="card-title">Diary</div>
+      <div class="card-subtitle">Track your schedule</div>
+    </ion-card>
+  
 </ion-content>

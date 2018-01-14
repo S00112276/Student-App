@@ -8,6 +8,7 @@ import { WelcomePage } from '../pages/welcome/welcome';
 import { TimetablePage } from '../pages/timetable/timetable';
 import { ChatPage } from '../pages/chat/chat';
 import { DiaryPage } from '../pages/diary/diary';
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
