@@ -1,10 +1,12 @@
 <ion-header>
   <ion-navbar hideBackButton color="energy">
-    <ion-title>
-      Home
-    </ion-title>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    <ion-title> Home </ion-title>
   </ion-navbar>
 </ion-header>
+
 <ion-content class="card-background-page">
 
     <ion-card (click)="openPage('TimetablePage')" style="background-color: #2A2C43">
