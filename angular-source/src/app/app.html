@@ -1,4 +1,4 @@
-<ion-menu [content]="content">
+<ion-menu type="overlay" [content]="content">
 
     <ion-header>
         <ion-toolbar color="dark">
@@ -8,13 +8,13 @@
 
     <ion-content>
         <ion-list>
-            <button ion-item (click)="openPage('TimetablePage')">
+            <button ion-item menuClose (click)="openPage('TimetablePage')">
                 Timetable
             </button>
-            <button ion-item (click)="openPage('ChatPage')">
+            <button ion-item menuClose (click)="openPage('ChatPage')">
                 Chat
             </button>
-            <button ion-item (click)="openPage('DiaryPage')">
+            <button ion-item menuClose (click)="openPage('DiaryPage')">
                 Diary
             </button>
             <button ion-button color="primary" (click)="logout()">

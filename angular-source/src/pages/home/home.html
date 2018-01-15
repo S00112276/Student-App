@@ -1,27 +1,27 @@
 <ion-header>
   <ion-navbar hideBackButton color="energy">
-      <button ion-button menuToggle>
-        <ion-icon name="menu"></ion-icon>
-      </button>
+    <button ion-button end menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title> Home </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="card-background-page">
 
-    <ion-card [navPush]="timetablePage" style="background-color: #2A2C43">
-      <div class="card-title">Timetable</div>
-      <div class="card-subtitle">Classes and Exams</div>
-    </ion-card>
-  
-    <ion-card [navPush]="chatPage" style="background-color: #677077">
-      <div class="card-title">Chat</div>
-      <div class="card-subtitle">Talk with friends</div>
-    </ion-card>
-  
-    <ion-card [navPush]="diaryPage" style="background-color: #B5B5B7">
-      <div class="card-title">Diary</div>
-      <div class="card-subtitle">Track your schedule</div>
-    </ion-card>
-  
+  <ion-card [navPush]="timetablePage" style="background-color: #2A2C43">
+    <div class="card-title">Timetable</div>
+    <div class="card-subtitle">Classes and Exams</div>
+  </ion-card>
+
+  <ion-card [navPush]="chatPage" style="background-color: #677077">
+    <div class="card-title">Chat</div>
+    <div class="card-subtitle">Talk with friends</div>
+  </ion-card>
+
+  <ion-card [navPush]="diaryPage" style="background-color: #B5B5B7">
+    <div class="card-title">Diary</div>
+    <div class="card-subtitle">Track your schedule</div>
+  </ion-card>
+
 </ion-content>
