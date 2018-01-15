@@ -14,7 +14,7 @@ import { HomePage } from '../pages/home/home';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = WelcomePage;
+  rootPage: any = HomePage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private app: App) {
     platform.ready().then(() => {

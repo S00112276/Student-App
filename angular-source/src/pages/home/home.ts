@@ -13,9 +13,14 @@ import { UserService } from '../shared/user.service';
 export class HomePage implements OnInit{
 //users: IUser[];
 errorMessage: string;
+timetablePage: any;
+chatPage: any;
+diaryPage: any;
 
   constructor(public navCtrl: NavController, public app: App, private _userService: UserService) {
-
+    this.timetablePage = TimetablePage;
+    this.chatPage = ChatPage;
+    this.diaryPage = DiaryPage;
   }
 
   ngOnInit(): void {
@@ -29,18 +34,6 @@ errorMessage: string;
     //Api Token Logout
     const root = this.app.getRootNav();
     root.popToRoot();
-  }
-
-  openPage(page) {
-    if (page === 'TimetablePage') {
-      this.app.getActiveNav().push(TimetablePage);
-    }
-    else if (page === 'ChatPage') {
-      this.app.getActiveNav().push(ChatPage);
-    }
-    else if (page === 'DiaryPage') {
-      this.app.getActiveNav().push(DiaryPage);
-    }
   }
 
 }

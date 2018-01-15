@@ -7,17 +7,17 @@
 </ion-header>
 <ion-content class="card-background-page">
 
-    <ion-card (click)="openPage('TimetablePage')" style="background-color: #2A2C43">
+    <ion-card [navPush]="timetablePage" style="background-color: #2A2C43">
       <div class="card-title">Timetable</div>
       <div class="card-subtitle">Classes and Exams</div>
     </ion-card>
   
-    <ion-card (click)="openPage('ChatPage')"  style="background-color: #677077">
+    <ion-card [navPush]="chatPage" style="background-color: #677077">
       <div class="card-title">Chat</div>
       <div class="card-subtitle">Talk with friends</div>
     </ion-card>
   
-    <ion-card (click)="openPage('DiaryPage')"  style="background-color: #B5B5B7">
+    <ion-card [navPush]="diaryPage" style="background-color: #B5B5B7">
       <div class="card-title">Diary</div>
       <div class="card-subtitle">Track your schedule</div>
     </ion-card>
