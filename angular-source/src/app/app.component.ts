@@ -35,13 +35,13 @@ export class MyApp {
 
   openPage(page) {
     if (page === 'TimetablePage') {
-      this.app.getActiveNav().push(TimetablePage);
+      this.nav.push(TimetablePage);
     }
     else if (page === 'ChatPage') {
-      this.app.getActiveNav().push(ChatPage);
+      this.nav.push(ChatPage);
     }
     else if (page === 'DiaryPage') {
-      this.app.getActiveNav().push(DiaryPage);
+      this.nav.push(DiaryPage);
     }
   }
 }
