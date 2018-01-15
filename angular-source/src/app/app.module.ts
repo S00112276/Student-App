@@ -20,9 +20,11 @@ import { HomePage } from '../pages/home/home';
 import { TimetablePage } from '../pages/timetable/timetable';
 import { ChatPage } from '../pages/chat/chat';
 import { DiaryPage } from '../pages/diary/diary';
+import { AddEventPage } from '../pages/add-event/add-event';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Calendar } from '@ionic-native/calendar'
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     TimetablePage,
     ChatPage,
-    DiaryPage
+    DiaryPage,
+    AddEventPage
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     HomePage,
     TimetablePage,
     ChatPage,
-    DiaryPage
+    DiaryPage,
+    AddEventPage
   ],
   providers: [
     UserService,
@@ -62,6 +66,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     ValidateService,
     StatusBar,
     SplashScreen,
+    Calendar,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,19 +1,19 @@
 //import { IUser } from '../home/user';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+//import { Observable } from 'rxjs/Observable';
+//import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 
 @Injectable()
 export class UserService {
-  private _userUrl = 'http://localhost:3000/users';
-  private _emailUrl = 'http://localhost:3000';
+  //private _userUrl = 'http://localhost:3000/users';
+  //private _emailUrl = 'http://localhost:3000';
   // Heroku
   //private _userUrl = 'https://breakpoint-app.herokuapp.com/';
 
-  constructor(private _http: HttpClient) { }
+  //constructor(private _http: HttpClient) { }
 
   // getUsers(): Observable<IUser[]> {
   //   return this._http.get<IUser[]>(this._userUrl)
@@ -22,8 +22,8 @@ export class UserService {
   // }
 
 
-  private handleError(err: HttpErrorResponse) {
-    console.log(err.message);
-    return Observable.throw(err.message);
-  }
+  //private handleError(err: HttpErrorResponse) {
+  //  console.log(err.message);
+  //  return Observable.throw(err.message);
+  //}
 }

@@ -4,7 +4,6 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { WelcomePage } from '../pages/welcome/welcome';
 import { TimetablePage } from '../pages/timetable/timetable';
 import { ChatPage } from '../pages/chat/chat';
 import { DiaryPage } from '../pages/diary/diary';
