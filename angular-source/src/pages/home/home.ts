@@ -32,11 +32,4 @@ diaryPage: any;
     // },
     //   error => this.errorMessage = <any>error);
   }
-
-  logout() {
-    //Api Token Logout
-    const root = this.app.getRootNav();
-    root.popToRoot();
-  }
-
 }

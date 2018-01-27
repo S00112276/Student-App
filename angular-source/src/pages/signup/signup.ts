@@ -1,9 +1,8 @@
-import {HomePage }from '../home/home'; 
-import {Component }from '@angular/core'; 
-import {IonicPage, NavController, NavParams }from 'ionic-angular'; 
-import {AlertController }from 'ionic-angular'; 
-import {AuthService }from '../shared/auth.service'
-import {ValidateService }from '../shared/validate.service'; 
+import { Component }from '@angular/core'; 
+import { IonicPage }from 'ionic-angular'; 
+import { AlertController }from 'ionic-angular'; 
+import { AuthService }from '../shared/auth.service'
+import { ValidateService }from '../shared/validate.service'; 
 
 @IonicPage()
 @Component( {
@@ -21,11 +20,9 @@ export class SignupPage {
 
    // Declare Services
   constructor(
-    public navCtrl:NavController, 
-    public navParams:NavParams, 
     public alertCtrl:AlertController, 
     private validateService:ValidateService, 
-    private authService:AuthService
+    private _authService:AuthService
   ) {}
 
   ionViewDidLoad() {}
@@ -43,9 +40,7 @@ export class SignupPage {
     }
 
     // Required Fields
-      // For Development:  
-      this.navCtrl.push(HomePage); //(When Not In Dev Comment Out) 
-    if ( ! this.validateService.validateRegister(user)) {
+    if (!this.validateService.validateRegister(user)) {
       let alert = this.alertCtrl.create( {
         title:'Failed to Register', 
         subTitle:'Please fill out all the fields', 
@@ -80,7 +75,7 @@ export class SignupPage {
     // Register User
     // Student
     if (user.studentId.startsWith("S") || user.studentId.startsWith("s")) {
-      this.authService.registerStudent(user).subscribe(data =>  {
+      this._authService.registerStudent(user).subscribe(data =>  {
         if (data.success) {
             let alert = this.alertCtrl.create( {
               title:'Registered Successfully', 
@@ -88,7 +83,7 @@ export class SignupPage {
               buttons:['OK']
             }); 
             alert.present(); 
-            this.authService.sendValEmail(user).subscribe(mailData =>  {
+            this._authService.sendValEmail(user).subscribe(mailData =>  {
             if (mailData.success) {
               console.log("email should be sent")
             }
@@ -96,7 +91,7 @@ export class SignupPage {
               console.log("email not sent: "); 
             }
           }); 
-          //this.navCtrl.push(HomePage);
+          this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
         }else {
           let alert = this.alertCtrl.create( {
             title:'Registration Unsuccessful', 
@@ -109,7 +104,8 @@ export class SignupPage {
     }
     // Lecturer
     else if (user.studentId.startsWith("L") || user.studentId.startsWith("l")) {
-      this.authService.registerLecturer(user).subscribe(data =>  {
+      this._authService.registerLecturer(user).subscribe(data =>  {
+        // Registered Successfully
         if (data.success) {
             let alert = this.alertCtrl.create( {
               title:'Registered Successfully', 
@@ -117,8 +113,10 @@ export class SignupPage {
               buttons:['OK']
             }); 
             alert.present(); 
-          this.navCtrl.push(HomePage); 
-        }else {
+            this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
+        }
+        // Unsuccessful
+        else {
           let alert = this.alertCtrl.create( {
             title:'Registration Unsuccessful', 
             subTitle:'Please Try Again', 
@@ -138,22 +136,5 @@ export class SignupPage {
         alert.present(); 
         return false; 
       }
-    // this.authService.registerUser(user).subscribe(data => {
-    //   if (data.success) {
-    //     console.log("User Registered");
-    //       let alert = this.alertCtrl.create({
-    //         title: 'Registered Successfully',
-    //         subTitle: 'Please check your college email to verify your Student ID',
-    //         buttons: ['OK']
-    //       });
-    //     this.navCtrl.push(HomePage);
-    //   } else {
-    //     let alert = this.alertCtrl.create({
-    //       title: 'Registration Unsuccessful',
-    //       subTitle: 'Please Try Again',
-    //       buttons: ['OK']
-    //     });
-    //   }
-    // });
   }
 }

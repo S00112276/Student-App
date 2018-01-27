@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { SignupPage } from '../signup/signup';
+//import { HomePage } from '../home/home';
 
 /**
  * Generated class for the WelcomePage page.
@@ -25,10 +26,14 @@ export class WelcomePage {
   }
 
   login() {
+    // For Development:
+    //this.navCtrl.push(HomePage); //(When Not In Dev Comment Out) 
     this.navCtrl.push(LoginPage);
   }
 
   signup() {
+    // For Development:
+    //this.navCtrl.push(HomePage); //(When Not In Dev Comment Out) 
     this.navCtrl.push(SignupPage);
   }
 

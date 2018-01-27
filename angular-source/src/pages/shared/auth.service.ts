@@ -2,15 +2,20 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { tokenNotExpired } from 'angular2-jwt';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 @Injectable()
 export class AuthService {
     authToken: any;
     user: any;
     isDev: boolean;
+    // Observable to send messages to when the user is no long auth'd
+    // BehaviorSubject is like a ReplaySubject with a stack depth of 1
+    isAuthed: BehaviorSubject<boolean> //= new BehaviorSubject(false);
 
     constructor(private http: Http) {
         this.isDev = false;
+        this.isAuthed = new BehaviorSubject(false);
     }
 
     // Send Validation Email
@@ -106,8 +111,9 @@ export class AuthService {
         }
     }
 
-    // Logged in
+    // Logged in --> Used to conditonally hide/show elements
     loggedIn() {
+        this.isAuthed.next(!this.isAuthed.value);
         return tokenNotExpired();
     }
 
