@@ -24,9 +24,7 @@ export class AddEventPage {
     private calendar: Calendar) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AddEventPage');
-  }
+  ionViewDidLoad() { }
 
   save() {
     this.calendar.createEvent(this.event.title, this.event.location, this.event.message, new Date(this.event.startDate), new Date(this.event.endDate)).then(

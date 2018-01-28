@@ -40,12 +40,10 @@ export class MyApp {
   }
 
   ngAfterContentInit() {
-    console.log("APP Started");
     // Listen to authNotifier
     this._authService.isAuthed
     //.filter(res => res !== null)
       .subscribe(status => {
-        console.log("APP AuthNotifier said: ",status);
         if(!status){ // when not auth'd
         this.rootPage = WelcomePage;
         }
