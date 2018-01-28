@@ -1,121 +1,15 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title center>Chat</ion-title>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
-  crossorigin="anonymous">
-
-<style>
-  #messages {
-    height: 300px;
-  }
-</style>
-
-<ion-content>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-md-3 col-sm-12">
-        <div id="status"></div>
-        <div class="chat">
-          <input type="text" id="username" class="form-control" placeholder="Enter name..">
-          <br>
-          <div class="card">
-            <div id="messages" class="card-block"></div>
-          </div>
-          <br>
-          <textarea id="textarea" class="form-control" placeholder="Enter message.."></textarea>
-          <button class="btn btn-primary btn-lg btn-block" id="submit" type="submit">Send</button>
-        <button id="clear" class="btn btn-danger">Clear</button>          
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-  <script>
-
-    (function () {
-      var element = function (id) {
-        return document.getElementById(id);
-      }
-      // Get Elements
-      var status = element('status');
-      var messages = element('messages');
-      var submit = element('submit');
-      var username = element('username');
-      var clearBtn = element('clear');
-
-      var statusDefault = status.textContent;
-
-      var setStatus = function (s) {
-        // Set Status
-        status.textContent = s;
-
-        if (s !== statusDefault) {
-          var delay = setTimeout(function () {
-            setStatus(statusDefault);
-          }, 4000);
-
-        }
-      }
-
-      // Connect to Socket.io
-      var socket = io.connect('http://127.0.0.1:4000');
-
-      // Check for connection
-      if (socket !== undefined) {
-        console.log('Connected to Socket...');
-
-        // Handle output
-        socket.on('output', function (data) {
-
-          if (data.length) {
-            for (var x = 0; x < data.length; x++) {
-              var message = document.createElement('div');
-              message.setAttribute('class', 'chat-message');
-              message.textContent = data[x].name + ": " + data[x].message;
-              messages.appendChild(message);
-              messages.insertBefore(message, messages.lastChild);
-            }
-          }
-        });
-        socket.on('status', function (data) {
-          // get message status
-          setStatus((typeof data === 'object') ? data.message : data);
-
-          if (data.clear) {
-            textarea.value = "";
-          }
-        });
-
-        // Handle Input
-        submit.addEventListener('click', function (event) {
-          // Emit to server input   
-
-          socket.emit('input', { name: username.value, message: textarea.value });
-
-          event.preventDefault();
-
-
-        })
-
-        // Handle clear chat
-        clearBtn.addEventListener('click', function () {
-          socket.emit('clear');
-        });
-
-        // Clear Message
-        socket.on('cleared', function () {
-          messages.textContent = '';
-        })
-
-      }
-      else {
-        alert("Not connected");
-      }
-
-    })();
-  </script>
+<ion-content padding>
+  <ion-item>
+    <ion-label stacked>Set Username</ion-label>
+    <ion-input type="text" [(ngModel)]="username" aria-placeholder="Username"></ion-input>
+  </ion-item>
+  <button ion-button full (click)="joinChat()" [disabled]="username === ''">Join Chat as {{ username }}</button>
 </ion-content>

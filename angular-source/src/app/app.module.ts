@@ -12,8 +12,6 @@ import { ValidateService } from '../pages/shared/validate.service';
 
 // Components
 import { WelcomePage } from '../pages/welcome/welcome';
-import { LoginPage } from '../pages/login/login';
-import { SignupPage } from '../pages/signup/signup';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -24,14 +22,15 @@ import { AddEventPage } from '../pages/add-event/add-event';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Calendar } from '@ionic-native/calendar'
+import { Calendar } from '@ionic-native/calendar';
+
+import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
 
 @NgModule({
   declarations: [
     MyApp,
     WelcomePage,
-    LoginPage,
-    SignupPage,
     AboutPage,
     ContactPage,
     HomePage,
@@ -42,6 +41,7 @@ import { Calendar } from '@ionic-native/calendar'
   ],
   imports: [
     BrowserModule,
+    SocketIoModule.forRoot(config),
     IonicModule.forRoot(MyApp),
     HttpModule,
     HttpClientModule
@@ -50,8 +50,6 @@ import { Calendar } from '@ionic-native/calendar'
   entryComponents: [
     MyApp,
     WelcomePage,
-    LoginPage,
-    SignupPage,
     AboutPage,
     ContactPage,
     HomePage,

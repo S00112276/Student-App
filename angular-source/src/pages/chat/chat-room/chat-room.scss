@@ -1,0 +1,32 @@
+page-chat-room {
+    .user_name {
+        color: color($colors, dark)
+    }
+    .message {
+        text-align: left;
+        padding: 10px !important;
+        transition: all 250ms ease-in-out !important;
+        border-radius: 10px !important;
+        margin-bottom: 4px !important;
+    }
+    .my_message {
+        background: color($colors, energy) !important;
+        color: #000 !important;
+    }
+    .other_message {
+        background: color($colors, lightprimary) !important;
+        color: #000 !important;
+    }
+    .time {
+        color: color($colors, dark);
+        float: right;
+        font-size: small;
+    }
+    .message_row {
+        background-color: #fff;
+    }
+}
+
+.toast {
+    text-align: right;
+}
