@@ -5,9 +5,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TimetablePage } from '../pages/timetable/timetable';
-import { ChatPage } from '../pages/chat/chat';
 import { DiaryPage } from '../pages/diary/diary';
 import { HomePage } from '../pages/home/home';
+import { ChatRoomPage } from '../pages/chat-room/chat-room';
 import { AuthService } from '../pages/shared/auth.service';
 import { WelcomePage } from '../pages/welcome/welcome';
 
@@ -62,8 +62,8 @@ export class MyApp {
     if (page === 'TimetablePage') {
       this.nav.push(TimetablePage);
     }
-    else if (page === 'ChatPage') {
-      this.nav.push(ChatPage);
+    else if (page === 'ChatRoomPage') {
+      this.nav.push(ChatRoomPage);
     }
     else if (page === 'DiaryPage') {
       this.nav.push(DiaryPage);

@@ -16,7 +16,6 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TimetablePage } from '../pages/timetable/timetable';
-import { ChatPage } from '../pages/chat/chat';
 import { DiaryPage } from '../pages/diary/diary';
 import { AddEventPage } from '../pages/add-event/add-event';
 
@@ -35,7 +34,6 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     ContactPage,
     HomePage,
     TimetablePage,
-    ChatPage,
     DiaryPage,
     AddEventPage
   ],
@@ -54,7 +52,6 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     ContactPage,
     HomePage,
     TimetablePage,
-    ChatPage,
     DiaryPage,
     AddEventPage
   ],

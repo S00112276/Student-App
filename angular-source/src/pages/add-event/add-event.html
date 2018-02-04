@@ -1,37 +1,37 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Add Event</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-<ion-content padding>
-  <form (ngSubmit)="save()">
-    <ion-list>
-      <ion-item>
-        <ion-label floating>Title</ion-label>
-        <ion-input type="text" [(ngModel)]="event.title" name="event.title"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Location</ion-label>
-        <ion-input type="text" [(ngModel)]="event.location" name="event.location"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Notes</ion-label>
-        <ion-input type="text" [(ngModel)]="event.message" name="event.message"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>Start Date</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="event.startDate" name="event.startDate"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <ion-label floating>End Date</ion-label>
-        <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="event.endDate" name="event.endDate"></ion-datetime>
-      </ion-item>
-      <ion-item>
-        <button ion-button type="submit" full round>Save</button>
-      </ion-item>
-    </ion-list>
-  </form>
-</ion-content>
+    <ion-navbar>
+      <ion-title>Add Event</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  <ion-content padding>
+    <form (ngSubmit)="save()">
+      <ion-list>
+        <ion-item>
+          <ion-label floating>Subject</ion-label>
+          <ion-input type="text" [(ngModel)]="event.subject" name="event.title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Location</ion-label>
+          <ion-input type="text" [(ngModel)]="event.location" name="event.location"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Details</ion-label>
+          <ion-input type="text" [(ngModel)]="event.details" name="event.message"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Date</ion-label>
+          <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="event.date" name="event.startDate"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Time</ion-label>
+          <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="event.endDate" name="event.time"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <button ion-button type="submit" full round>Save</button>
+        </ion-item>
+      </ion-list>
+    </form>
+  </ion-content>

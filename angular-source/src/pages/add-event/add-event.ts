@@ -16,7 +16,7 @@ import { Calendar } from '@ionic-native/calendar';
 })
 export class AddEventPage {
 
-  event = { title: "", location: "", message: "", startDate: "", endDate: "" };
+  event = { subject: "", location: "", details: "", date: "", time: "" };
 
   constructor(public alertCtrl: AlertController,
     public navCtrl: NavController,
@@ -27,7 +27,7 @@ export class AddEventPage {
   ionViewDidLoad() { }
 
   save() {
-    this.calendar.createEvent(this.event.title, this.event.location, this.event.message, new Date(this.event.startDate), new Date(this.event.endDate)).then(
+    this.calendar.createEvent(this.event.subject, this.event.location, this.event.details, new Date(this.event.date), new Date(this.event.time)).then(
       (msg) => {
         let alert = this.alertCtrl.create({
           title: 'Success!',

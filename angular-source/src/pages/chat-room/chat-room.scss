@@ -11,11 +11,11 @@ page-chat-room {
     }
     .my_message {
         background: color($colors, energy) !important;
-        color: #000 !important;
+        color: #fff !important;
     }
     .other_message {
-        background: color($colors, lightprimary) !important;
-        color: #000 !important;
+        background: color($colors, secondary) !important;
+        color: #fff !important;
     }
     .time {
         color: color($colors, dark);

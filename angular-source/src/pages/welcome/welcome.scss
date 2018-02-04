@@ -76,8 +76,9 @@ page-welcome {
       max-width: 40rem;
       height: 50px;
       font-size: 1.2em;
+      background-color:  map-get($colors, primary);
       span {
-        color: $base-color !important;
+        color:  map-get($colors, light);
       }
       // border: 1px solid #fff;
     }

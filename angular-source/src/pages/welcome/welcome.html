@@ -1,6 +1,9 @@
-<ion-content class="transparent-header" [ngStyle]="{'background-image': 'url(https://i.pinimg.com/originals/eb/94/7c/eb947c39cd70146565d256ab756e62ce.jpg)'}">
-<!-- Initial Welcome Page -->
+<ion-content class="transparent-header" [ngStyle]="{'background-color': '#2072f7'}">
+
+  <!-- Initial Welcome Page -->
   <ion-slides #slider class="content-slider" direction="vertical">
+
+    <!-- Logo -->
     <ion-slide class="swiper-no-swiping">
       <div padding>
         <img class="logo" src="assets/imgs/ss.png" />
@@ -14,6 +17,7 @@
         </ion-row>
       </div>
     </ion-slide>
+
     <!-- Login Page -->
     <ion-slide class="zoom swiper-no-swiping">
       <ion-slides #innerSlider class="content-slider">
@@ -35,6 +39,7 @@
             <ion-icon name="arrow-down"></ion-icon>
           </button>
         </ion-slide>
+
         <!-- Forgot Password -->
         <ion-slide class="swiper-no-swiping">
           <div style="padding: 20% 32px 32px 32px">
@@ -49,6 +54,7 @@
         </ion-slide>
       </ion-slides>
     </ion-slide>
+
     <!-- Sign Up Page -->
     <ion-slide class="zoom swiper-no-swiping">
       <button ion-button clear (click)="goToLogin()" class="slide-button">
@@ -83,5 +89,6 @@
           <button ion-button block round (click)="SignUp()" color="light" class="login-button">SIGN UP</button>
       </div>
     </ion-slide>
+
   </ion-slides>
 </ion-content>

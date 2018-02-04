@@ -31,6 +31,7 @@ export class ChatRoomPage {
     });
   }
 
+  /* Track connected users */
   getUsers() {
     let observable = new Observable(observer => {
       this.socket.on('users-changed', data => {
@@ -40,15 +41,22 @@ export class ChatRoomPage {
     return observable;
   }
 
+  ionViewWillEnter() {
+    this.socket.emit('retrieve-history');
+  }
+
+  /* Disconnect from server */  
   ionViewWillLeave() {
     this.socket.disconnect();
   }
 
+  /* Send message */  
   sendMessage() {
     this.socket.emit('add-message', { text: this.message});
     this.message = '';
   }
 
+  /* Receive message */
   getMessage() {
     let observable = new Observable(observer => {
       this.socket.on('message', data => {
@@ -58,6 +66,7 @@ export class ChatRoomPage {
     return observable;
   }
 
+  /* Notifications */
   showtoast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
@@ -67,5 +76,4 @@ export class ChatRoomPage {
     });
     toast.present();
   }
-
 }
