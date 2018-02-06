@@ -18,10 +18,6 @@ export class ChatRoomPage {
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private socket: Socket) {
     this.username = this.navParams.get('username');
 
-    var testmessages = [];
-    
-    this.messages = this.getHistory(testmessages);
-
     this.getMessage().subscribe(message => {
       this.messages.push(message);
     });
@@ -47,13 +43,11 @@ export class ChatRoomPage {
   }
 
   // Retrieve message history
-  getHistory() 
-  {
-      this.messages =  this.socket.emit('retrieve-history', function (data) { this.messages = data;  } ).data; //Have to pass data from socket scope to app scope
-      console.log(this.messages); 
-    };
-
-
+  ionViewDidLoad() {
+    this.socket.emit('retrieve-history', function (data) { 
+      console.log(data); 
+    }); //Have to pass data from socket scope to app scope
+  };
 
   // Disconnect from server
   ionViewWillLeave() {
