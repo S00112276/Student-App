@@ -11,11 +11,16 @@ import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 })
 export class ChatRoomPage {
   messages = [];
+  users = [];
   username = '';
   message = '';
 
   constructor(public navCtrl: NavController, private toastCtrl: ToastController, public navParams: NavParams, private socket: Socket) {
     this.username = this.navParams.get('username');
+
+    var testmessages = [];
+    
+    this.messages = this.getHistory(testmessages);
 
     this.getMessage().subscribe(message => {
       this.messages.push(message);
@@ -31,7 +36,7 @@ export class ChatRoomPage {
     });
   }
 
-  /* Track connected users */
+  // Track connected users
   getUsers() {
     let observable = new Observable(observer => {
       this.socket.on('users-changed', data => {
@@ -41,22 +46,27 @@ export class ChatRoomPage {
     return observable;
   }
 
-  ionViewWillEnter() {
-    this.socket.emit('retrieve-history');
-  }
+  // Retrieve message history
+  getHistory() 
+  {
+      this.messages =  this.socket.emit('retrieve-history', function (data) { this.messages = data;  } ).data; //Have to pass data from socket scope to app scope
+      console.log(this.messages); 
+    };
 
-  /* Disconnect from server */  
+
+
+  // Disconnect from server
   ionViewWillLeave() {
     this.socket.disconnect();
   }
 
-  /* Send message */  
+  // Send message
   sendMessage() {
-    this.socket.emit('add-message', { text: this.message});
+    this.socket.emit('add-message', { text: this.message });
     this.message = '';
   }
 
-  /* Receive message */
+  // Receive message
   getMessage() {
     let observable = new Observable(observer => {
       this.socket.on('message', data => {
@@ -66,7 +76,7 @@ export class ChatRoomPage {
     return observable;
   }
 
-  /* Notifications */
+  // Notifications
   showtoast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,
