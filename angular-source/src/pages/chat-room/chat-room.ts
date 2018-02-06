@@ -44,8 +44,8 @@ export class ChatRoomPage {
 
   // Retrieve message history
   ionViewDidLoad() {
-    this.socket.emit('retrieve-history', function (data) { 
-      console.log(data); 
+    this.socket.emit('retrieve-history', function (history) { 
+      console.log(history); 
     }); //Have to pass data from socket scope to app scope
   };
 
