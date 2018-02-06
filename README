@@ -2,10 +2,17 @@ How to run APP:
 cd into Student-App/angular-source
 ionic serve
 
+To run the api server:
+cd into Student-App
+nodemon index
+
 To access the database in the shell:
 /ProgramFiles/MongoDB/server/3.4/bin/
 mongo "mongodb://breakpoint-shard-00-00-ti5q0.mongodb.net:27017,breakpoint-shard-00-01-ti5q0.mongodb.net:27017,breakpoint-shard-00-02-ti5q0.mongodb.net:27017/test?replicaSet=Breakpoint-shard-0" --authenticationDatabase admin --ssl --username Breakpoint --password breakpoint 
 
-To run the api server:
-cd into Student-App
-nodemon index
+When Registering:
+- Save Passwords as: qwerty1234
+
+Example Login:
+email:      L00282828@mail.itsligo.ie
+password:   qwerty1234

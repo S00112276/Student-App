@@ -30,13 +30,6 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
-    
- /*    if(_authService.loggedIn() == true) {
-      this.rootPage = HomePage;
-    }
-    else {
-      this.rootPage = WelcomePage;
-    } */
   }
 
   ngAfterContentInit() {

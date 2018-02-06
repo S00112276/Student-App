@@ -14,6 +14,9 @@ const config = require('./config/database');
 // Routes
 const userRoutes = require('./api/routes/userRoutes');
 const emailRoutes = require('./api/routes/emailRoutes');
+const diaryRoutes = require('./api/routes/diaryRoutes');
+const courseRoutes = require('./api/routes/courseRoutes');
+
 // Model
 //const userModel = require('./api/models/userModel');
 
@@ -48,6 +51,8 @@ require('./config/passport')(passport);
 
 app.use('/users', userRoutes);
 app.use('/email', emailRoutes);
+app.use('/diary', diaryRoutes);
+app.use('/course', courseRoutes);
 
 //userRoutes(app);
 
