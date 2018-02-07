@@ -4,9 +4,6 @@ const config = require('../../config/database');
 
 // Lecturer Schema
 const LecturerSchema = mongoose.Schema({
-    // _id: {
-    //     Schema.ObjectId
-    // },
     firstName: {
         type: String
     },

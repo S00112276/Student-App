@@ -1,19 +1,3 @@
-//'use strict';
-// Doesn't Work 
-//module.exports = function (app) {
-//    var users = require('../controllers/userController');
-//
-//    app.route('/register')
-//        .post(users.registerUser);
-//
-//    app.route('/authenticate')
-//        .post(users.AuthenticateUser);
-//
-//    app.route('/profile')
-//        .get(users.GetProfile);
-//}
-
-// Works
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
@@ -106,10 +90,21 @@ router.post('/authenticatelecturer', (req, res, next) => {
         });
     });
 });
+// End Auth Lecturer
 
 // Profile
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     res.send({ user: req.user });
 });
+
+// Retrieve All Lecturers
+router.get('/lecturers', (req, res) => {
+    Lecturer.findById({}, function(err, lecturer) {
+        if(err)
+            res.send(err);
+
+        res.json(lecturer);
+    })
+})
 
 module.exports = router;

@@ -13,11 +13,18 @@ export class DiaryService {
 
   constructor(private _http: HttpClient) { }
 
+  // Get Diary Entries
   getEntries(): Observable<IEntry[]> {
     return this._http.get<IEntry[]>(this._entriesUrl)
       .catch(this.handleError);
   }
 
+  // Get Lecturers
+  getLecturers() {
+    
+  }
+
+  // Handle Error
   private handleError(err: HttpErrorResponse) {
     console.log(err.message);
     return Observable.throw(err.message);
