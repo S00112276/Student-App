@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { IEvent } from './event';
 
 @IonicPage()
 @Component({
@@ -13,7 +12,7 @@ export class TimetablePage {
 
   ionViewDidLoad() { }
 
-  events: IEvent[] = [
+  events = [
     {
       _id: 1,
       subject: 'Rich Application Development',

@@ -2,7 +2,6 @@ import { Socket } from 'ng-socket-io';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
-import { PACKAGE_ROOT_URL } from '@angular/core/src/application_tokens';
 
 @IonicPage()
 @Component({
@@ -21,6 +20,8 @@ export class ChatRoomPage {
     this.getMessage().subscribe(message => {
       this.messages.push(message);
     });
+
+    this.getHistory(this.messages);
 
     this.getUsers().subscribe(data => {
       let user = data['user'];
@@ -42,12 +43,23 @@ export class ChatRoomPage {
     return observable;
   }
 
-  // Retrieve message history
-  ionViewDidLoad() {
-    this.socket.emit('retrieve-history', function (history) { 
-      console.log(history); 
-    }); //Have to pass data from socket scope to app scope
-  };
+  getHistory(messages) {
+    this.socket.emit('retrieve-history', function (history) {
+      for (var i = 0; i < history.length; i++) {
+        messages[i] = history[i];
+      }
+    });
+  }
+
+  /*  ionViewDidLoad() {
+     let username = 'Ted';
+     this.socket.emit('retrieve-history', function (history) {
+       console.log(username);
+       username = 'Frank';
+       console.log(username);
+     });
+     console.log(username);
+   } */
 
   // Disconnect from server
   ionViewWillLeave() {

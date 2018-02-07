@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { AddEventPage } from '../add-event/add-event';
 import { DiaryService } from '../shared/diary.service';
 
