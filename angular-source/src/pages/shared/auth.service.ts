@@ -32,6 +32,7 @@ export class AuthService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let ep = this.prepEndpoint('users/registerstudent');
+        this.user = user;        
         return this.http.post(ep, user, { headers: headers })
             .map(res => res.json());
     }
@@ -41,6 +42,7 @@ export class AuthService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
         let ep = this.prepEndpoint('users/registerlecturer');
+        this.user = user;
         return this.http.post(ep, user, { headers: headers })
             .map(res => res.json());
     }

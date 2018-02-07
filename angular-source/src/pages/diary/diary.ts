@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { AddEventPage } from '../add-event/add-event';
 
 @IonicPage()
@@ -9,8 +9,7 @@ import { AddEventPage } from '../add-event/add-event';
 })
 export class DiaryPage {
 
-  constructor(private alertCtrl: AlertController,
-    public navCtrl: NavController) {}
+  constructor( public navCtrl: NavController) {}
 
   events: any[] = [
     {
