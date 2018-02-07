@@ -6,9 +6,9 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 
 // Services
-import { UserService } from '../pages/shared/user.service';
 import { AuthService } from '../pages/shared/auth.service';
 import { ValidateService } from '../pages/shared/validate.service';
+import { DiaryService } from '../pages/shared/diary.service';
 
 // Components
 import { WelcomePage } from '../pages/welcome/welcome';
@@ -56,9 +56,9 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     AddEventPage
   ],
   providers: [
-    UserService,
     AuthService,
     ValidateService,
+    DiaryService,
     StatusBar,
     SplashScreen,
     Calendar,

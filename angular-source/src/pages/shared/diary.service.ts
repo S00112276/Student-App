@@ -1,27 +1,25 @@
+import { IEntry } from '../diary/diary-entry';
 import { Injectable } from '@angular/core';
-import { Http, Headers } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/do';
 
 @Injectable()
 export class DiaryService {
-    isDev: boolean;
+  //private _productUrl = '/products';
+  private _entriesUrl = 'http://localhost:3000/diary/diaryentries'; 
 
-    constructor(private http: Http) {
-        this.isDev = false;
-    }
+  constructor(private _http: HttpClient) { }
 
-    // Get Diary Entries
-    getEntries() {
-        let ep = this.prepEndpoint('diary/diaryentries');
-        return this.http.get(ep)
-            .map(res => res.json());
-    }
+  getEntries(): Observable<IEntry[]> {
+    return this._http.get<IEntry[]>(this._entriesUrl)
+      .catch(this.handleError);
+  }
 
-    // Prepare Endpoint (Always the same)
-    prepEndpoint(ep) {
-        if(this.isDev) {
-            return ep;
-        } else {
-            return 'http://localhost:3000/' + ep;
-        }
-    }
+  private handleError(err: HttpErrorResponse) {
+    console.log(err.message);
+    return Observable.throw(err.message);
+  }
 }

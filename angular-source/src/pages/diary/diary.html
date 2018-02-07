@@ -11,16 +11,16 @@
 
 <ion-content class="list-avatar-page">
 
-    <ion-list *ngFor="let event of events">
+    <ion-list *ngFor="let entry of entries">
 
         <button ion-item>
             <div class="inline">
-                <ion-note>{{event.date}}</ion-note>
-                <h2>{{event.time}}</h2>
+                <ion-note></ion-note>
+                <h2></h2>
             </div>
             <div class="inline">
-                <h2 class="subject">{{event.subject}}</h2>
-                <p class="desc">{{event.title}}</p>
+                <h2 class="subject">{{entry.title}}</h2>
+                <p class="desc">{{entry.room}}</p>
             </div>
         </button>
 
