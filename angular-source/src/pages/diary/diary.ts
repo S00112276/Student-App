@@ -11,18 +11,38 @@ import { IEntry } from '../diary/diary-entry';
 })
 export class DiaryPage {
   entries: IEntry[] = [];
+  lecturers: any[] = [];
   errorMessage: string;
+  lecturerName: any[] = [];
 
   constructor(private alertCtrl: AlertController,
     public navCtrl: NavController,
     private _diaryService: DiaryService) {
-      this.getEntries(this.entries);
+      this.getLecturers(this.lecturers);      
+      this.getEntries(this.entries, this.lecturers, this.lecturerName);
   }
 
-  getEntries(entries) {
+  getLecturers(lecturers) {
+    this._diaryService.getLecturers().subscribe(data => {
+      for (var i = 0; i < data.length; i++) {
+        lecturers[i] = data[i];
+      }
+    },
+    error => this.errorMessage = <any>error);
+    console.log(lecturers);
+  }
+
+  getEntries(entries, lecturers, lecturerName) {
     this._diaryService.getEntries().subscribe(data => {
       for (var i = 0; i < data.length; i++) {
         entries[i] = data[i];
+        for(var j = 0; j < entries.length; j++) {
+          for(var k = 0; k < lecturers.length; k++ ) {
+            if(entries[j].lecturer == lecturers[k]._id) {
+                lecturerName.push((lecturers[k].firstName + " " + lecturers[k].lastName));
+            }
+          }
+        }
       }      
     },
       error => this.errorMessage = <any>error);

@@ -10,18 +10,19 @@ import 'rxjs/add/operator/do';
 export class DiaryService {
   //private _productUrl = '/products';
   private _entriesUrl = 'http://localhost:3000/diary/diaryentries'; 
+  private _lecturersUrl = 'http://localhost:3000/users/lecturers';
 
   constructor(private _http: HttpClient) { }
+  // Get Lecturers  
+  getLecturers(): Observable<any[]> {
+    return this._http.get<any[]>(this._lecturersUrl)
+    .catch(this.handleError);
+  }
 
   // Get Diary Entries
   getEntries(): Observable<IEntry[]> {
     return this._http.get<IEntry[]>(this._entriesUrl)
       .catch(this.handleError);
-  }
-
-  // Get Lecturers
-  getLecturers() {
-    
   }
 
   // Handle Error
