@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { AddEventPage } from '../add-event/add-event';
+import { DiaryService } from '../shared/diary.service';
 
 @IonicPage()
 @Component({
@@ -9,29 +10,23 @@ import { AddEventPage } from '../add-event/add-event';
 })
 export class DiaryPage {
 
-  constructor(private alertCtrl: AlertController,
-    public navCtrl: NavController) {}
+  constructor(
+    private alertCtrl: AlertController,
+    public navCtrl: NavController,
+    private _diarySevice: DiaryService
+  ) {}
+// Declare Variables
+  events: any[] = [];
+  title: String;
+  startDate: Date;
+  dueDate: Date;
+  lecturer: String;
+  groups: String;
+  room: String;
+  module: String;
 
-  events: any[] = [
-    {
-      subject: 'RAD 302',
-      title: 'Project Proposal',
-      date: '29.01.2018',
-      time: '12:00'
-    },
-    {
-      subject: 'PROJ 300',
-      title: 'Report Update',
-      date: '29.01.2018',
-      time: '14:00'
-    },
-    {
-      subject: 'DATA DEV',
-      title: 'Triggers Assignment',
-      date: '29.01.2018',
-      time: '16:00'
-    }
-  ];
+  // Display Events
+
 
   addEvent() {
     this.navCtrl.push(AddEventPage);

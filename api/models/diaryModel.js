@@ -2,35 +2,41 @@ const mongoose = require('mongoose');
 
 // Diary Schema
 const DiarySchema = mongoose.Schema({
-    
     title: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
+        Required: [true]
     },
     startDate: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        Required: [true]
     },
     dueDate: {
-        type: Date
+        type: Date,
+        Required: [true]
     },
     lecturer: {
         type: mongoose.Schema.Types.ObjectId, // Gets ID for referenced Document
-        ref: 'Lecturer' // References Document
+        ref: 'Lecturer', // References Document
+        Required: [true]
     },
     groups: [{
         type: mongoose.Schema.Types.ObjectId, // Gets ID for referenced Document
-        ref: 'StudentGroup' // References Document
+        ref: 'StudentGroup', // References Document
+        Required: [true]
     }],
     room: {
         type: String,
         required: true,
-        lowercase: true
+        lowercase: true,
+        Required: [true]
     },
     module: {
         type: mongoose.Schema.Types.ObjectId, // Gets ID for referenced Document
-        ref: 'Module' // References Document
+        ref: 'Module', // References Document
+        Required: [true]
     }
 });
 

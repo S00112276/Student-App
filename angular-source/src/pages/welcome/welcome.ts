@@ -44,6 +44,7 @@ export class WelcomePage  {
     this.innerSlider.slidePrev();
   }
 
+  // Reset Password
   presentLoading(message) {
     const loading = this.loadingCtrl.create({
       duration: 500
@@ -66,14 +67,14 @@ export class WelcomePage  {
   }
 
    // Decalre Variables
-   firstName:String; 
-   lastName:String; 
-   username:String; 
-   password:String; 
-   confirmPassword:String; 
-   studentID:String;
+   firstName: String; 
+   lastName: String; 
+   username: String; 
+   password: String; 
+   confirmPassword: String; 
+   studentID: String;
    email: String;
-   password1:String;
+   password1: String;
  
    // SignUp Button Clicked
    SignUp() {

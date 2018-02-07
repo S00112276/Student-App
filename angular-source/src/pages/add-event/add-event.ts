@@ -24,7 +24,15 @@ export class AddEventPage {
     private calendar: Calendar) {
   }
 
-  ionViewDidLoad() { }
+  // Declare Variables
+  events: any[] = [];
+  title: String;
+  startDate: Date;
+  dueDate: Date;
+  lecturer: String;
+  groups: String;
+  room: String;
+  module: String;
 
   save() {
     this.calendar.createEvent(this.event.subject, this.event.location, this.event.details, new Date(this.event.date), new Date(this.event.time)).then(

@@ -24,4 +24,35 @@ router.post('/addtodiary', (req, res, next) => {
     });
 });
 
+// Retrieve All Diary Entries
+router.get('/diaryentries', (req, res) => {
+    DiaryEntry.find({}, function (err, entry) {
+        if (err)
+            res.send(err);
+        
+        res.json(entry);
+    });
+});
+
+// Retrieve an Entry
+ router.get('/diaryentry', (req, res) => {
+    DiaryEntry.find({ _id: req.params.diaryId }, function(err, entry) {
+        if(err)
+            res.send(err);
+        
+        res.json(entry);
+    });
+}); 
+
+// Update an Entry
+router.put('/updateentry', (req, res) => {
+    DiaryEntry.findOneAndUpdate({_id: req.params.diaryId}, req.body,
+    { new: true }, function (err, entry) {
+        if(err)
+            res.send(err);
+        
+        res.json(entry);
+    })
+});
+
 module.exports = router;

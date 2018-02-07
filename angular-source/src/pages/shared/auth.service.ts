@@ -11,7 +11,7 @@ export class AuthService {
     isDev: boolean;
     // Observable to send messages to when the user is no long auth'd
     // BehaviorSubject is like a ReplaySubject with a stack depth of 1
-    isAuthed: BehaviorSubject<boolean> //= new BehaviorSubject(false);
+    isAuthed: BehaviorSubject<boolean>
 
     constructor(private http: Http) {
         this.isDev = false;
