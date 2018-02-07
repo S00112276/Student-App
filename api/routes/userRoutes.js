@@ -99,7 +99,7 @@ router.get('/profile', passport.authenticate('jwt', { session: false }), (req, r
 
 // Retrieve All Lecturers
 router.get('/lecturers', (req, res) => {
-    Lecturer.findById({}, function(err, lecturer) {
+    Lecturer.get({}, function(err, lecturer) {
         if(err)
             res.send(err);
 
