@@ -3,6 +3,16 @@ const router = express.Router();
 const Course = require('../models/courseModel');
 const Module = require('../models/moduleModel');
 
+// Retrieve All courses
+router.get('/courses', (req, res) => {
+    Course.find({}, function (err, entry) {
+        if (err)
+            res.send(err);
+        
+        res.json(entry);
+    });
+});
+
 // Add a Course
 router.post('/addcourse', (req, res, next) => {
     let newCourse = new Course({
@@ -17,6 +27,16 @@ router.post('/addcourse', (req, res, next) => {
 
         else
             res.json({ message: 'Entry Added to DB!' });
+    });
+});
+
+// Retrieve All Modules
+router.get('/modules', (req, res) => {
+    Module.find({}, function (err, entry) {
+        if (err)
+            res.send(err);
+        
+        res.json(entry);
     });
 });
 

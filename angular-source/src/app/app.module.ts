@@ -18,6 +18,7 @@ import { HomePage } from '../pages/home/home';
 import { TimetablePage } from '../pages/timetable/timetable';
 import { DiaryPage } from '../pages/diary/diary';
 import { AddEventPage } from '../pages/add-event/add-event';
+import { DiaryEntryPage } from '../pages/diary-entry/diary-entry';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -35,6 +36,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     HomePage,
     TimetablePage,
     DiaryPage,
+    DiaryEntryPage,
     AddEventPage
   ],
   imports: [
@@ -53,6 +55,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     HomePage,
     TimetablePage,
     DiaryPage,
+    DiaryEntryPage,
     AddEventPage
   ],
   providers: [

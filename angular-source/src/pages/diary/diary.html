@@ -13,16 +13,14 @@
 
     <ion-list *ngFor="let entry of entries">
 
-        <button ion-item>
-            <div class="inline">
-                <ion-note></ion-note>
-                <h2>{{lecturerName[0]}}</h2>
-            </div>
-            <div class="inline">
-                <h2 class="subject"></h2>
-                <p class="desc"></p>
-            </div>
-        </button>
+        <ion-item (click)="openModal({entry: entry})">
+            <ion-avatar item-start>
+                <img src="https://drslash.com/wp-content/uploads/2014/07/Notes.png">
+            </ion-avatar>
+            <h2>{{entry.dueDate | date: 'EEEE, MMMM d, h:mm a'}}</h2>
+            <h3>{{entry.module | uppercase}}</h3>
+            <p>{{entry.title}}</p>
+        </ion-item>
 
     </ion-list>
 

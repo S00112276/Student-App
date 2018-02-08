@@ -1,37 +1,39 @@
 <ion-header>
 
     <ion-navbar>
-      <ion-title>Add Event</ion-title>
+      <ion-title>Add entry</ion-title>
     </ion-navbar>
   
   </ion-header>
   
   <ion-content padding>
-    <form (ngSubmit)="save()">
       <ion-list>
         <ion-item>
-          <ion-label floating>Subject</ion-label>
-          <ion-input type="text" [(ngModel)]="event.subject" name="event.title"></ion-input>
+          <ion-label floating>Title</ion-label>
+          <ion-input type="text" [(ngModel)]="entry.title" name="entry.title"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>Location</ion-label>
-          <ion-input type="text" [(ngModel)]="event.location" name="event.location"></ion-input>
+          <ion-label floating>Notes</ion-label>
+          <ion-textarea type="text" [(ngModel)]="entry.notes" name="entry.notes"></ion-textarea>
         </ion-item>
         <ion-item>
-          <ion-label floating>Details</ion-label>
-          <ion-input type="text" [(ngModel)]="event.details" name="event.message"></ion-input>
+          <ion-label floating>Room</ion-label>
+          <ion-input type="text" [(ngModel)]="entry.room" name="entry.room"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>Date</ion-label>
-          <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="event.date" name="event.startDate"></ion-datetime>
+          <ion-label floating>Date Due</ion-label>
+          <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="entry.dueDate" name="entry.dueDate"></ion-datetime>
         </ion-item>
         <ion-item>
           <ion-label floating>Time</ion-label>
-          <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="event.endDate" name="event.time"></ion-datetime>
+          <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="entry.dueDate" name="entry.time"></ion-datetime>
         </ion-item>
+        <ion-item>
+            <ion-label floating>Percentage</ion-label>
+            <ion-input type="text" [(ngModel)]="entry.percentage" name="entry.percentage"></ion-input>
+          </ion-item>
         <ion-item>
           <button ion-button type="submit" full round>Save</button>
         </ion-item>
       </ion-list>
-    </form>
   </ion-content>

@@ -1,4 +1,3 @@
-import { IEntry } from '../diary/diary-entry';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -10,18 +9,17 @@ import 'rxjs/add/operator/do';
 export class DiaryService {
   //private _productUrl = '/products';
   private _entriesUrl = 'http://localhost:3000/diary/diaryentries'; 
-  private _lecturersUrl = 'http://localhost:3000/users/lecturers';
 
   constructor(private _http: HttpClient) { }
-  // Get Lecturers  
-  getLecturers(): Observable<any[]> {
-    return this._http.get<any[]>(this._lecturersUrl)
+  // Returns data on selected collection
+  populateArrays(_url): Observable<any[]> {
+    return this._http.get<any[]>(_url)
     .catch(this.handleError);
   }
 
   // Get Diary Entries
-  getEntries(): Observable<IEntry[]> {
-    return this._http.get<IEntry[]>(this._entriesUrl)
+  getEntries(): Observable<any[]> {
+    return this._http.get<any[]>(this._entriesUrl)
       .catch(this.handleError);
   }
 

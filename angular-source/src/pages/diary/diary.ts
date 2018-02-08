@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, ModalController, Platform, NavParams, ViewController } from 'ionic-angular';
 import { AddEventPage } from '../add-event/add-event';
 import { DiaryService } from '../shared/diary.service';
-import { IEntry } from '../diary/diary-entry';
+import { DiaryEntryPage } from '../diary-entry/diary-entry';
 
 @IonicPage()
 @Component({
@@ -10,42 +10,63 @@ import { IEntry } from '../diary/diary-entry';
   templateUrl: 'diary.html',
 })
 export class DiaryPage {
-  entries: IEntry[] = [];
+  errorMessage: string;  
+  entries: any[] = [];
+
   lecturers: any[] = [];
-  errorMessage: string;
-  lecturerName: any[] = [];
+  private _lecturersUrl = 'http://localhost:3000/users/lecturers';
+
+  modules: any[] = [];
+  private _modulesUrl = 'http://localhost:3000/course/modules';
+  
+  courses: any[] = [];
+  private _coursesUrl = 'http://localhost:3000/course/courses';
 
   constructor(private alertCtrl: AlertController,
     public navCtrl: NavController,
-    private _diaryService: DiaryService) {
-      this.getLecturers(this.lecturers);      
-      this.getEntries(this.entries, this.lecturers, this.lecturerName);
+    private _diaryService: DiaryService,
+    public modalCtrl: ModalController) {
+      this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
   }
 
-  getLecturers(lecturers) {
-    this._diaryService.getLecturers().subscribe(data => {
+  // Returns data on selected collection
+  populateArrays(array, _url) {
+    this._diaryService.populateArrays(_url).subscribe(data => {
       for (var i = 0; i < data.length; i++) {
-        lecturers[i] = data[i];
+        array[i] = data[i];
       }
     },
     error => this.errorMessage = <any>error);
-    console.log(lecturers);
   }
 
-  getEntries(entries, lecturers, lecturerName) {
+  // Returns Diary Entries
+  getEntries(entries, lecturers, modules, courses) {
+    this.populateArrays(lecturers, this._lecturersUrl);  
+    this.populateArrays(modules, this._modulesUrl);  
+    this.populateArrays(courses, this._coursesUrl);  
     this._diaryService.getEntries().subscribe(data => {
       for (var i = 0; i < data.length; i++) {
         entries[i] = data[i];
         for(var j = 0; j < entries.length; j++) {
           for(var k = 0; k < lecturers.length; k++ ) {
             if(entries[j].lecturer == lecturers[k]._id) {
-                lecturerName.push((lecturers[k].firstName + " " + lecturers[k].lastName));
+                entries[j].lecturer = (lecturers[k].firstName + " " + lecturers[k].lastName);
+            }
+          }
+          for(var l = 0; l < modules.length; l++ ) {
+            if(entries[j].module == modules[l]._id) {
+                entries[j].module = (modules[l].name);
             }
           }
         }
       }      
     },
       error => this.errorMessage = <any>error);
+  }
+
+  openModal(entry) {
+    let modal = this.modalCtrl.create(DiaryEntryPage, entry);
+    modal.present();
   }
 
   addEvent() {
