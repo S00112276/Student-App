@@ -1,9 +1,9 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>Schedule</ion-title>
+        <ion-title>Diary</ion-title>
         <ion-buttons end>
             <button ion-button icon-only (click)="addEvent()">
-                <ion-icon name="add-circle"></ion-icon>
+                <ion-icon name="md-add-circle"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -11,11 +11,14 @@
 
 <ion-content class="list-avatar-page">
 
-    <ion-list *ngFor="let entry of entries">
+    <ion-list>
 
-        <ion-item (click)="openModal({entry: entry})">
+        <ion-item (click)="openModal({entry: entry})" *ngFor="let entry of entries">
             <ion-avatar item-start>
-                <img src="https://drslash.com/wp-content/uploads/2014/07/Notes.png">
+                <img *ngIf="entry.title.toLowerCase() == 'assessment'" src="{{entryType[0]}}">
+                <img *ngIf="entry.title.toLowerCase() == 'presentation'" src="{{entryType[1]}}">
+                <img *ngIf="entry.title.toLowerCase() == 'assignment'" src="{{entryType[2]}}">
+                <img *ngIf="entry.title.toLowerCase() == 'event'" src="{{entryType[3]}}">
             </ion-avatar>
             <h2>{{entry.dueDate | date: 'EEEE, MMMM d, h:mm a'}}</h2>
             <h3>{{entry.module | uppercase}}</h3>

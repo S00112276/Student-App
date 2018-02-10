@@ -1,39 +1,50 @@
 <ion-header>
 
-    <ion-navbar>
-      <ion-title>Add entry</ion-title>
-    </ion-navbar>
-  
-  </ion-header>
-  
-  <ion-content padding>
-      <ion-list>
-        <ion-item>
-          <ion-label floating>Title</ion-label>
-          <ion-input type="text" [(ngModel)]="entry.title" name="entry.title"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Notes</ion-label>
-          <ion-textarea type="text" [(ngModel)]="entry.notes" name="entry.notes"></ion-textarea>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Room</ion-label>
-          <ion-input type="text" [(ngModel)]="entry.room" name="entry.room"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Date Due</ion-label>
-          <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="entry.dueDate" name="entry.dueDate"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label floating>Time</ion-label>
-          <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="entry.dueDate" name="entry.time"></ion-datetime>
-        </ion-item>
-        <ion-item>
-            <ion-label floating>Percentage</ion-label>
-            <ion-input type="text" [(ngModel)]="entry.percentage" name="entry.percentage"></ion-input>
-          </ion-item>
-        <ion-item>
-          <button ion-button type="submit" full round>Save</button>
-        </ion-item>
-      </ion-list>
-  </ion-content>
+  <ion-navbar>
+    <ion-title>Add entry</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Type</ion-label>
+      <ion-select [(ngModel)]="entry.title">
+        <ion-option value="assessment">Assessment</ion-option>
+        <ion-option value="presentation">Presentation</ion-option>
+        <ion-option value="assignment">Assignment</ion-option>
+        <ion-option value="event">Event</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Module</ion-label>
+        <ion-select [(ngModel)]="entry.module">
+          <ion-option value="module._id" *ngFor="let module of modules">{{module.name | uppercase}}</ion-option>
+        </ion-select>
+      </ion-item>
+    <ion-item>
+      <ion-label floating>Notes</ion-label>
+      <ion-textarea type="text" [(ngModel)]="entry.notes" name="entry.notes"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Room</ion-label>
+      <ion-input type="text" [(ngModel)]="entry.room" name="entry.room"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Date Due</ion-label>
+      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="entry.dueDate" name="entry.dueDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Time</ion-label>
+      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="entry.dueDate" name="entry.time"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Percentage</ion-label>
+      <ion-input type="text" [(ngModel)]="entry.percentage" name="entry.percentage"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button type="submit" full round>Save</button>
+    </ion-item>
+  </ion-list>
+</ion-content>

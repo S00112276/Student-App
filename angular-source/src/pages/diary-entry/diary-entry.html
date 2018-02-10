@@ -4,9 +4,8 @@
       Event
     </ion-title>
     <ion-buttons start>
-      <button ion-button (click)="dismiss()">
-        <span ion-text color="primary" showWhen="ios">Cancel</span>
-        <ion-icon name="md-close" showWhen="android, windows"></ion-icon>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="md-close-circle"></ion-icon>
       </button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,7 +14,10 @@
   <ion-list>
     <ion-item>
       <ion-avatar item-start>
-        <img src="https://drslash.com/wp-content/uploads/2014/07/Notes.png">
+          <img *ngIf="entry.title.toLowerCase() == 'assessment'" src="{{entryType[0]}}">
+          <img *ngIf="entry.title.toLowerCase() == 'presentation'" src="{{entryType[1]}}">
+          <img *ngIf="entry.title.toLowerCase() == 'assignment'" src="{{entryType[2]}}">
+          <img *ngIf="entry.title.toLowerCase() == 'event'" src="{{entryType[3]}}">
       </ion-avatar>
       <h2>{{entry.module | uppercase}}</h2>
       <p>{{entry.title}}</p>
@@ -52,15 +54,12 @@
     <ion-item>
       Percentage
       <ion-note item-end>
-        10%
+        {{entry.percentage}}%
       </ion-note>
     </ion-item>
 
     <ion-item>
-      <h2>Marks will be awarded for: </h2>
-      <p class="notes">- Preperation</p>
-      <p class="notes">- Working code</p>
-      <p class="notes">- Teamwork</p>
+      <div><h3>{{entry.description}}</h3></div>
     </ion-item>
   </ion-list>
 </ion-content>

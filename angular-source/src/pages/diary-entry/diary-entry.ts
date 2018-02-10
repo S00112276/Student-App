@@ -15,6 +15,12 @@ import { IonicPage, NavController, Platform, NavParams, ViewController } from 'i
 })
 export class DiaryEntryPage {
   entry;
+  entryType: string[] = [
+    'https://drslash.com/wp-content/uploads/2014/07/Notes.png', 
+    'https://image.flaticon.com/icons/svg/432/432413.svg', 
+    'https://image.flaticon.com/icons/svg/235/235248.svg',
+    'https://image.flaticon.com/icons/svg/236/236816.svg'
+  ];
 
   constructor(
     public platform: Platform,
