@@ -1,6 +1,7 @@
 const express = require('express'); 
 const router = express.Router(); 
 const DiaryEntry = require('../models/diaryModel');
+const Course = require('../models/courseModel');
 
 // Add to diary
 router.post('/addtodiary', (req, res, next) => {
@@ -11,7 +12,9 @@ router.post('/addtodiary', (req, res, next) => {
         lecturer: req.body.lecturer,
         groups: req.body.groups,
         room: req.body.room,
-        module: req.body.module
+        module: req.body.module,
+        percentage: req.body.percentage,
+        description: req.body.description
     });
 
     // Save New Diary Entry & Check For Errors
@@ -52,6 +55,36 @@ router.put('/updateentry', (req, res) => {
             res.send(err);
         
         res.json(entry);
+    })
+});
+
+// Retrieve All Courses
+router.get('/courses', (req, res) => {
+    Course.find({}, function (err, course) {
+        if(err)
+            res.send(err);
+        
+        res.json(course);
+    })
+});
+
+// Retrieve Student Groups
+router.get('/studentgroups', (req, res) => {
+    Course.find({}, function (err, studentgroup) {
+        if(err)
+            res.send(err);
+        
+        res.json(studentgroup);
+    })
+});
+
+// Retrieve Student GRoup where Group Name = Soft Dev A2
+router.get('/studentgroup', (req, res) => {
+    Course.find({ "groups.name":"Soft Dev A2" }, function (err, studentgroup) {
+        if(err)
+            res.send(err);
+        
+        res.json(studentgroup);
     })
 });
 

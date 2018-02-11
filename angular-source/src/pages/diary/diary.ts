@@ -33,13 +33,7 @@ export class DiaryPage {
     public navCtrl: NavController,
     private _diaryService: DiaryService,
     public modalCtrl: ModalController) {
-    this.entries.push({ title: 'Assessment', startDate: new Date(), dueDate: "2018-01-01T13:00:00.000Z", lecturer: 'Keith McManus', groups: [], room: 'D2037', module: 'prj300' });
-    this.entries.push({ title: 'Assignment', startDate: new Date(), dueDate: "2018-02-02T13:00:00.000Z", lecturer: 'Paul Powell', groups: [], room: 'D2039', module: 'rad302' });
-    this.entries.push({ title: 'Presentation', startDate: new Date(), dueDate: "2018-03-03T13:00:00.000Z", lecturer: 'Colm Davey', groups: [], room: 'B1041', module: 'clientside scripting' });
-    this.entries.push({ title: 'Event', startDate: new Date(), dueDate: "2018-04-04T13:00:00.000Z", lecturer: 'Padraig Harte', groups: [], room: 'Aurivo Auditorium', module: 'professional development' });
-    this.entries.push({ title: 'Assignment', startDate: new Date(), dueDate: "2018-12-12T13:00:00.000Z", lecturer: 'Paul Powell', groups: [], room: 'D2039', module: 'rad302' }); 
     this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
-    this.entries.sort(this.sortByDate);
   }
 
   sortByDate(event1: any, event2: any) {
@@ -79,6 +73,7 @@ export class DiaryPage {
           }
         }
       }
+      this.entries.sort(this.sortByDate);
     },
       error => this.errorMessage = <any>error);
   }
@@ -91,4 +86,6 @@ export class DiaryPage {
   addEvent() {
     this.navCtrl.push(AddEventPage);
   }
+
+
 }

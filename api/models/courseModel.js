@@ -4,8 +4,7 @@ const mongoose = require('mongoose');
 const StudentGroup = mongoose.Schema({  
     name: {
         type: String,
-        required: true,
-        lowercase: true
+        required: true
     }
 });
 
@@ -14,8 +13,7 @@ const CourseSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        unique: true,
-        lowercase: true
+        unique: true
     },
     groups: [StudentGroup] // Embedded Document
     /* Modules: [{

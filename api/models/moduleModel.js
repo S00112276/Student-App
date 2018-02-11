@@ -6,7 +6,6 @@ const ModuleSchema = mongoose.Schema({
     name: {
         type: String,
         required: true,
-        lowercase: true
     },
     day: {
         type: String
@@ -27,8 +26,10 @@ const ModuleSchema = mongoose.Schema({
     }],
     room: {
         type: String,
-        required: true,
-        lowercase: true
+        required: true
+    },
+    description: {
+        type: String
     }
 });
 

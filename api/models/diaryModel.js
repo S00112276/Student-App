@@ -5,7 +5,6 @@ const DiarySchema = mongoose.Schema({
     title: {
         type: String,
         required: true,
-        lowercase: true,
         Required: [true]
     },
     startDate: {
@@ -30,13 +29,19 @@ const DiarySchema = mongoose.Schema({
     room: {
         type: String,
         required: true,
-        lowercase: true,
         Required: [true]
     },
     module: {
         type: mongoose.Schema.Types.ObjectId, // Gets ID for referenced Document
         ref: 'Module', // References Document
         Required: [true]
+    },
+    percentage: {
+        type: Number,
+        required: true
+    },
+    description: {
+        type: String
     }
 });
 
