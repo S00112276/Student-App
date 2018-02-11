@@ -8,7 +8,6 @@ import 'rxjs/add/operator/do';
 
 @Injectable()
 export class DiaryService {
-  //private _entriesUrl = 'http://localhost:3000/diary/diaryentries'; 
   isDev: boolean;
   entry: any;
 
