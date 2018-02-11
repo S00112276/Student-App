@@ -107,8 +107,6 @@ export class AuthService {
             return ep;
         } else {
             return 'http://localhost:3000/' + ep;
-            // Heroku
-            //return 'https://breakpoint-app.herokuapp.com/' + ep;
         }
     }
 
