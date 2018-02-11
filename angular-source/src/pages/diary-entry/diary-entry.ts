@@ -19,7 +19,8 @@ export class DiaryEntryPage {
     'https://drslash.com/wp-content/uploads/2014/07/Notes.png', 
     'https://image.flaticon.com/icons/svg/432/432413.svg', 
     'https://image.flaticon.com/icons/svg/235/235248.svg',
-    'https://image.flaticon.com/icons/svg/236/236816.svg'
+    'https://image.flaticon.com/icons/svg/236/236816.svg',
+    'https://image.flaticon.com/icons/svg/236/236830.svg'
   ];
 
   constructor(

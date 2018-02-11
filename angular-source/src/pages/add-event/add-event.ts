@@ -9,18 +9,26 @@ import { DiaryService } from '../shared/diary.service';
 })
 export class AddEventPage {
   errorMessage: String;
-  title: String;
-  notes: String;
-  startDate: Date;
-  dueDate: Date;
-  lecturer: String;
-  groups: String;
-  room: String;
-  module: String;
-  entry = { subject: "", location: "", details: "", date: "", time: "" };
   
+  title: string;
+  dueDate: string;
+  time: string;
+  room: string;
+  module: { _id: string, lecturer: string, groups: [{}]};
+  percentage: string;
+  description: string;
+  group: string;
+  lecturer: string;
+
+  newEntry: { };
+
   modules: any[] = [];
   private _modulesUrl = 'http://localhost:3000/course/modules';
+
+  courses: any[] = [];
+  private _coursesUrl = 'http://localhost:3000/course/courses';
+
+  groups: any[] = [];
 
   constructor(
     public alertCtrl: AlertController,
@@ -28,16 +36,66 @@ export class AddEventPage {
     public navParams: NavParams,
     private _diaryService: DiaryService
   ) {
+    this.populateArrays(this.courses, this._coursesUrl);
     this.populateArrays(this.modules, this._modulesUrl);
-   }
+  }
 
-   // Returns data on selected collection
+  logModule() {
+    this.groups = this.module.groups;
+    this.lecturer = this.module.lecturer;
+    var due = this.dueDate.concat(this.time);
+    console.log({ title: this.title, 
+                  dueDate: due, 
+                  lecturer: this.lecturer, 
+                  room: this.room, 
+                  module: this.module._id, 
+                  percentage: this.percentage, 
+                  description: this.description, 
+                  groups: this.groups, 
+                  startDate: new Date()});
+  }
+
+  // Returns data on selected collection
   populateArrays(array, _url) {
     this._diaryService.populateArrays(_url).subscribe(data => {
       for (var i = 0; i < data.length; i++) {
         array[i] = data[i];
       }
+      /* this.getGroups(this.groups); */
     },
-    error => this.errorMessage = <any>error);
+      error => this.errorMessage = <any>error);
+  }
+
+/*   filterGroups(moduleID) {
+    for (let i = 0; i < this.modules.length; i++) {
+      if(this.modules[i].name == moduleID)
+          console.log(this.modules[i].groups);
+    }
+  }
+
+  getGroups(module) {
+    for (let i = 0; i < this.courses.length; i++) {
+      for (let j = 0; j < this.courses[i].length; j++) {
+        this.groups.push(this.courses[i].groups[j]);
+      }
+    }
+  } */
+
+  removeDuplicates(originalArray, objKey) {
+    this.removeDuplicates(this.groups, 'name');    
+    var trimmedArray = [];
+    var values = [];
+    var value;
+
+    for (var i = 0; i < originalArray.length; i++) {
+      value = originalArray[i][objKey];
+
+      if (values.indexOf(value) === -1) {
+        trimmedArray.push(originalArray[i]);
+        values.push(value);
+      }
+    }
+
+    return trimmedArray;
   }
 }

@@ -19,6 +19,7 @@
                 <img *ngIf="entry.title.toLowerCase() == 'presentation'" src="{{entryType[1]}}">
                 <img *ngIf="entry.title.toLowerCase() == 'assignment'" src="{{entryType[2]}}">
                 <img *ngIf="entry.title.toLowerCase() == 'event'" src="{{entryType[3]}}">
+                <img *ngIf="entry.title.toLowerCase() == 'report'" src="{{entryType[4]}}">
             </ion-avatar>
             <h2>{{entry.dueDate | date: 'EEEE, MMMM d, h:mm a'}}</h2>
             <h3>{{entry.module | uppercase}}</h3>

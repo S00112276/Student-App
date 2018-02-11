@@ -4,6 +4,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 // Services
 import { AuthService } from '../pages/shared/auth.service';
@@ -40,6 +41,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
     AddEventPage
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     SocketIoModule.forRoot(config),
     IonicModule.forRoot(MyApp),
