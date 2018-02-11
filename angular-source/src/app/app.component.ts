@@ -36,7 +36,7 @@ export class MyApp {
     //.filter(res => res !== null)
       .subscribe(status => {
         if(!status){ // when not auth'd
-        this.rootPage = HomePage;
+        this.rootPage = WelcomePage;
         }
         else {
           this.rootPage = HomePage;

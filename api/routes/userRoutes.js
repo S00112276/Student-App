@@ -3,7 +3,6 @@ const router = express.Router();
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const config = require('../../config/database');
-const User = require('../models/userModel');
 const Student = require('../models/studentModel');
 const Lecturer = require('../models/lecturerModel');
 
@@ -56,7 +55,7 @@ router.post('/authenticatelecturer', (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    // Call method from User & retrieve Lecturer by email
+    // Call method from Lecturer & retrieve Lecturer by email
     Lecturer.getUserByEmail(email, (err, lecturer) => {
         if(err) throw err;
         
@@ -64,7 +63,7 @@ router.post('/authenticatelecturer', (req, res, next) => {
             return res.json({ success: false, msg: 'Lecturer not found' });
         }
 
-        User.comparePassword(password, lecturer.password, (err, isMatch) => {
+        Lecturer.comparePassword(password, lecturer.password, (err, isMatch) => {
             if(err) throw err;
 
             if(isMatch) {
@@ -91,6 +90,47 @@ router.post('/authenticatelecturer', (req, res, next) => {
     });
 });
 // End Auth Lecturer
+
+// Authenticate Student
+router.post('/authenticatestudent', (req, res, next) => {
+    const email = req.body.email;
+    const password = req.body.password;
+
+    // Call method from Student & retrieve Student by email
+    Student.getUserByEmail(email, (err, student) => {
+        if(err) throw err;
+        
+        if(!student) {
+            return res.json({ success: false, msg: 'Student not found' });
+        }
+
+        Student.comparePassword(password, student.password, (err, isMatch) => {
+            if(err) throw err;
+
+            if(isMatch) {
+                const token = jwt.sign({ data: student }, config.secret, {
+                    expiresIn: 86400 // 1 day in seconds
+                });
+                res.json({
+                    success: true,
+                    token: 'JWT '+ token,
+                    user: {
+                        id: student._id,
+                        firstName: student.firstName,
+                        lastName: student.lastName,
+                        email: student.email,
+                        username: student.username,
+                        studentId: student.studentId
+                    }
+                });
+            }
+            else {
+                return res.json({ success: false, msg: 'Incorrect Password' });
+            }
+        });
+    });
+});
+// End Auth Student
 
 // Profile
 router.get('/profile', passport.authenticate('jwt', { session: false }), (req, res, next) => {

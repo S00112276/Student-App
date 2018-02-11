@@ -47,16 +47,6 @@ export class AuthService {
             .map(res => res.json());
     }
 
-    // // Register User
-    // registerUser(user) {
-    //     console.log("Register User: " + user.firstName + " in auth.service.ts");
-    //     let headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');
-    //     let ep = this.prepEndpoint('users/register');
-    //     return this.http.post(ep, user, { headers: headers })
-    //         .map(res => res.json());
-    // }
-
     // Authenticate Lecturer
     authLecturer(user) {
         let headers = new Headers();
@@ -66,18 +56,16 @@ export class AuthService {
             .map(res => res.json());
     }
 
-    // Authenticate User
-    // authUser(user) {
-    //     console.log("auth user: " + user);
-    //     console.log("auth data: " + user.data);
-    //     let headers = new Headers();
-    //     headers.append('Content-Type', 'application/json');
-    //     let ep = this.prepEndpoint('users/authenticate');
-    //     return this.http.post(ep, user, { headers: headers })
-    //         .map(res => res.json());
-    // }
+    // Authenticate Student
+    authStudent(user) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        let ep = this.prepEndpoint('users/authenticatestudent');
+        return this.http.post(ep, user, { headers: headers })
+            .map(res => res.json());
+    }
 
-    // Get User Profile
+    // Get User Profile - Not in use
     getProfile() {
         let headers = new Headers();
         this.loadToken();
@@ -107,8 +95,6 @@ export class AuthService {
             return ep;
         } else {
             return 'http://localhost:3000/' + ep;
-            // Heroku
-            //return 'https://breakpoint-app.herokuapp.com/' + ep;
         }
     }
 

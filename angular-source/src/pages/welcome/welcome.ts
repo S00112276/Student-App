@@ -34,8 +34,6 @@ export class WelcomePage  {
     this.slider.slideTo(2);
   }
 
-  ionViewDidLoad() { }
-
   slideNext() {
     this.innerSlider.slideNext();
   }
@@ -44,7 +42,7 @@ export class WelcomePage  {
     this.innerSlider.slidePrev();
   }
 
-  // Reset Password
+  // Reset Password -- Not Being Used
   presentLoading(message) {
     const loading = this.loadingCtrl.create({
       duration: 500
@@ -66,7 +64,7 @@ export class WelcomePage  {
     this.presentLoading('An e-mail was sent with your new password.');
   }
 
-   // Decalre Variables
+   // Decalre Variables for Register
    firstName: String; 
    lastName: String; 
    username: String; 
@@ -87,11 +85,9 @@ export class WelcomePage  {
        password:this.password, 
        confirmPassword:this.confirmPassword
      }
- 
-     // Required Fields
-       // For Development:  
-       //this.navCtrl.push(HomePage); //(When Not In Dev Comment Out) 
-     if ( ! this.validateService.validateRegister(user)) {
+     
+     // Check for Empty Fields
+     if ( !this.validateService.validateRegister(user)) {
        let alert = this.alertCtrl.create( {
          title:'Failed to Register', 
          subTitle:'Please fill out all the fields', 
@@ -133,8 +129,8 @@ export class WelcomePage  {
                subTitle:'Please check your college email to verify your Student ID', 
                buttons:['OK']
              }); 
-             //alert.present(); 
-             this.presentLoading('Thanks for signing up!');
+             alert.present(); 
+             // Sends Email to breakpoint@outlook.ie
              this._authService.sendValEmail(user).subscribe(mailData =>  {
              if (mailData.success) {
                console.log("email should be sent")
@@ -144,7 +140,7 @@ export class WelcomePage  {
              }
            }); 
            this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
-         }else {
+         } else {
            let alert = this.alertCtrl.create( {
              title:'Registration Unsuccessful', 
              subTitle:'Please Try Again', 
@@ -163,10 +159,20 @@ export class WelcomePage  {
                subTitle:'Please check your college email to verify your Lecturer ID', 
                buttons:['OK']
              }); 
-             //alert.present();
-             this.presentLoading('Thanks for signing up!'); 
+             alert.present();
+             // Sends Email to breakpoint@outlook.ie
+             this._authService.sendValEmail(user).subscribe(mailData =>  {
+              if (mailData.success) {
+                console.log("email should be sent")
+              }
+              else {
+                console.log("email not sent: "); 
+              }
+            }); 
              this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
-         }else {
+         } 
+         // Incorrect ID format
+         else {
            let alert = this.alertCtrl.create( {
              title:'Registration Unsuccessful', 
              subTitle:'Please Try Again', 
@@ -175,62 +181,81 @@ export class WelcomePage  {
            alert.present(); 
          }
        }); 
-     }
-     else {
-         console.log("StudentId does not start with either S or L"); 
+     } else {
+         console.log("ID does not start with either S or L"); 
          let alert = this.alertCtrl.create( {
            title:'Failed to Register', 
-           subTitle:'Incorrect StudentID Format', 
+           subTitle:'Incorrect ID Format', 
            buttons:['OK']
          }); 
          alert.present(); 
          return false; 
-       }
-     // this.authService.registerUser(user).subscribe(data => {
-     //   if (data.success) {
-     //     console.log("User Registered");
-     //       let alert = this.alertCtrl.create({
-     //         title: 'Registered Successfully',
-     //         subTitle: 'Please check your college email to verify your Student ID',
-     //         buttons: ['OK']
-     //       });
-     //     this.navCtrl.push(HomePage);
-     //   } else {
-     //     let alert = this.alertCtrl.create({
-     //       title: 'Registration Unsuccessful',
-     //       subTitle: 'Please Try Again',
-     //       buttons: ['OK']
-     //     });
-     //   }
-     // });     
+       }    
    }
    
+   // Login Method
    Login() {
-    // Create user Object for Login
+    // Create Lecturer Object for Login
     const user = {
       email: this.email.toLowerCase(),
       password: this.password
     }
-
-    this._authService.authLecturer(user).subscribe(data => {
-      if(data.success) {
-        this._authService.storeUserData(data.token, data.user);
-        let alert = this.alertCtrl.create({
-          title: 'Logged In!',
-          subTitle: 'You are now logged in',
-          buttons: ['OK']
-        });
-        this.presentLoading("You're now logged in!");
-        //alert.present();
-        this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
-      } else {
-        let alert = this.alertCtrl.create({
-          title: 'Login Unsuccessful',
-          subTitle: data.msg,
-          buttons: ['OK']
-        });
-        alert.present();
-      }
-    });
+    // Lecturer Authentication
+    if(this.email.startsWith("L") || this.email.startsWith("l"))
+    {
+      this._authService.authLecturer(user).subscribe(data => {
+        if(data.success) {
+          this._authService.storeUserData(data.token, data.user);
+          let alert = this.alertCtrl.create({
+            title: 'Logged In!',
+            subTitle: 'You are now logged in',
+            buttons: ['OK']
+          });
+          this.presentLoading("You're now logged in!");
+          //alert.present();
+          this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
+        } else {
+          let alert = this.alertCtrl.create({
+            title: 'Login Unsuccessful',
+            subTitle: data.msg,
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      });
+    } 
+    // Student Authentication
+    else if (this.email.startsWith("S") || this.email.startsWith("s")) {
+      this._authService.authStudent(user).subscribe(data => {
+        if(data.success) {
+          this._authService.storeUserData(data.token, data.user);
+          let alert = this.alertCtrl.create({
+            title: 'Logged In!',
+            subTitle: 'You are now logged in',
+            buttons: ['OK']
+          });
+          alert.present();
+          this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
+        } else {
+          let alert = this.alertCtrl.create({
+            title: 'Login Unsuccessful',
+            subTitle: data.msg,
+            buttons: ['OK']
+          });
+          alert.present();
+        }
+      });
+    } 
+    // Incorrect ID format
+    else {
+      console.log("ID does not start with either S or L"); 
+         let alert = this.alertCtrl.create( {
+           title:'Failed to Login', 
+           subTitle:'Incorrect ID Format', 
+           buttons:['OK']
+         }); 
+         alert.present(); 
+         return false; 
+    }
   }
 }

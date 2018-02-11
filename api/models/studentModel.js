@@ -41,8 +41,13 @@ const Student = module.exports = mongoose.model('Student', StudentSchema);
 //     Student.findById(id, callback);
 // }
 
-module.exports.getUserById = function(id, callback) {
+/* module.exports.getUserById = function(id, callback) {
     const query = { id : id }
+    Student.findOne(query, callback);
+} */
+
+module.exports.getUserByEmail = function(email, callback) {
+    const query = { email : email }
     Student.findOne(query, callback);
 }
 
