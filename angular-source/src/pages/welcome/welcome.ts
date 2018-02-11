@@ -42,7 +42,6 @@ export class WelcomePage  {
     this.innerSlider.slidePrev();
   }
 
-  // Reset Password -- Not Being Used
   presentLoading(message) {
     const loading = this.loadingCtrl.create({
       duration: 500
@@ -60,6 +59,7 @@ export class WelcomePage  {
     loading.present();
   }
 
+  // Reset Password -- Not Being Used
   resetPassword() {
     this.presentLoading('An e-mail was sent with your new password.');
   }
@@ -124,21 +124,9 @@ export class WelcomePage  {
      if (user.studentId.startsWith("S") || user.studentId.startsWith("s")) {
        this._authService.registerStudent(user).subscribe(data =>  {
          if (data.success) {
-             let alert = this.alertCtrl.create( {
-               title:'Registered Successfully', 
-               subTitle:'Please check your college email to verify your Student ID', 
-               buttons:['OK']
-             }); 
-             alert.present(); 
+             this.presentLoading('Check your email.');
              // Sends Email to breakpoint@outlook.ie
-             this._authService.sendValEmail(user).subscribe(mailData =>  {
-             if (mailData.success) {
-               console.log("email should be sent")
-             }
-             else {
-               console.log("email not sent: "); 
-             }
-           }); 
+             this._authService.sendValEmail(user);
            this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
          } else {
            let alert = this.alertCtrl.create( {
@@ -154,21 +142,9 @@ export class WelcomePage  {
      else if (user.studentId.startsWith("L") || user.studentId.startsWith("l")) {
        this._authService.registerLecturer(user).subscribe(data =>  {
          if (data.success) {
-             let alert = this.alertCtrl.create( {
-               title:'Registered Successfully', 
-               subTitle:'Please check your college email to verify your Lecturer ID', 
-               buttons:['OK']
-             }); 
-             alert.present();
+             this.presentLoading('Check your email.');
              // Sends Email to breakpoint@outlook.ie
-             this._authService.sendValEmail(user).subscribe(mailData =>  {
-              if (mailData.success) {
-                console.log("email should be sent")
-              }
-              else {
-                console.log("email not sent: "); 
-              }
-            }); 
+             this._authService.sendValEmail(user);
              this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
          } 
          // Incorrect ID format
@@ -206,11 +182,6 @@ export class WelcomePage  {
       this._authService.authLecturer(user).subscribe(data => {
         if(data.success) {
           this._authService.storeUserData(data.token, data.user);
-          let alert = this.alertCtrl.create({
-            title: 'Logged In!',
-            subTitle: 'You are now logged in',
-            buttons: ['OK']
-          });
           this.presentLoading("You're now logged in!");
           //alert.present();
           this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
@@ -229,12 +200,7 @@ export class WelcomePage  {
       this._authService.authStudent(user).subscribe(data => {
         if(data.success) {
           this._authService.storeUserData(data.token, data.user);
-          let alert = this.alertCtrl.create({
-            title: 'Logged In!',
-            subTitle: 'You are now logged in',
-            buttons: ['OK']
-          });
-          alert.present();
+          this.presentLoading("You're now logged in!");
           this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
         } else {
           let alert = this.alertCtrl.create({

@@ -12,7 +12,7 @@ export class TimetablePage {
 
   ionViewDidLoad() { }
 
-  events = [
+  modules = [
     {
       _id: 1,
       subject: 'Rich Application Development',
@@ -52,6 +52,6 @@ export class TimetablePage {
       location: 'A0004',
       day: 'Friday',      
       time: '9:00 - 10:00'
-    },
+    }
   ]
 }
