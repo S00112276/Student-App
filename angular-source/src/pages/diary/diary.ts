@@ -78,7 +78,6 @@ export class DiaryPage {
             }
           }
         }
-      }
       this.entries.sort(this.sortByDate);
     },
       error => this.errorMessage = <any>error);
