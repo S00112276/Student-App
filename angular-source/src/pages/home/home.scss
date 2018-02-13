@@ -31,4 +31,16 @@
     color: map-get($colors, light);
   }
 
+  .timetable {
+    background-color: map-get($colors, energy);
+  }
+
+  .chat {
+    background-color: map-get($colors, lightprimary);
+  }
+
+  .diary {
+    background-color: map-get($colors, secondary);
+  }
+
 }

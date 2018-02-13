@@ -34,8 +34,12 @@ export class DiaryPage {
     public navCtrl: NavController,
     private _diaryService: DiaryService,
     public modalCtrl: ModalController) {
-     this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
+    this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
   }
+
+  /* onViewDidEnter() {
+    this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
+  } */
 
   sortByDate(event1: any, event2: any) {
     if (event1.dueDate > event2.dueDate) return 1;
@@ -55,28 +59,28 @@ export class DiaryPage {
 
   // Returns Diary Entries
   getEntries(entries, lecturers, modules, courses) {
-      this.populateArrays(lecturers, this._lecturersUrl);
-      this.populateArrays(modules, this._modulesUrl);
-      this.populateArrays(courses, this._coursesUrl);
-      this._diaryService.getEntries().subscribe(data => {
-        for (var i = 0; i < data.length; i++) {
-          entries.push(data[i]);
-          for (var j = 0; j < entries.length; j++) {
-            for (var k = 0; k < lecturers.length; k++) {
-              if (entries[j].lecturer == lecturers[k]._id) {
-                entries[j].lecturer = (lecturers[k].firstName + " " + lecturers[k].lastName);
-              }
+    this.populateArrays(lecturers, this._lecturersUrl);
+    this.populateArrays(modules, this._modulesUrl);
+    this.populateArrays(courses, this._coursesUrl);
+    this._diaryService.getEntries().subscribe(data => {
+      for (var i = 0; i < data.length; i++) {
+        entries.push(data[i]);
+        for (var j = 0; j < entries.length; j++) {
+          for (var k = 0; k < lecturers.length; k++) {
+            if (entries[j].lecturer == lecturers[k]._id) {
+              entries[j].lecturer = (lecturers[k].firstName + " " + lecturers[k].lastName);
             }
-            for (var l = 0; l < modules.length; l++) {
-              if (entries[j].module == modules[l]._id) {
-                entries[j].module = (modules[l].name);
-              }
+          }
+          for (var l = 0; l < modules.length; l++) {
+            if (entries[j].module == modules[l]._id) {
+              entries[j].module = (modules[l].name);
             }
           }
         }
-        this.entries.sort(this.sortByDate);
-      },
-        error => this.errorMessage = <any>error);
+      }
+      this.entries.sort(this.sortByDate);
+    },
+      error => this.errorMessage = <any>error);
   }
 
   openModal(entry) {

@@ -26,6 +26,7 @@ export class DiaryService {
 
   // Insert Diary Entries
   insertEntry(entry) {
+    console.log(entry);
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     let ep = this.prepEndpoint('diary/addtodiary');

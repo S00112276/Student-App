@@ -9,18 +9,18 @@ import { DiaryService } from '../shared/diary.service';
 })
 export class AddEventPage {
   errorMessage: String;
-  
+
   title: string;
   dueDate: string;
   time: string;
   room: string;
-  module: { _id: string, lecturer: string, groups: [{}]};
+  module: { _id: string, lecturer: string, groups: [{}] };
   percentage: string;
   description: string;
   group: string;
   lecturer: string;
 
-  newEntry: { };
+  newEntry: {};
 
   modules: any[] = [];
   private _modulesUrl = 'http://localhost:3000/course/modules';
@@ -40,19 +40,42 @@ export class AddEventPage {
     this.populateArrays(this.modules, this._modulesUrl);
   }
 
-  logModule() {
+  insertEntry() {
     this.groups = this.module.groups;
     this.lecturer = this.module.lecturer;
-    var due = this.dueDate.concat(this.time);
-    console.log({ title: this.title, 
-                  dueDate: due, 
-                  lecturer: this.lecturer, 
-                  room: this.room, 
-                  module: this.module._id, 
-                  percentage: this.percentage, 
-                  description: this.description, 
-                  groups: this.groups, 
-                  startDate: new Date()});
+    var time = 'T'
+    var dueTime = time.concat(this.time)
+    var due = this.dueDate.concat(dueTime);
+    const entry = {
+      title: this.title,
+      startDate: new Date(),
+      dueDate: due,
+      lecturer: this.lecturer,
+      groups: this.groups,
+      room: this.room,
+      module: this.module._id,
+      percentage: this.percentage,
+      description: this.description
+    }
+
+    this._diaryService.insertEntry(entry).subscribe(data =>  {
+      if (data.success) {
+          let alert = this.alertCtrl.create( {
+            title:'Added to DB', 
+            subTitle:'YAY', 
+            buttons:['OK']
+          }); 
+          alert.present(); 
+    this.navCtrl.pop();
+        } else {
+          let alert = this.alertCtrl.create( {
+            title:'Failed', 
+            subTitle:':(', 
+            buttons:['OK']
+          }); 
+          alert.present(); 
+        }
+      });
   }
 
   // Returns data on selected collection
@@ -66,23 +89,23 @@ export class AddEventPage {
       error => this.errorMessage = <any>error);
   }
 
-/*   filterGroups(moduleID) {
-    for (let i = 0; i < this.modules.length; i++) {
-      if(this.modules[i].name == moduleID)
-          console.log(this.modules[i].groups);
-    }
-  }
-
-  getGroups(module) {
-    for (let i = 0; i < this.courses.length; i++) {
-      for (let j = 0; j < this.courses[i].length; j++) {
-        this.groups.push(this.courses[i].groups[j]);
+  /*   filterGroups(moduleID) {
+      for (let i = 0; i < this.modules.length; i++) {
+        if(this.modules[i].name == moduleID)
+            console.log(this.modules[i].groups);
       }
     }
-  } */
+  
+    getGroups(module) {
+      for (let i = 0; i < this.courses.length; i++) {
+        for (let j = 0; j < this.courses[i].length; j++) {
+          this.groups.push(this.courses[i].groups[j]);
+        }
+      }
+    } */
 
   removeDuplicates(originalArray, objKey) {
-    this.removeDuplicates(this.groups, 'name');    
+    this.removeDuplicates(this.groups, 'name');
     var trimmedArray = [];
     var values = [];
     var value;

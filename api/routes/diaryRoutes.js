@@ -18,12 +18,12 @@ router.post('/addtodiary', (req, res, next) => {
     });
 
     // Save New Diary Entry & Check For Errors
-    newEntry.save(function(err) {
-        if(err)
-            res.send(err);
-
-        else
-            res.json({ message: 'Entry Added to DB!' });
+    DiaryEntry.addEntry(newEntry, (err, entry) => {
+        if(err) {
+            res.json({ success: false, msg: 'Failed to add entry: ' + err });
+        } else {
+            res.json({ success: true, msg: 'Entry added to diary!' });
+        }
     });
 });
 

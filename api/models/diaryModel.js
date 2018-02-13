@@ -13,7 +13,7 @@ const DiarySchema = mongoose.Schema({
         Required: [true]
     },
     dueDate: {
-        type: Date,
+        type: String,
         Required: [true]
     },
     lecturer: {
@@ -37,7 +37,7 @@ const DiarySchema = mongoose.Schema({
         Required: [true]
     },
     percentage: {
-        type: Number,
+        type: String,
         required: true
     },
     description: {
@@ -46,3 +46,7 @@ const DiarySchema = mongoose.Schema({
 });
 
 const Diary = module.exports = mongoose.model('Diary', DiarySchema);
+
+module.exports.addEntry = function (newEntry, callback) {
+    newEntry.save(callback);
+}

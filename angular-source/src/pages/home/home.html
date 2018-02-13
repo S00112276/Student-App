@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton color="energy">
+  <ion-navbar hideBackButton color="primary">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -9,17 +9,17 @@
 
 <ion-content class="card-background-page">
 
-  <ion-card [navPush]="timetablePage" style="background-color: #2A2C43">
+  <ion-card [navPush]="timetablePage" class="timetable">
     <div class="card-title">Timetable</div>
     <div class="card-subtitle">Classes and Exams</div>
   </ion-card>
 
-  <ion-card (click)="joinChat()" style="background-color: #677077">
+  <ion-card (click)="joinChat()" class="chat">
     <div class="card-title">Chat</div>
     <div class="card-subtitle">Talk with friends</div>
   </ion-card>
 
-  <ion-card [navPush]="diaryPage" style="background-color: #B5B5B7">
+  <ion-card [navPush]="diaryPage" class="diary">
     <div class="card-title">Diary</div>
     <div class="card-subtitle">Track your schedule</div>
   </ion-card>
