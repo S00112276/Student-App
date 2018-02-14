@@ -26,7 +26,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Calendar } from '@ionic-native/calendar';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
-const config: SocketIoConfig = { url: 'http://localhost:3001', options: {} };
+const config: SocketIoConfig = { url: 'https://obscure-escarpment-51111.herokuapp.com/', options: {} };
 
 @NgModule({
   declarations: [
