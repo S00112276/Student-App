@@ -67,7 +67,7 @@ export class DiaryService {
     if(this.isDev) {
         return ep;
     } else {
-        return 'http://localhost:3000/' + ep;
+        return 'https://still-beach-80885.herokuapp.com/' + ep;
     }
 }
 }
