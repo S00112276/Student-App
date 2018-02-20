@@ -22,13 +22,13 @@ export class DiaryPage {
   entries: any[] = [];
 
   lecturers: any[] = [];
-  private _lecturersUrl = 'http://localhost:3000/users/lecturers';
+  private _lecturersUrl = 'https://still-beach-80885.herokuapp.com/users/lecturers';
 
   modules: any[] = [];
-  private _modulesUrl = 'http://localhost:3000/course/modules';
+  private _modulesUrl = 'https://still-beach-80885.herokuapp.com/course/modules';
 
   courses: any[] = [];
-  private _coursesUrl = 'http://localhost:3000/course/courses';
+  private _coursesUrl = 'https://still-beach-80885.herokuapp.com/course/courses';
 
   constructor(private alertCtrl: AlertController,
     public navCtrl: NavController,
