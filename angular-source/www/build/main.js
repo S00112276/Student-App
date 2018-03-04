@@ -268,8 +268,8 @@ var WelcomePage = (function () {
     WelcomePage.prototype.SignUp = function () {
         var _this = this;
         var user = {
-            firstName: this.firstName,
-            lastName: this.lastName,
+            /* firstName:this.firstName,
+            lastName:this.lastName,  */
             email: this.studentID + "@mail.itsligo.ie",
             username: this.username,
             studentId: this.studentID.toLowerCase(),
@@ -278,32 +278,32 @@ var WelcomePage = (function () {
         };
         // Check for Empty Fields
         if (!this.validateService.validateRegister(user)) {
-            var alert_1 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Failed to Register',
                 subTitle: 'Please fill out all the fields',
                 buttons: ['OK']
             });
-            alert_1.present();
+            alert.present();
             return false;
         }
         // Validate ID
         if (!this.validateService.validateUserID(user.studentId)) {
-            var alert_2 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Failed to Register',
                 subTitle: 'Incorrect StudentID Format',
                 buttons: ['OK']
             });
-            alert_2.present();
+            alert.present();
             return false;
         }
         // Validate Password
         if (!this.validateService.validatePassword(user)) {
-            var alert_3 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Failed to Register',
                 subTitle: 'Passwords Must Match!',
                 buttons: ['OK']
             });
-            alert_3.present();
+            alert.present();
             return false;
         }
         // Register User
@@ -311,47 +311,49 @@ var WelcomePage = (function () {
         if (user.studentId.startsWith("s")) {
             this._authService.registerStudent(user).subscribe(function (data) {
                 if (data.success) {
+                    _this._authService.storeUserData(data.token, data.user);
                     _this.presentLoading('Check your email.');
                     // Sends Email to breakpoint@outlook.ie
                     _this._authService.sendValEmail(user);
                     _this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
                 }
                 else {
-                    var alert_4 = _this.alertCtrl.create({
+                    var alert = _this.alertCtrl.create({
                         title: 'Student Registration Unsuccessful',
                         subTitle: 'Please Try Again',
                         buttons: ['OK']
                     });
-                    alert_4.present();
+                    alert.present();
                 }
             });
         }
         else if (user.studentId.startsWith("l")) {
             this._authService.registerLecturer(user).subscribe(function (data) {
                 if (data.success) {
+                    _this._authService.storeUserData(data.token, data.user);
                     _this.presentLoading('Check your email.');
                     // Sends Email to breakpoint@outlook.ie
                     _this._authService.sendValEmail(user);
                     _this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
                 }
                 else {
-                    var alert_5 = _this.alertCtrl.create({
+                    var alert = _this.alertCtrl.create({
                         title: 'Lecturer Registration Unsuccessful',
                         subTitle: 'Please Try Again',
                         buttons: ['OK']
                     });
-                    alert_5.present();
+                    alert.present();
                 }
             });
         }
         else {
             console.log("ID does not start with either S or L");
-            var alert_6 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Failed to Register',
                 subTitle: 'Incorrect ID Format',
                 buttons: ['OK']
             });
-            alert_6.present();
+            alert.present();
             return false;
         }
     };
@@ -373,12 +375,12 @@ var WelcomePage = (function () {
                     _this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
                 }
                 else {
-                    var alert_7 = _this.alertCtrl.create({
+                    var alert = _this.alertCtrl.create({
                         title: 'Login Unsuccessful',
                         subTitle: data.msg,
                         buttons: ['OK']
                     });
-                    alert_7.present();
+                    alert.present();
                 }
             });
         }
@@ -390,23 +392,23 @@ var WelcomePage = (function () {
                     _this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
                 }
                 else {
-                    var alert_8 = _this.alertCtrl.create({
+                    var alert = _this.alertCtrl.create({
                         title: 'Login Unsuccessful',
                         subTitle: data.msg,
                         buttons: ['OK']
                     });
-                    alert_8.present();
+                    alert.present();
                 }
             });
         }
         else {
             console.log("ID does not start with either S or L");
-            var alert_9 = this.alertCtrl.create({
+            var alert = this.alertCtrl.create({
                 title: 'Failed to Login',
                 subTitle: 'Incorrect ID Format',
                 buttons: ['OK']
             });
-            alert_9.present();
+            alert.present();
             return false;
         }
     };
@@ -414,25 +416,20 @@ var WelcomePage = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('slider'),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Slides */])
+    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Slides */]) === "function" && _a || Object)
 ], WelcomePage.prototype, "slider", void 0);
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])('innerSlider'),
-    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Slides */])
+    __metadata("design:type", typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Slides */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["m" /* Slides */]) === "function" && _b || Object)
 ], WelcomePage.prototype, "innerSlider", void 0);
 WelcomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-welcome',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\welcome\welcome.html"*/'<ion-content class="transparent-header" [ngStyle]="{\'background-color\': \'#2072f7\'}">\n\n\n\n  <!-- Initial Welcome Page -->\n\n  <ion-slides #slider class="content-slider" direction="vertical">\n\n\n\n    <!-- Logo -->\n\n    <ion-slide class="swiper-no-swiping">\n\n      <div padding>\n\n        <img class="logo" src="assets/imgs/ss.png" />\n\n        <ion-row>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToLogin()">LOGIN</button>\n\n          </ion-col>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToSignup()">SIGN UP</button>\n\n          </ion-col>\n\n        </ion-row>\n\n      </div>\n\n    </ion-slide>\n\n\n\n    <!-- Login Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <ion-slides #innerSlider class="content-slider">\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n              <ion-item>\n\n                <ion-label floating>Email</ion-label>\n\n                <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>\n\n              </ion-item>\n\n              <ion-item>\n\n                <ion-label floating>Password</ion-label>\n\n                <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n              </ion-item>\n\n              <button ion-button block round (click)="Login()" color="light" class="login-button">Login</button>\n\n              <button ion-button clear (click)="slideNext()" color="light" class="forgot-button">FORGOT PASSWORD?</button>\n\n          </div>\n\n          <!-- Switch Page to Sign Up -->\n\n          <button ion-button clear (click)="goToSignup()" class="slide-button position-bottom">GO TO SIGNUP\n\n            <ion-icon name="arrow-down"></ion-icon>\n\n          </button>\n\n        </ion-slide>\n\n\n\n        <!-- Forgot Password -->\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n            <ion-item>\n\n              <ion-label floating>E-mail</ion-label>\n\n              <ion-input type="email"></ion-input>\n\n            </ion-item>\n\n            <button ion-button block round (click)="resetPassword()" color="light" class="login-button">RESET PASSWORD</button>\n\n            <button ion-button clear (click)="slidePrevious()" color="light" class="goback-button">\n\n              <ion-icon name="arrow-back"></ion-icon> GO BACK</button>\n\n          </div>\n\n        </ion-slide>\n\n      </ion-slides>\n\n    </ion-slide>\n\n\n\n    <!-- Sign Up Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <button ion-button clear (click)="goToLogin()" class="slide-button">\n\n        GO TO LOGIN\n\n        <ion-icon name="arrow-up"></ion-icon>\n\n      </button>\n\n      <div style="padding: 32px">\n\n          <ion-item>\n\n            <ion-label floating>First Name</ion-label>\n\n            <ion-input type="text" name="firstName" [(ngModel)]="firstName" required></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Last Name</ion-label>\n\n            <ion-input type="text" name="lastName" [(ngModel)]="lastName"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Username</ion-label>\n\n            <ion-input type="text" name="username" [(ngModel)]="username"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Student ID</ion-label>\n\n            <ion-input type="text" name="studentID" [(ngModel)]="studentID"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="margin-bottom">\n\n            <ion-label floating>Confirm Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="confirmPassword"></ion-input>\n\n          </ion-item>\n\n          <button ion-button block round (click)="SignUp()" color="light" class="login-button">SIGN UP</button>\n\n      </div>\n\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\welcome\welcome.html"*/,
+        selector: 'page-welcome',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\welcome\welcome.html"*/'<ion-content class="transparent-header" [ngStyle]="{\'background-color\': \'#2072f7\'}">\n\n\n\n  <!-- Initial Welcome Page -->\n\n  <ion-slides #slider class="content-slider" direction="vertical">\n\n\n\n    <!-- Logo -->\n\n    <ion-slide class="swiper-no-swiping">\n\n      <div padding>\n\n        <img class="logo" src="assets/imgs/ss.png" />\n\n        <ion-row>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToLogin()">LOGIN</button>\n\n          </ion-col>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToSignup()">SIGN UP</button>\n\n          </ion-col>\n\n        </ion-row>\n\n      </div>\n\n    </ion-slide>\n\n\n\n    <!-- Login Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <ion-slides #innerSlider class="content-slider">\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n              <ion-item>\n\n                <ion-label floating>Email</ion-label>\n\n                <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>\n\n              </ion-item>\n\n              <ion-item>\n\n                <ion-label floating>Password</ion-label>\n\n                <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n              </ion-item>\n\n              <button ion-button block round (click)="Login()" color="light" class="login-button">Login</button>\n\n              <button ion-button clear (click)="slideNext()" color="light" class="forgot-button">FORGOT PASSWORD?</button>\n\n          </div>\n\n          <!-- Switch Page to Sign Up -->\n\n          <button ion-button clear (click)="goToSignup()" class="slide-button position-bottom">GO TO SIGNUP\n\n            <ion-icon name="arrow-down"></ion-icon>\n\n          </button>\n\n        </ion-slide>\n\n\n\n        <!-- Forgot Password -->\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n            <ion-item>\n\n              <ion-label floating>E-mail</ion-label>\n\n              <ion-input type="email"></ion-input>\n\n            </ion-item>\n\n            <button ion-button block round (click)="resetPassword()" color="light" class="login-button">RESET PASSWORD</button>\n\n            <button ion-button clear (click)="slidePrevious()" color="light" class="goback-button">\n\n              <ion-icon name="arrow-back"></ion-icon> GO BACK</button>\n\n          </div>\n\n        </ion-slide>\n\n      </ion-slides>\n\n    </ion-slide>\n\n\n\n    <!-- Sign Up Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <button ion-button clear (click)="goToLogin()" class="slide-button">\n\n        GO TO LOGIN\n\n        <ion-icon name="arrow-up"></ion-icon>\n\n      </button>\n\n      <div style="padding: 32px">\n\n         <!--  <ion-item>\n\n            <ion-label floating>First Name</ion-label>\n\n            <ion-input type="text" name="firstName" [(ngModel)]="firstName" required></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Last Name</ion-label>\n\n            <ion-input type="text" name="lastName" [(ngModel)]="lastName"></ion-input>\n\n          </ion-item> -->\n\n          <ion-item> \n\n            <ion-label floating>Username</ion-label>\n\n            <ion-input type="text" name="username" [(ngModel)]="username"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Student ID</ion-label>\n\n            <ion-input type="text" name="studentID" [(ngModel)]="studentID"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="margin-bottom">\n\n            <ion-label floating>Confirm Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="confirmPassword"></ion-input>\n\n          </ion-item>\n\n          <button ion-button block round (click)="SignUp()" color="light" class="login-button">SIGN UP</button>\n\n      </div>\n\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\welcome\welcome.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_3__shared_validate_service__["a" /* ValidateService */],
-        __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__["a" /* AuthService */]])
+    __metadata("design:paramtypes", [typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__shared_validate_service__["a" /* ValidateService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_validate_service__["a" /* ValidateService */]) === "function" && _h || Object, typeof (_j = typeof __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__["a" /* AuthService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__["a" /* AuthService */]) === "function" && _j || Object])
 ], WelcomePage);
 
+var _a, _b, _c, _d, _e, _f, _g, _h, _j;
 //# sourceMappingURL=welcome.js.map
 
 /***/ }),
@@ -520,9 +517,7 @@ var ValidateService = (function () {
     }
     // Validate Registration
     ValidateService.prototype.validateRegister = function (user) {
-        if (user.firstName == undefined
-            || user.lastName == undefined
-            || user.username == undefined
+        if (user.username == undefined
             || user.studentId == undefined
             || user.password == undefined) {
             return false;

@@ -65,7 +65,22 @@ router.post('/registerstudent', (req, res, next) => {
                 if(err) {
                     res.json({ success: false, msg: 'Failed to register student: ' + err });
                 } else {
-                    res.json({ success: true, msg: 'Student registered!' });
+                    const token = jwt.sign({ data: student }, config.secret, {
+                        expiresIn: 86400 // 1 day in seconds
+                    });
+                    res.json({
+                        success: true,
+                        token: 'JWT '+ token,
+                        user: {
+                            id: student._id,
+                            firstName: student.firstName,
+                            lastName: student.lastName,
+                            email: student.email,
+                            studentId: student.studentId,
+                            groupId: student.groupId,
+                            username: student.username
+                        }
+                    });
                 }
             });
         }
@@ -131,7 +146,21 @@ router.post('/registerlecturer', (req, res, next) => {
                 if(err) {
                     res.json({ success: false, msg: 'Failed to register lecturer: ' + err });
                 } else {
-                    res.json({ success: true, msg: 'Lecturer registered!' });
+                    const token = jwt.sign({ data: lecturer }, config.secret, {
+                        expiresIn: 86400 // 1 day in seconds
+                    });
+                    res.json({
+                        success: true,
+                        token: 'JWT '+ token,
+                        user: {
+                            id: lecturer._id,
+                            firstName: lecturer.firstName,
+                            lastName: lecturer.lastName,
+                            email: lecturer.email,
+                            username: lecturer.username,
+                            lecturerId: lecturer.lecturerId
+                        }
+                    });
                 }
             });
         }

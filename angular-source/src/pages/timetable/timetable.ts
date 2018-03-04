@@ -26,7 +26,7 @@ export class TimetablePage {
     public navParams: NavParams,
     private _authService: AuthService,
     private _diaryService: DiaryService) {
-      this.user = _authService.loadUser();   
+      this.user = _authService.loadUser(); 
       this.userObj = JSON.parse(this.user);
       this.getModules();
   }

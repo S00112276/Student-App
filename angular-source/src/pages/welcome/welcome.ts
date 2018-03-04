@@ -77,8 +77,8 @@ export class WelcomePage  {
    // SignUp Button Clicked
    SignUp() {
      const user =  {
-       firstName:this.firstName, 
-       lastName:this.lastName,  
+       /* firstName:this.firstName, 
+       lastName:this.lastName,  */ 
        email: this.studentID + "@mail.itsligo.ie",
        username:this.username, 
        studentId:this.studentID.toLowerCase(), 
@@ -124,9 +124,10 @@ export class WelcomePage  {
      if (user.studentId.startsWith("s")) {
        this._authService.registerStudent(user).subscribe(data =>  {
          if (data.success) {
-             this.presentLoading('Check your email.');
-             // Sends Email to breakpoint@outlook.ie
-             this._authService.sendValEmail(user);
+           this._authService.storeUserData(data.token, data.user);
+           this.presentLoading('Check your email.');
+           // Sends Email to breakpoint@outlook.ie
+           this._authService.sendValEmail(user);
            this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
          } else {
            let alert = this.alertCtrl.create( {
@@ -142,11 +143,12 @@ export class WelcomePage  {
      else if (user.studentId.startsWith("l")) {
        this._authService.registerLecturer(user).subscribe(data =>  {
          if (data.success) {
-             this.presentLoading('Check your email.');
-             // Sends Email to breakpoint@outlook.ie
-             this._authService.sendValEmail(user);
-             this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
-         } else {
+           this._authService.storeUserData(data.token, data.user);
+           this.presentLoading('Check your email.');
+           // Sends Email to breakpoint@outlook.ie
+           this._authService.sendValEmail(user);
+           this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
+        } else {
            let alert = this.alertCtrl.create( {
              title:'Lecturer Registration Unsuccessful', 
              subTitle:'Please Try Again', 

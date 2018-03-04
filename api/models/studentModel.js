@@ -21,7 +21,7 @@ const StudentSchema = mongoose.Schema({
     },
     username: {
         type: String,
-        required: true,
+        sparse: true,
         unique: true
     },
     studentId: {
@@ -31,6 +31,7 @@ const StudentSchema = mongoose.Schema({
     },
     password: {
         type: String,
+        sparse: true,
         required: true
     },
     groupId: {

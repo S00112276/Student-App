@@ -6,9 +6,9 @@ export class ValidateService {
 
     // Validate Registration
     validateRegister(user) {
-        if (user.firstName == undefined
+        if (/* user.firstName == undefined
             || user.lastName == undefined
-            || user.username == undefined
+            || */ user.username == undefined
             || user.studentId == undefined
             || user.password == undefined
         ) {
