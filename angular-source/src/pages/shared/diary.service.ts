@@ -12,12 +12,6 @@ export class DiaryService {
   entry: any;
 
   constructor(private _http: HttpClient, private http: Http) { }
-  
- /*  // Returns data on selected collection
-  populateArrays(_url): Observable<any[]> {
-    return this._http.get<any[]>(_url)
-    .catch(this.handleError);
-  } */
 
   // Get Diary Entries
   getEntries(): Observable<any[]> {

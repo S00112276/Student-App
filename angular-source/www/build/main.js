@@ -83,14 +83,10 @@ var AddEventPage = (function () {
         this.navParams = navParams;
         this._diaryService = _diaryService;
         this.modules = [];
-        //private _modulesUrl = 'http://localhost:3000/course/modules';
         this.courses = [];
-        //private _coursesUrl = 'http://localhost:3000/course/courses';
         this.groups = [];
         this.getModules();
         this.getCourses();
-        /* this.populateArrays(this.courses, this._coursesUrl);
-        this.populateArrays(this.modules, this._modulesUrl); */
     }
     AddEventPage.prototype.insertEntry = function () {
         var _this = this;
@@ -1215,11 +1211,6 @@ var DiaryService = (function () {
         this._http = _http;
         this.http = http;
     }
-    /*  // Returns data on selected collection
-     populateArrays(_url): Observable<any[]> {
-       return this._http.get<any[]>(_url)
-       .catch(this.handleError);
-     } */
     // Get Diary Entries
     DiaryService.prototype.getEntries = function () {
         return this._http.get(this.prepEndpoint('diary/diaryentries'))
@@ -1310,7 +1301,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var DiaryPage = (function () {
-    //private _coursesUrl = 'http://localhost:3000/course/courses';
     function DiaryPage(navCtrl, _diaryService, modalCtrl) {
         this.navCtrl = navCtrl;
         this._diaryService = _diaryService;
@@ -1324,14 +1314,11 @@ var DiaryPage = (function () {
         ];
         this.entries = [];
         this.lecturers = [];
-        //private _lecturersUrl = 'http://localhost:3000/users/lecturers';
         this.modules = [];
-        //private _modulesUrl = 'http://localhost:3000/course/modules';
         this.courses = [];
         this.getLecturers();
         this.getModules();
         this.getCourses();
-        this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
     }
     DiaryPage.prototype.sortByDate = function (event1, event2) {
         if (event1.dueDate > event2.dueDate)
@@ -1341,15 +1328,6 @@ var DiaryPage = (function () {
         else
             return -1;
     };
-    // Returns data on selected collection
-    /*   populateArrays(array, _url) {
-        this._diaryService.populateArrays(_url).subscribe(data => {
-          for (var i = 0; i < data.length; i++) {
-            array[i] = data[i];
-          }
-        },
-          error => this.errorMessage = <any>error);
-      } */
     // Get Lecturers
     DiaryPage.prototype.getLecturers = function () {
         var _this = this;
@@ -1375,6 +1353,7 @@ var DiaryPage = (function () {
         var _this = this;
         this._diaryService.getCourses().subscribe(function (courses) {
             _this.courses = courses;
+            _this.getEntries(_this.entries, _this.lecturers, _this.modules, _this.courses);
         }, function (err) {
             console.log(err);
             return false;
@@ -1382,10 +1361,10 @@ var DiaryPage = (function () {
     };
     // Returns Diary Entries
     DiaryPage.prototype.getEntries = function (entries, lecturers, modules, courses) {
-        /* this.populateArrays(lecturers, this._lecturersUrl);
-        this.populateArrays(modules, this._modulesUrl);
-        this.populateArrays(courses, this._coursesUrl); */
         var _this = this;
+        console.log(this.lecturers);
+        console.log(modules);
+        console.log(courses);
         this._diaryService.getEntries().subscribe(function (data) {
             for (var i = 0; i < data.length; i++) {
                 entries.push(data[i]);

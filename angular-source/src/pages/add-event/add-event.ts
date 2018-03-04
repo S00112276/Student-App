@@ -23,10 +23,8 @@ export class AddEventPage {
   newEntry: {};
 
   modules: any[] = [];
-  //private _modulesUrl = 'http://localhost:3000/course/modules';
 
   courses: any[] = [];
-  //private _coursesUrl = 'http://localhost:3000/course/courses';
 
   groups: any[] = [];
 
@@ -38,8 +36,6 @@ export class AddEventPage {
   ) {
     this.getModules();
     this.getCourses();
-    /* this.populateArrays(this.courses, this._coursesUrl);
-    this.populateArrays(this.modules, this._modulesUrl); */
   }
 
   insertEntry() {

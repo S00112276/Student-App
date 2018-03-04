@@ -22,13 +22,10 @@ export class DiaryPage {
   entries: any[] = [];
 
   lecturers: any[] = [];
-  //private _lecturersUrl = 'http://localhost:3000/users/lecturers';
 
   modules: any[] = [];
-  //private _modulesUrl = 'http://localhost:3000/course/modules';
 
   courses: any[] = [];
-  //private _coursesUrl = 'http://localhost:3000/course/courses';
 
   constructor(public navCtrl: NavController,
     private _diaryService: DiaryService,
@@ -36,7 +33,6 @@ export class DiaryPage {
     this.getLecturers();
     this.getModules();
     this.getCourses();
-    this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
   }
 
   sortByDate(event1: any, event2: any) {
@@ -44,16 +40,6 @@ export class DiaryPage {
     else if (event1.dueDate === event2.dueDate) return 0;
     else return -1;
   }
-
-  // Returns data on selected collection
-/*   populateArrays(array, _url) {
-    this._diaryService.populateArrays(_url).subscribe(data => {
-      for (var i = 0; i < data.length; i++) {
-        array[i] = data[i];
-      }
-    },
-      error => this.errorMessage = <any>error);
-  } */
 
   // Get Lecturers
   getLecturers() {
@@ -81,6 +67,7 @@ export class DiaryPage {
   getCourses() {
     this._diaryService.getCourses().subscribe(courses => {
       this.courses = courses;
+      this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
     }, 
     err => {
       console.log(err);
@@ -90,10 +77,9 @@ export class DiaryPage {
 
   // Returns Diary Entries
   getEntries(entries, lecturers, modules, courses) {
-      /* this.populateArrays(lecturers, this._lecturersUrl);
-      this.populateArrays(modules, this._modulesUrl);
-      this.populateArrays(courses, this._coursesUrl); */
-
+      console.log(this.lecturers);
+      console.log(modules);
+      console.log(courses);
       this._diaryService.getEntries().subscribe(data => {
         for (var i = 0; i < data.length; i++) {
           entries.push(data[i]);
