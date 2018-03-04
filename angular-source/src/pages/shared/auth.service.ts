@@ -87,14 +87,20 @@ export class AuthService {
     loadToken() {
         const token = localStorage.getItem('id_token');
         this.authToken = token;
-      }
+    }
+
+    // Load User from Local Storage
+    loadUser() {
+        const user = localStorage.getItem('user');
+        return user;
+    }
 
     // Sets beginning of every endpoint
     prepEndpoint(ep) {
         if(this.isDev) {
             return ep;
         } else {
-            return 'https://still-beach-80885.herokuapp.com/' + ep;
+            return 'http://localhost:3000/' + ep;
         }
     }
 

@@ -23,10 +23,10 @@ export class AddEventPage {
   newEntry: {};
 
   modules: any[] = [];
-  private _modulesUrl = 'http://localhost:3000/course/modules';
+  //private _modulesUrl = 'http://localhost:3000/course/modules';
 
   courses: any[] = [];
-  private _coursesUrl = 'http://localhost:3000/course/courses';
+  //private _coursesUrl = 'http://localhost:3000/course/courses';
 
   groups: any[] = [];
 
@@ -36,8 +36,10 @@ export class AddEventPage {
     public navParams: NavParams,
     private _diaryService: DiaryService
   ) {
-    this.populateArrays(this.courses, this._coursesUrl);
-    this.populateArrays(this.modules, this._modulesUrl);
+    this.getModules();
+    this.getCourses();
+    /* this.populateArrays(this.courses, this._coursesUrl);
+    this.populateArrays(this.modules, this._modulesUrl); */
   }
 
   insertEntry() {
@@ -78,16 +80,38 @@ export class AddEventPage {
       });
   }
 
+    // Get Modules
+    getModules() {
+      this._diaryService.getModules().subscribe(modules => {
+        this.modules = modules;
+      }, 
+      err => {
+        console.log(err);
+          return false;
+      });
+    }
+  
+    // Get Courses
+    getCourses() {
+      this._diaryService.getCourses().subscribe(courses => {
+        this.courses = courses;
+      }, 
+      err => {
+        console.log(err);
+          return false;
+      });
+    }
+
   // Returns data on selected collection
-  populateArrays(array, _url) {
+/*   populateArrays(array, _url) {
     this._diaryService.populateArrays(_url).subscribe(data => {
       for (var i = 0; i < data.length; i++) {
         array[i] = data[i];
       }
-      /* this.getGroups(this.groups); */
+      // this.getGroups(this.groups); 
     },
       error => this.errorMessage = <any>error);
-  }
+  } */
 
   /*   filterGroups(moduleID) {
       for (let i = 0; i < this.modules.length; i++) {

@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AuthService } from '../shared/auth.service';
+import { DiaryService } from '../shared/diary.service';
 
 @IonicPage()
 @Component({
@@ -8,50 +10,55 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TimetablePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) { }
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private _authService: AuthService,
+    private _diaryService: DiaryService) {
+      this.user = _authService.loadUser();
+      console.log("user: " + this.user);
+      this.getModules();
+  }
+    
+  user: any;
+  modules: any[] = [];
+  errorMessage: string;
+  groupId = "5a78f42853e0020c2cf5b22c"; // Should be from user in localStorage
+  mondayModules: any[] = [];
+  tuesdayModules:any[] = [];
+  wednesdayModules:any[] = [];
+  thursdayModules:any[] = [];
+  fridayModules:any[] = [];
+    
+  // Return Modules for groupId
+  getModules() {
+    this._diaryService.getStudentModules(this.groupId).subscribe(modules => {
+      this.modules = modules;
+      this.filterModules();
+    }, 
+    err => {
+      console.log(err);
+        return false;
+    });
+  }
 
-  ionViewDidLoad() { }
-
-  modules = [
-    {
-      _id: 1,
-      subject: 'Rich Application Development',
-      lecturer: 'Paul Powell',
-      location: 'A0005',
-      day: 'Monday',
-      time: '12:00 - 13:00'
-    },
-    {
-      _id: 2,
-      subject: 'Software Project Management',
-      lecturer: 'Kinsellal',
-      location: 'E2011',
-      day: 'Tuesday',      
-      time: '13:00 - 14:00'
-    },
-    {
-      _id: 3,
-      subject: 'Web Programming',
-      lecturer: 'Shane Banks',
-      location: 'D2039',
-      day: 'Wednesday',      
-      time: '14:00 - 15:00'
-    },
-    {
-      _id: 4,
-      subject: 'Foundation Object Oriented Programming',
-      lecturer: 'Keith McManus',
-      location: 'B1042',
-      day: 'Thursday',      
-      time: '16:00 - 18:00'
-    },
-    {
-      _id: 5,
-      subject: 'Professional Development',
-      lecturer: 'Aine Mitchell',
-      location: 'A0004',
-      day: 'Friday',      
-      time: '9:00 - 10:00'
+  // Filter Modules by Day
+  filterModules() {
+    for (let i = 0; i < this.modules.length; i++) {
+      if(this.modules[i].day.toLowerCase() == "monday") {
+        this.mondayModules.push(this.modules[i]);
+      }
+      else if(this.modules[i].day.toLowerCase() == "tuesday") {
+        this.tuesdayModules.push(this.modules[i]);
+      }
+      else if(this.modules[i].day.toLowerCase() == "wednesday") {
+        this.wednesdayModules.push(this.modules[i]);
+      }
+      else if(this.modules[i].day.toLowerCase() == "thursday") {
+        this.thursdayModules.push(this.modules[i]);
+      }
+      else if(this.modules[i].day.toLowerCase() == "friday") {
+        this.fridayModules.push(this.modules[i]);
+      }
     }
-  ]
+  }
 }

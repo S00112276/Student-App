@@ -62,4 +62,14 @@ router.post('/addmodule', (req, res, next) => {
     });
 });
 
+// Find Module based on groupId
+router.get('/studentmodules/:groupId', (req, res, next) => {
+    Module.find({ groups : req.params.groupId }, function (err, entry) {
+        if(err)
+        res.send(err);
+
+        res.json(entry);
+    });
+});
+
 module.exports = router;

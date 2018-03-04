@@ -4,103 +4,53 @@
   </ion-navbar>
 </ion-header>
 
-<!-- Mock data -->
+<!-- Timtable -->
 <ion-content padding>
   <ion-list>
+    <!-- Monday -->
     <ion-item-group>
-      <ion-item-divider color="secondary">Monday</ion-item-divider>
-      <ion-item>
-        <h2>Rich Application Development</h2>
-        <h3>A0005 // 12:00 - 13:00</h3>
-        <p>Paul Powell</p>
-      </ion-item>
-      <ion-item>
-        <h2>Software Project Management</h2>
-        <h3>E2011 // 13:00 - 14:00</h3>
-        <p>Vivion Kinsellal</p>
-      </ion-item>
-      <ion-item>
-        <h2>Web Programming</h2>
-        <h3>D2039 // 14:00 - 15:00</h3>
-        <p>Shane Banks</p>
-      </ion-item>
-      <ion-item>
-        <h2>Foundation Object Oriented Programming</h2>
-        <h3>B1042 // 16:00 - 18:00</h3>
-        <p>Keith McManus</p>
-      </ion-item>
+        <ion-item-divider color="secondary">Monday</ion-item-divider>
+        <ion-item *ngFor="let module of mondayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p>{{ module.lecturer }}</p>
+        </ion-item>
     </ion-item-group>
+    <!-- Tuesday -->
     <ion-item-group>
-      <ion-item-divider color="secondary">Tuesday</ion-item-divider>
-      <ion-item>
-        <h2>Professional Development</h2>
-        <h3>A0004 // 9:00 - 10:00</h3>
-        <p>Aine Mitchell</p>
-      </ion-item>
-      <ion-item>
-        <h2>Software Project Management</h2>
-        <h3>E1028 // 12:00 - 14:00</h3>
-        <p>Vivion Kinsellal</p>
-      </ion-item>
-      <ion-item>
-        <h2>Database Development</h2>
-        <h3>D2037 // 14:00 - 16:00</h3>
-        <p>Shane Banks</p>
-      </ion-item>
+        <ion-item-divider color="secondary">Tuesday</ion-item-divider>
+        <ion-item *ngFor="let module of tuesdayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p>{{ module.lecturer }}</p>
+        </ion-item>
     </ion-item-group>
+    <!-- Wednesday -->
     <ion-item-group>
-      <ion-item-divider color="secondary">Wednesday</ion-item-divider>
-      <ion-item>
-        <h2>Professional Development</h2>
-        <h3>A0004 // 9:00 - 10:00</h3>
-        <p>Aine Mitchell</p>
-      </ion-item>
-      <ion-item>
-        <h2>Software Project Management</h2>
-        <h3>E1028 // 12:00 - 14:00</h3>
-        <p>Vivion Kinsellal</p>
-      </ion-item>
-      <ion-item>
-        <h2>Database Development</h2>
-        <h3>D2037 // 14:00 - 16:00</h3>
-        <p>Shane Banks</p>
-      </ion-item>
+        <ion-item-divider color="secondary">Wednesday</ion-item-divider>
+        <ion-item *ngFor="let module of wednesdayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p>{{ module.lecturer }}</p>
+        </ion-item>
     </ion-item-group>
+    <!-- Thursday -->
     <ion-item-group>
-      <ion-item-divider color="secondary">Thursday</ion-item-divider>
-      <ion-item>
-        <h2>Professional Development</h2>
-        <h3>A0004 // 9:00 - 10:00</h3>
-        <p>Aine Mitchell</p>
-      </ion-item>
-      <ion-item>
-        <h2>Software Project Management</h2>
-        <h3>E1028 // 12:00 - 14:00</h3>
-        <p>Vivion Kinsellal</p>
-      </ion-item>
-      <ion-item>
-        <h2>Database Development</h2>
-        <h3>D2037 // 14:00 - 16:00</h3>
-        <p>Shane Banks</p>
-      </ion-item>
+        <ion-item-divider color="secondary">Thursday</ion-item-divider>
+        <ion-item *ngFor="let module of thursdayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p>{{ module.lecturer }}</p>
+        </ion-item>
     </ion-item-group>
+    <!-- Friday -->
     <ion-item-group>
-      <ion-item-divider color="secondary">Friday</ion-item-divider>
-      <ion-item>
-        <h2>Professional Development</h2>
-        <h3>A0004 // 9:00 - 10:00</h3>
-        <p>Aine Mitchell</p>
-      </ion-item>
-      <ion-item>
-        <h2>Software Project Management</h2>
-        <h3>E1028 // 12:00 - 14:00</h3>
-        <p>Vivion Kinsellal</p>
-      </ion-item>
-      <ion-item>
-        <h2>Database Development</h2>
-        <h3>D2037 // 14:00 - 16:00</h3>
-        <p>Shane Banks</p>
-      </ion-item>
+        <ion-item-divider color="secondary">Friday</ion-item-divider>
+        <ion-item *ngFor="let module of fridayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p>{{ module.lecturer }}</p>
+        </ion-item>
     </ion-item-group>
   </ion-list>
 </ion-content>

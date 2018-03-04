@@ -10,8 +10,14 @@ To access the database in the shell:
 /ProgramFiles/MongoDB/server/3.4/bin/
 mongo "mongodb://breakpoint-shard-00-00-ti5q0.mongodb.net:27017,breakpoint-shard-00-01-ti5q0.mongodb.net:27017,breakpoint-shard-00-02-ti5q0.mongodb.net:27017/test?replicaSet=Breakpoint-shard-0" --authenticationDatabase admin --ssl --username Breakpoint --password breakpoint 
 
+MongoDB Commands:
+- show dbs 
+- use breakpoint (this is this projects db)
+- show collections 
+- db.collectionName.find().pretty() --> Will show all entries in the collection, e.g: db.students.find().pretty()
+
 When Registering:
-- Save Passwords as: qwerty1234
+- Save Passwords as: qwerty1234 (for handiness to remember)
 
 Example Login:
 email:      L00282828@mail.itsligo.ie

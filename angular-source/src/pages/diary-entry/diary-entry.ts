@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, Platform, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, Platform, NavParams, ViewController } from 'ionic-angular';
 
 /**
  * Generated class for the DiaryEntryPage page.

@@ -81,7 +81,7 @@ export class WelcomePage  {
        lastName:this.lastName,  
        email: this.studentID + "@mail.itsligo.ie",
        username:this.username, 
-       studentId:this.studentID, 
+       studentId:this.studentID.toLowerCase(), 
        password:this.password, 
        confirmPassword:this.confirmPassword
      }
@@ -121,7 +121,7 @@ export class WelcomePage  {
  
      // Register User
      // Student
-     if (user.studentId.startsWith("S") || user.studentId.startsWith("s")) {
+     if (user.studentId.startsWith("s")) {
        this._authService.registerStudent(user).subscribe(data =>  {
          if (data.success) {
              this.presentLoading('Check your email.');
@@ -130,7 +130,7 @@ export class WelcomePage  {
            this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
          } else {
            let alert = this.alertCtrl.create( {
-             title:'Registration Unsuccessful', 
+             title:'Student Registration Unsuccessful', 
              subTitle:'Please Try Again', 
              buttons:['OK']
            }); 
@@ -139,25 +139,23 @@ export class WelcomePage  {
        }); 
      }
      // Lecturer
-     else if (user.studentId.startsWith("L") || user.studentId.startsWith("l")) {
+     else if (user.studentId.startsWith("l")) {
        this._authService.registerLecturer(user).subscribe(data =>  {
          if (data.success) {
              this.presentLoading('Check your email.');
              // Sends Email to breakpoint@outlook.ie
              this._authService.sendValEmail(user);
              this._authService.loggedIn(); // Calls loggedIn to update BehaviorSubject
-         } 
-         // Incorrect ID format
-         else {
+         } else {
            let alert = this.alertCtrl.create( {
-             title:'Registration Unsuccessful', 
+             title:'Lecturer Registration Unsuccessful', 
              subTitle:'Please Try Again', 
              buttons:['OK']
            }); 
            alert.present(); 
          }
        }); 
-     } else {
+     } else { // Incorrect ID format
          console.log("ID does not start with either S or L"); 
          let alert = this.alertCtrl.create( {
            title:'Failed to Register', 

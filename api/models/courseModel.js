@@ -16,10 +16,6 @@ const CourseSchema = mongoose.Schema({
         unique: true
     },
     groups: [StudentGroup] // Embedded Document
-    /* Modules: [{
-        type: Schema.Types.ObjectId, // Gets ID for referenced Document
-        ref: 'Module' // References Module Document
-    }] */
 });
 
 const Course = module.exports = mongoose.model('Course', CourseSchema);

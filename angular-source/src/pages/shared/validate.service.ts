@@ -11,7 +11,6 @@ export class ValidateService {
             || user.username == undefined
             || user.studentId == undefined
             || user.password == undefined
-
         ) {
             return false;
         }

@@ -4,132 +4,6 @@ webpackJsonp([6],{
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddEventPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_diary_service__ = __webpack_require__(92);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var AddEventPage = (function () {
-    function AddEventPage(alertCtrl, navCtrl, navParams, _diaryService) {
-        this.alertCtrl = alertCtrl;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this._diaryService = _diaryService;
-        this.modules = [];
-        this._modulesUrl = 'http://localhost:3000/course/modules';
-        this.courses = [];
-        this._coursesUrl = 'http://localhost:3000/course/courses';
-        this.groups = [];
-        this.populateArrays(this.courses, this._coursesUrl);
-        this.populateArrays(this.modules, this._modulesUrl);
-    }
-    AddEventPage.prototype.insertEntry = function () {
-        var _this = this;
-        this.groups = this.module.groups;
-        this.lecturer = this.module.lecturer;
-        var time = 'T';
-        var dueTime = time.concat(this.time);
-        var due = this.dueDate.concat(dueTime);
-        var entry = {
-            title: this.title,
-            startDate: new Date(),
-            dueDate: due,
-            lecturer: this.lecturer,
-            groups: this.groups,
-            room: this.room,
-            module: this.module._id,
-            percentage: this.percentage,
-            description: this.description
-        };
-        this._diaryService.insertEntry(entry).subscribe(function (data) {
-            if (data.success) {
-                var alert_1 = _this.alertCtrl.create({
-                    title: 'Added to DB',
-                    subTitle: 'YAY',
-                    buttons: ['OK']
-                });
-                alert_1.present();
-                _this.navCtrl.pop();
-            }
-            else {
-                var alert_2 = _this.alertCtrl.create({
-                    title: 'Failed',
-                    subTitle: ':(',
-                    buttons: ['OK']
-                });
-                alert_2.present();
-            }
-        });
-    };
-    // Returns data on selected collection
-    AddEventPage.prototype.populateArrays = function (array, _url) {
-        var _this = this;
-        this._diaryService.populateArrays(_url).subscribe(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                array[i] = data[i];
-            }
-            /* this.getGroups(this.groups); */
-        }, function (error) { return _this.errorMessage = error; });
-    };
-    /*   filterGroups(moduleID) {
-        for (let i = 0; i < this.modules.length; i++) {
-          if(this.modules[i].name == moduleID)
-              console.log(this.modules[i].groups);
-        }
-      }
-    
-      getGroups(module) {
-        for (let i = 0; i < this.courses.length; i++) {
-          for (let j = 0; j < this.courses[i].length; j++) {
-            this.groups.push(this.courses[i].groups[j]);
-          }
-        }
-      } */
-    AddEventPage.prototype.removeDuplicates = function (originalArray, objKey) {
-        this.removeDuplicates(this.groups, 'name');
-        var trimmedArray = [];
-        var values = [];
-        var value;
-        for (var i = 0; i < originalArray.length; i++) {
-            value = originalArray[i][objKey];
-            if (values.indexOf(value) === -1) {
-                trimmedArray.push(originalArray[i]);
-                values.push(value);
-            }
-        }
-        return trimmedArray;
-    };
-    return AddEventPage;
-}());
-AddEventPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-add-event',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\add-event\add-event.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Add entry</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n\n      <ion-label>Type</ion-label>\n\n      <ion-select [(ngModel)]="title">\n\n        <ion-option value="assessment">Assessment</ion-option>\n\n        <ion-option value="presentation">Presentation</ion-option>\n\n        <ion-option value="report">Report</ion-option>\n\n        <ion-option value="assignment">Assignment</ion-option>\n\n        <ion-option value="event">Event</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Module</ion-label>\n\n      <ion-select [(ngModel)]="module"><!--(ngModelChange)="filterGroups($event)"-->\n\n        <ion-option *ngFor="let module of modules" [value]="module" >{{module.name | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <!-- <ion-item *ngIf="module != null">\n\n      <ion-label>Group</ion-label>\n\n      <ion-select [(ngModel)]="groups">\n\n        <ion-option *ngFor="let group of module.groups" ngValue="group" >{{group\ | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item> -->\n\n    <ion-item>\n\n      <ion-label floating>Description</ion-label>\n\n      <ion-textarea type="text" [(ngModel)]="description" name="notes"></ion-textarea>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Room</ion-label>\n\n      <ion-input type="text" [(ngModel)]="room" name="room"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Due Date</ion-label>\n\n      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="dueDate" name="dueDate"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Time</ion-label>\n\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="time" name="time"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Percentage</ion-label>\n\n      <ion-input type="text" [(ngModel)]="percentage" name="percentage"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <button ion-button (click)="insertEntry()" full round>Save</button>\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\add-event\add-event.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
-        __WEBPACK_IMPORTED_MODULE_2__shared_diary_service__["a" /* DiaryService */]])
-], AddEventPage);
-
-//# sourceMappingURL=add-event.js.map
-
-/***/ }),
-
-/***/ 117:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiaryEntryPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
@@ -182,6 +56,152 @@ DiaryEntryPage = __decorate([
 
 /***/ }),
 
+/***/ 117:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddEventPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_diary_service__ = __webpack_require__(55);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var AddEventPage = (function () {
+    function AddEventPage(alertCtrl, navCtrl, navParams, _diaryService) {
+        this.alertCtrl = alertCtrl;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this._diaryService = _diaryService;
+        this.modules = [];
+        //private _modulesUrl = 'http://localhost:3000/course/modules';
+        this.courses = [];
+        //private _coursesUrl = 'http://localhost:3000/course/courses';
+        this.groups = [];
+        this.getModules();
+        this.getCourses();
+        /* this.populateArrays(this.courses, this._coursesUrl);
+        this.populateArrays(this.modules, this._modulesUrl); */
+    }
+    AddEventPage.prototype.insertEntry = function () {
+        var _this = this;
+        this.groups = this.module.groups;
+        this.lecturer = this.module.lecturer;
+        var time = 'T';
+        var dueTime = time.concat(this.time);
+        var due = this.dueDate.concat(dueTime);
+        var entry = {
+            title: this.title,
+            startDate: new Date(),
+            dueDate: due,
+            lecturer: this.lecturer,
+            groups: this.groups,
+            room: this.room,
+            module: this.module._id,
+            percentage: this.percentage,
+            description: this.description
+        };
+        this._diaryService.insertEntry(entry).subscribe(function (data) {
+            if (data.success) {
+                var alert = _this.alertCtrl.create({
+                    title: 'Added to DB',
+                    subTitle: 'YAY',
+                    buttons: ['OK']
+                });
+                alert.present();
+                _this.navCtrl.pop();
+            }
+            else {
+                var alert = _this.alertCtrl.create({
+                    title: 'Failed',
+                    subTitle: ':(',
+                    buttons: ['OK']
+                });
+                alert.present();
+            }
+        });
+    };
+    // Get Modules
+    AddEventPage.prototype.getModules = function () {
+        var _this = this;
+        this._diaryService.getModules().subscribe(function (modules) {
+            _this.modules = modules;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    // Get Courses
+    AddEventPage.prototype.getCourses = function () {
+        var _this = this;
+        this._diaryService.getCourses().subscribe(function (courses) {
+            _this.courses = courses;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    // Returns data on selected collection
+    /*   populateArrays(array, _url) {
+        this._diaryService.populateArrays(_url).subscribe(data => {
+          for (var i = 0; i < data.length; i++) {
+            array[i] = data[i];
+          }
+          // this.getGroups(this.groups);
+        },
+          error => this.errorMessage = <any>error);
+      } */
+    /*   filterGroups(moduleID) {
+        for (let i = 0; i < this.modules.length; i++) {
+          if(this.modules[i].name == moduleID)
+              console.log(this.modules[i].groups);
+        }
+      }
+    
+      getGroups(module) {
+        for (let i = 0; i < this.courses.length; i++) {
+          for (let j = 0; j < this.courses[i].length; j++) {
+            this.groups.push(this.courses[i].groups[j]);
+          }
+        }
+      } */
+    AddEventPage.prototype.removeDuplicates = function (originalArray, objKey) {
+        this.removeDuplicates(this.groups, 'name');
+        var trimmedArray = [];
+        var values = [];
+        var value;
+        for (var i = 0; i < originalArray.length; i++) {
+            value = originalArray[i][objKey];
+            if (values.indexOf(value) === -1) {
+                trimmedArray.push(originalArray[i]);
+                values.push(value);
+            }
+        }
+        return trimmedArray;
+    };
+    return AddEventPage;
+}());
+AddEventPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-add-event',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\add-event\add-event.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Add entry</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n\n      <ion-label>Type</ion-label>\n\n      <ion-select [(ngModel)]="title">\n\n        <ion-option value="assessment">Assessment</ion-option>\n\n        <ion-option value="presentation">Presentation</ion-option>\n\n        <ion-option value="report">Report</ion-option>\n\n        <ion-option value="assignment">Assignment</ion-option>\n\n        <ion-option value="event">Event</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Module</ion-label>\n\n      <ion-select [(ngModel)]="module"><!--(ngModelChange)="filterGroups($event)"-->\n\n        <ion-option *ngFor="let module of modules" [value]="module" >{{module.name | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <!-- <ion-item *ngIf="module != null">\n\n      <ion-label>Group</ion-label>\n\n      <ion-select [(ngModel)]="groups">\n\n        <ion-option *ngFor="let group of module.groups" ngValue="group" >{{group\ | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item> -->\n\n    <ion-item>\n\n      <ion-label floating>Description</ion-label>\n\n      <ion-textarea type="text" [(ngModel)]="description" name="notes"></ion-textarea>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Room</ion-label>\n\n      <ion-input type="text" [(ngModel)]="room" name="room"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Due Date</ion-label>\n\n      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="dueDate" name="dueDate"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Time</ion-label>\n\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="time" name="time"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Percentage</ion-label>\n\n      <ion-input type="text" [(ngModel)]="percentage" name="percentage"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <button ion-button (click)="insertEntry()" full round>Save</button>\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\add-event\add-event.html"*/,
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_2__shared_diary_service__["a" /* DiaryService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__shared_diary_service__["a" /* DiaryService */]) === "function" && _d || Object])
+], AddEventPage);
+
+var _a, _b, _c, _d;
+//# sourceMappingURL=add-event.js.map
+
+/***/ }),
+
 /***/ 118:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -189,7 +209,7 @@ DiaryEntryPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WelcomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_validate_service__ = __webpack_require__(189);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -254,7 +274,7 @@ var WelcomePage = (function () {
             lastName: this.lastName,
             email: this.studentID + "@mail.itsligo.ie",
             username: this.username,
-            studentId: this.studentID,
+            studentId: this.studentID.toLowerCase(),
             password: this.password,
             confirmPassword: this.confirmPassword
         };
@@ -290,7 +310,7 @@ var WelcomePage = (function () {
         }
         // Register User
         // Student
-        if (user.studentId.startsWith("S") || user.studentId.startsWith("s")) {
+        if (user.studentId.startsWith("s")) {
             this._authService.registerStudent(user).subscribe(function (data) {
                 if (data.success) {
                     _this.presentLoading('Check your email.');
@@ -300,7 +320,7 @@ var WelcomePage = (function () {
                 }
                 else {
                     var alert_4 = _this.alertCtrl.create({
-                        title: 'Registration Unsuccessful',
+                        title: 'Student Registration Unsuccessful',
                         subTitle: 'Please Try Again',
                         buttons: ['OK']
                     });
@@ -308,7 +328,7 @@ var WelcomePage = (function () {
                 }
             });
         }
-        else if (user.studentId.startsWith("L") || user.studentId.startsWith("l")) {
+        else if (user.studentId.startsWith("l")) {
             this._authService.registerLecturer(user).subscribe(function (data) {
                 if (data.success) {
                     _this.presentLoading('Check your email.');
@@ -318,7 +338,7 @@ var WelcomePage = (function () {
                 }
                 else {
                     var alert_5 = _this.alertCtrl.create({
-                        title: 'Registration Unsuccessful',
+                        title: 'Lecturer Registration Unsuccessful',
                         subTitle: 'Please Try Again',
                         buttons: ['OK']
                     });
@@ -441,7 +461,7 @@ webpackEmptyAsyncContext.id = 129;
 
 var map = {
 	"../pages/add-event/add-event.module": [
-		340,
+		344,
 		5
 	],
 	"../pages/chat-room/chat-room.module": [
@@ -449,19 +469,19 @@ var map = {
 		4
 	],
 	"../pages/diary-entry/diary-entry.module": [
-		341,
+		340,
 		3
 	],
 	"../pages/diary/diary.module": [
-		342,
+		341,
 		2
 	],
 	"../pages/timetable/timetable.module": [
-		343,
+		342,
 		1
 	],
 	"../pages/welcome/welcome.module": [
-		344,
+		343,
 		0
 	]
 };
@@ -545,11 +565,11 @@ ValidateService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timetable_timetable__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diary_diary__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timetable_timetable__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diary_diary__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_auth_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_auth_service__ = __webpack_require__(47);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -609,7 +629,7 @@ HomePage = __decorate([
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatRoomPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ng_socket_io__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ng_socket_io__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_ng_socket_io__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(14);
@@ -745,24 +765,24 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(29);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common_http__ = __webpack_require__(186);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_shared_auth_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_shared_auth_service__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_shared_validate_service__ = __webpack_require__(189);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_shared_diary_service__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_shared_diary_service__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_welcome_welcome__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_about_about__ = __webpack_require__(336);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_contact_contact__ = __webpack_require__(337);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_home__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_timetable_timetable__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_diary_diary__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_add_event_add_event__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_diary_entry_diary_entry__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_timetable_timetable__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_diary_diary__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_add_event_add_event__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_diary_entry_diary_entry__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_status_bar__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_splash_screen__ = __webpack_require__(231);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_calendar__ = __webpack_require__(338);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng_socket_io__ = __webpack_require__(88);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng_socket_io__ = __webpack_require__(89);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21_ng_socket_io__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -820,11 +840,11 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                 links: [
                     { loadChildren: '../pages/chat-room/chat-room.module#ChatRoomPageModule', name: 'ChatRoomPage', segment: 'chat-room', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/add-event/add-event.module#AddEventPageModule', name: 'AddEventPage', segment: 'add-event', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/diary-entry/diary-entry.module#DiaryEntryPageModule', name: 'DiaryEntryPage', segment: 'diary-entry', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/diary/diary.module#DiaryPageModule', name: 'DiaryPage', segment: 'diary', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/timetable/timetable.module#TimetablePageModule', name: 'TimetablePage', segment: 'timetable', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] }
+                    { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/add-event/add-event.module#AddEventPageModule', name: 'AddEventPage', segment: 'add-event', priority: 'low', defaultHistory: [] }
                 ]
             }),
             __WEBPACK_IMPORTED_MODULE_4__angular_http__["HttpModule"],
@@ -874,11 +894,11 @@ AppModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(231);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_timetable_timetable__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_diary_diary__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_timetable_timetable__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_diary_diary__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(232);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_chat_room_chat_room__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_shared_auth_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_shared_auth_service__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_welcome_welcome__ = __webpack_require__(118);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1026,13 +1046,13 @@ ContactPage = __decorate([
 
 /***/ }),
 
-/***/ 55:
+/***/ 47:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AuthService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(304);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_jwt__ = __webpack_require__(305);
@@ -1122,13 +1142,18 @@ var AuthService = (function () {
         var token = localStorage.getItem('id_token');
         this.authToken = token;
     };
+    // Load User from Local Storage
+    AuthService.prototype.loadUser = function () {
+        var user = localStorage.getItem('user');
+        return user;
+    };
     // Sets beginning of every endpoint
     AuthService.prototype.prepEndpoint = function (ep) {
         if (this.isDev) {
             return ep;
         }
         else {
-            return 'https://still-beach-80885.herokuapp.com/' + ep;
+            return 'http://localhost:3000/' + ep;
         }
     };
     // Logged in --> Used to conditonally hide/show elements
@@ -1153,206 +1178,13 @@ AuthService = __decorate([
 
 /***/ }),
 
-/***/ 60:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiaryPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_event_add_event__ = __webpack_require__(116);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__diary_entry_diary_entry__ = __webpack_require__(117);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-var DiaryPage = (function () {
-    function DiaryPage(alertCtrl, navCtrl, _diaryService, modalCtrl) {
-        this.alertCtrl = alertCtrl;
-        this.navCtrl = navCtrl;
-        this._diaryService = _diaryService;
-        this.modalCtrl = modalCtrl;
-        this.entryType = [
-            'https://drslash.com/wp-content/uploads/2014/07/Notes.png',
-            'https://image.flaticon.com/icons/svg/432/432413.svg',
-            'https://image.flaticon.com/icons/svg/235/235248.svg',
-            'https://image.flaticon.com/icons/svg/236/236816.svg',
-            'https://image.flaticon.com/icons/svg/236/236830.svg'
-        ];
-        this.entries = [];
-        this.lecturers = [];
-        this._lecturersUrl = 'http://localhost:3000/users/lecturers';
-        this.modules = [];
-        this._modulesUrl = 'http://localhost:3000/course/modules';
-        this.courses = [];
-        this._coursesUrl = 'http://localhost:3000/course/courses';
-        this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
-    }
-    /* onViewDidEnter() {
-      this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
-    } */
-    DiaryPage.prototype.sortByDate = function (event1, event2) {
-        if (event1.dueDate > event2.dueDate)
-            return 1;
-        else if (event1.dueDate === event2.dueDate)
-            return 0;
-        else
-            return -1;
-    };
-    // Returns data on selected collection
-    DiaryPage.prototype.populateArrays = function (array, _url) {
-        var _this = this;
-        this._diaryService.populateArrays(_url).subscribe(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                array[i] = data[i];
-            }
-        }, function (error) { return _this.errorMessage = error; });
-    };
-    // Returns Diary Entries
-    DiaryPage.prototype.getEntries = function (entries, lecturers, modules, courses) {
-        var _this = this;
-        this.populateArrays(lecturers, this._lecturersUrl);
-        this.populateArrays(modules, this._modulesUrl);
-        this.populateArrays(courses, this._coursesUrl);
-        this._diaryService.getEntries().subscribe(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                entries.push(data[i]);
-                for (var j = 0; j < entries.length; j++) {
-                    for (var k = 0; k < lecturers.length; k++) {
-                        if (entries[j].lecturer == lecturers[k]._id) {
-                            entries[j].lecturer = (lecturers[k].firstName + " " + lecturers[k].lastName);
-                        }
-                    }
-                    for (var l = 0; l < modules.length; l++) {
-                        if (entries[j].module == modules[l]._id) {
-                            entries[j].module = (modules[l].name);
-                        }
-                    }
-                }
-            }
-            _this.entries.sort(_this.sortByDate);
-        }, function (error) { return _this.errorMessage = error; });
-    };
-    DiaryPage.prototype.openModal = function (entry) {
-        var modal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__diary_entry_diary_entry__["a" /* DiaryEntryPage */], entry);
-        modal.present();
-    };
-    DiaryPage.prototype.addEvent = function () {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__add_event_add_event__["a" /* AddEventPage */]);
-    };
-    return DiaryPage;
-}());
-DiaryPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-diary',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary\diary.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>Diary</ion-title>\n\n        <ion-buttons end>\n\n            <button ion-button icon-only (click)="addEvent()">\n\n                <ion-icon name="md-add-circle"></ion-icon>\n\n            </button>\n\n        </ion-buttons>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="list-avatar-page">\n\n\n\n    <ion-list>\n\n\n\n        <ion-item (click)="openModal({entry: entry})" *ngFor="let entry of entries">\n\n            <ion-avatar item-start>\n\n                <img *ngIf="entry.title.toLowerCase() == \'assessment\'" src="{{entryType[0]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'presentation\'" src="{{entryType[1]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'assignment\'" src="{{entryType[2]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'event\'" src="{{entryType[3]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'report\'" src="{{entryType[4]}}">\n\n            </ion-avatar>\n\n            <h2>{{entry.dueDate | date: \'EEEE, MMMM d, h:mm a\'}}</h2>\n\n            <h3>{{entry.module | uppercase}}</h3>\n\n            <p>{{entry.title}}</p>\n\n        </ion-item>\n\n\n\n    </ion-list>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary\diary.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__["a" /* DiaryService */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]])
-], DiaryPage);
-
-//# sourceMappingURL=diary.js.map
-
-/***/ }),
-
-/***/ 61:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TimetablePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var TimetablePage = (function () {
-    function TimetablePage(navCtrl, navParams) {
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.modules = [
-            {
-                _id: 1,
-                subject: 'Rich Application Development',
-                lecturer: 'Paul Powell',
-                location: 'A0005',
-                day: 'Monday',
-                time: '12:00 - 13:00'
-            },
-            {
-                _id: 2,
-                subject: 'Software Project Management',
-                lecturer: 'Kinsellal',
-                location: 'E2011',
-                day: 'Tuesday',
-                time: '13:00 - 14:00'
-            },
-            {
-                _id: 3,
-                subject: 'Web Programming',
-                lecturer: 'Shane Banks',
-                location: 'D2039',
-                day: 'Wednesday',
-                time: '14:00 - 15:00'
-            },
-            {
-                _id: 4,
-                subject: 'Foundation Object Oriented Programming',
-                lecturer: 'Keith McManus',
-                location: 'B1042',
-                day: 'Thursday',
-                time: '16:00 - 18:00'
-            },
-            {
-                _id: 5,
-                subject: 'Professional Development',
-                lecturer: 'Aine Mitchell',
-                location: 'A0004',
-                day: 'Friday',
-                time: '9:00 - 10:00'
-            }
-        ];
-    }
-    TimetablePage.prototype.ionViewDidLoad = function () { };
-    return TimetablePage;
-}());
-TimetablePage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-timetable',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\timetable\timetable.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title center>Timetable</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<!-- Mock data -->\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item-group>\n\n      <ion-item-divider color="secondary">Monday</ion-item-divider>\n\n      <ion-item>\n\n        <h2>Rich Application Development</h2>\n\n        <h3>A0005 // 12:00 - 13:00</h3>\n\n        <p>Paul Powell</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Software Project Management</h2>\n\n        <h3>E2011 // 13:00 - 14:00</h3>\n\n        <p>Vivion Kinsellal</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Web Programming</h2>\n\n        <h3>D2039 // 14:00 - 15:00</h3>\n\n        <p>Shane Banks</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Foundation Object Oriented Programming</h2>\n\n        <h3>B1042 // 16:00 - 18:00</h3>\n\n        <p>Keith McManus</p>\n\n      </ion-item>\n\n    </ion-item-group>\n\n    <ion-item-group>\n\n      <ion-item-divider color="secondary">Tuesday</ion-item-divider>\n\n      <ion-item>\n\n        <h2>Professional Development</h2>\n\n        <h3>A0004 // 9:00 - 10:00</h3>\n\n        <p>Aine Mitchell</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Software Project Management</h2>\n\n        <h3>E1028 // 12:00 - 14:00</h3>\n\n        <p>Vivion Kinsellal</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Database Development</h2>\n\n        <h3>D2037 // 14:00 - 16:00</h3>\n\n        <p>Shane Banks</p>\n\n      </ion-item>\n\n    </ion-item-group>\n\n    <ion-item-group>\n\n      <ion-item-divider color="secondary">Wednesday</ion-item-divider>\n\n      <ion-item>\n\n        <h2>Professional Development</h2>\n\n        <h3>A0004 // 9:00 - 10:00</h3>\n\n        <p>Aine Mitchell</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Software Project Management</h2>\n\n        <h3>E1028 // 12:00 - 14:00</h3>\n\n        <p>Vivion Kinsellal</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Database Development</h2>\n\n        <h3>D2037 // 14:00 - 16:00</h3>\n\n        <p>Shane Banks</p>\n\n      </ion-item>\n\n    </ion-item-group>\n\n    <ion-item-group>\n\n      <ion-item-divider color="secondary">Thursday</ion-item-divider>\n\n      <ion-item>\n\n        <h2>Professional Development</h2>\n\n        <h3>A0004 // 9:00 - 10:00</h3>\n\n        <p>Aine Mitchell</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Software Project Management</h2>\n\n        <h3>E1028 // 12:00 - 14:00</h3>\n\n        <p>Vivion Kinsellal</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Database Development</h2>\n\n        <h3>D2037 // 14:00 - 16:00</h3>\n\n        <p>Shane Banks</p>\n\n      </ion-item>\n\n    </ion-item-group>\n\n    <ion-item-group>\n\n      <ion-item-divider color="secondary">Friday</ion-item-divider>\n\n      <ion-item>\n\n        <h2>Professional Development</h2>\n\n        <h3>A0004 // 9:00 - 10:00</h3>\n\n        <p>Aine Mitchell</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Software Project Management</h2>\n\n        <h3>E1028 // 12:00 - 14:00</h3>\n\n        <p>Vivion Kinsellal</p>\n\n      </ion-item>\n\n      <ion-item>\n\n        <h2>Database Development</h2>\n\n        <h3>D2037 // 14:00 - 16:00</h3>\n\n        <p>Shane Banks</p>\n\n      </ion-item>\n\n    </ion-item-group>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\timetable\timetable.html"*/,
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */]])
-], TimetablePage);
-
-//# sourceMappingURL=timetable.js.map
-
-/***/ }),
-
-/***/ 92:
+/***/ 55:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiaryService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(186);
@@ -1383,11 +1215,11 @@ var DiaryService = (function () {
         this._http = _http;
         this.http = http;
     }
-    // Returns data on selected collection
-    DiaryService.prototype.populateArrays = function (_url) {
-        return this._http.get(_url)
-            .catch(this.handleError);
-    };
+    /*  // Returns data on selected collection
+     populateArrays(_url): Observable<any[]> {
+       return this._http.get<any[]>(_url)
+       .catch(this.handleError);
+     } */
     // Get Diary Entries
     DiaryService.prototype.getEntries = function () {
         return this._http.get(this.prepEndpoint('diary/diaryentries'))
@@ -1421,6 +1253,12 @@ var DiaryService = (function () {
         return this.http.get(ep)
             .map(function (res) { return res.json(); });
     };
+    // Find Module based on groupId
+    DiaryService.prototype.getStudentModules = function (groupId) {
+        var ep = this.prepEndpoint('course/studentmodules/' + groupId);
+        return this.http.get(ep)
+            .map(function (res) { return res.json(); });
+    };
     // Handle Error
     DiaryService.prototype.handleError = function (err) {
         console.log(err.message);
@@ -1432,17 +1270,245 @@ var DiaryService = (function () {
             return ep;
         }
         else {
-            return 'https://still-beach-80885.herokuapp.com/' + ep;
+            return 'http://localhost:3000/' + ep;
         }
     };
     return DiaryService;
 }());
 DiaryService = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */], __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _b || Object])
 ], DiaryService);
 
+var _a, _b;
 //# sourceMappingURL=diary.service.js.map
+
+/***/ }),
+
+/***/ 61:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiaryPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_event_add_event__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__diary_entry_diary_entry__ = __webpack_require__(116);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var DiaryPage = (function () {
+    //private _coursesUrl = 'http://localhost:3000/course/courses';
+    function DiaryPage(navCtrl, _diaryService, modalCtrl) {
+        this.navCtrl = navCtrl;
+        this._diaryService = _diaryService;
+        this.modalCtrl = modalCtrl;
+        this.entryType = [
+            'https://drslash.com/wp-content/uploads/2014/07/Notes.png',
+            'https://image.flaticon.com/icons/svg/432/432413.svg',
+            'https://image.flaticon.com/icons/svg/235/235248.svg',
+            'https://image.flaticon.com/icons/svg/236/236816.svg',
+            'https://image.flaticon.com/icons/svg/236/236830.svg'
+        ];
+        this.entries = [];
+        this.lecturers = [];
+        //private _lecturersUrl = 'http://localhost:3000/users/lecturers';
+        this.modules = [];
+        //private _modulesUrl = 'http://localhost:3000/course/modules';
+        this.courses = [];
+        this.getLecturers();
+        this.getModules();
+        this.getCourses();
+        this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
+    }
+    DiaryPage.prototype.sortByDate = function (event1, event2) {
+        if (event1.dueDate > event2.dueDate)
+            return 1;
+        else if (event1.dueDate === event2.dueDate)
+            return 0;
+        else
+            return -1;
+    };
+    // Returns data on selected collection
+    /*   populateArrays(array, _url) {
+        this._diaryService.populateArrays(_url).subscribe(data => {
+          for (var i = 0; i < data.length; i++) {
+            array[i] = data[i];
+          }
+        },
+          error => this.errorMessage = <any>error);
+      } */
+    // Get Lecturers
+    DiaryPage.prototype.getLecturers = function () {
+        var _this = this;
+        this._diaryService.getLecturers().subscribe(function (lecturers) {
+            _this.lecturers = lecturers;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    // Get Modules
+    DiaryPage.prototype.getModules = function () {
+        var _this = this;
+        this._diaryService.getModules().subscribe(function (modules) {
+            _this.modules = modules;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    // Get Courses
+    DiaryPage.prototype.getCourses = function () {
+        var _this = this;
+        this._diaryService.getCourses().subscribe(function (courses) {
+            _this.courses = courses;
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    // Returns Diary Entries
+    DiaryPage.prototype.getEntries = function (entries, lecturers, modules, courses) {
+        /* this.populateArrays(lecturers, this._lecturersUrl);
+        this.populateArrays(modules, this._modulesUrl);
+        this.populateArrays(courses, this._coursesUrl); */
+        var _this = this;
+        this._diaryService.getEntries().subscribe(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                entries.push(data[i]);
+                for (var j = 0; j < entries.length; j++) {
+                    for (var k = 0; k < lecturers.length; k++) {
+                        if (entries[j].lecturer == lecturers[k]._id) {
+                            entries[j].lecturer = (lecturers[k].firstName + " " + lecturers[k].lastName);
+                        }
+                    }
+                    for (var l = 0; l < modules.length; l++) {
+                        if (entries[j].module == modules[l]._id) {
+                            entries[j].module = (modules[l].name);
+                        }
+                    }
+                }
+            }
+            _this.entries.sort(_this.sortByDate);
+        }, function (error) { return _this.errorMessage = error; });
+    };
+    DiaryPage.prototype.openModal = function (entry) {
+        var modal = this.modalCtrl.create(__WEBPACK_IMPORTED_MODULE_4__diary_entry_diary_entry__["a" /* DiaryEntryPage */], entry);
+        modal.present();
+    };
+    DiaryPage.prototype.addEvent = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__add_event_add_event__["a" /* AddEventPage */]);
+    };
+    return DiaryPage;
+}());
+DiaryPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-diary',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary\diary.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>Diary</ion-title>\n\n        <ion-buttons end>\n\n            <button ion-button icon-only (click)="addEvent()">\n\n                <ion-icon name="md-add-circle"></ion-icon>\n\n            </button>\n\n        </ion-buttons>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="list-avatar-page">\n\n\n\n    <ion-list>\n\n\n\n        <ion-item (click)="openModal({entry: entry})" *ngFor="let entry of entries">\n\n            <ion-avatar item-start>\n\n                <img *ngIf="entry.title.toLowerCase() == \'assessment\'" src="{{entryType[0]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'presentation\'" src="{{entryType[1]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'assignment\'" src="{{entryType[2]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'event\'" src="{{entryType[3]}}">\n\n                <img *ngIf="entry.title.toLowerCase() == \'report\'" src="{{entryType[4]}}">\n\n            </ion-avatar>\n\n            <h2>{{entry.dueDate | date: \'EEEE, MMMM d, h:mm a\'}}</h2>\n\n            <h3>{{entry.module | uppercase}}</h3>\n\n            <p>{{entry.title}}</p>\n\n        </ion-item>\n\n\n\n    </ion-list>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary\diary.html"*/,
+    }),
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__["a" /* DiaryService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__["a" /* DiaryService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]) === "function" && _c || Object])
+], DiaryPage);
+
+var _a, _b, _c;
+//# sourceMappingURL=diary.js.map
+
+/***/ }),
+
+/***/ 62:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TimetablePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__ = __webpack_require__(55);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var TimetablePage = (function () {
+    function TimetablePage(navCtrl, navParams, _authService, _diaryService) {
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this._authService = _authService;
+        this._diaryService = _diaryService;
+        this.modules = [];
+        this.groupId = "5a78f42853e0020c2cf5b22c"; // Should be from user in localStorage
+        this.mondayModules = [];
+        this.tuesdayModules = [];
+        this.wednesdayModules = [];
+        this.thursdayModules = [];
+        this.fridayModules = [];
+        this.user = _authService.loadUser();
+        console.log("user: " + this.user);
+        this.getModules();
+    }
+    // Return Modules for groupId
+    TimetablePage.prototype.getModules = function () {
+        var _this = this;
+        this._diaryService.getStudentModules(this.groupId).subscribe(function (modules) {
+            _this.modules = modules;
+            _this.filterModules();
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    // Filter Modules by Day
+    TimetablePage.prototype.filterModules = function () {
+        for (var i = 0; i < this.modules.length; i++) {
+            if (this.modules[i].day.toLowerCase() == "monday") {
+                this.mondayModules.push(this.modules[i]);
+            }
+            else if (this.modules[i].day.toLowerCase() == "tuesday") {
+                this.tuesdayModules.push(this.modules[i]);
+            }
+            else if (this.modules[i].day.toLowerCase() == "wednesday") {
+                this.wednesdayModules.push(this.modules[i]);
+            }
+            else if (this.modules[i].day.toLowerCase() == "thursday") {
+                this.thursdayModules.push(this.modules[i]);
+            }
+            else if (this.modules[i].day.toLowerCase() == "friday") {
+                this.fridayModules.push(this.modules[i]);
+            }
+        }
+    };
+    return TimetablePage;
+}());
+TimetablePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'page-timetable',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\timetable\timetable.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <ion-title center>Timetable</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<!-- Timtable -->\n\n<ion-content padding>\n\n  <ion-list>\n\n    <!-- Monday -->\n\n    <ion-item-group>\n\n        <ion-item-divider color="secondary">Monday</ion-item-divider>\n\n        <ion-item *ngFor="let module of mondayModules">\n\n            <h2>{{ module.name }}</h2>\n\n            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n            <p>{{ module.lecturer }}</p>\n\n        </ion-item>\n\n    </ion-item-group>\n\n    <!-- Tuesday -->\n\n    <ion-item-group>\n\n        <ion-item-divider color="secondary">Tuesday</ion-item-divider>\n\n        <ion-item *ngFor="let module of tuesdayModules">\n\n            <h2>{{ module.name }}</h2>\n\n            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n            <p>{{ module.lecturer }}</p>\n\n        </ion-item>\n\n    </ion-item-group>\n\n    <!-- Wednesday -->\n\n    <ion-item-group>\n\n        <ion-item-divider color="secondary">Wednesday</ion-item-divider>\n\n        <ion-item *ngFor="let module of wednesdayModules">\n\n            <h2>{{ module.name }}</h2>\n\n            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n            <p>{{ module.lecturer }}</p>\n\n        </ion-item>\n\n    </ion-item-group>\n\n    <!-- Thursday -->\n\n    <ion-item-group>\n\n        <ion-item-divider color="secondary">Thursday</ion-item-divider>\n\n        <ion-item *ngFor="let module of thursdayModules">\n\n            <h2>{{ module.name }}</h2>\n\n            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n            <p>{{ module.lecturer }}</p>\n\n        </ion-item>\n\n    </ion-item-group>\n\n    <!-- Friday -->\n\n    <ion-item-group>\n\n        <ion-item-divider color="secondary">Friday</ion-item-divider>\n\n        <ion-item *ngFor="let module of fridayModules">\n\n            <h2>{{ module.name }}</h2>\n\n            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n            <p>{{ module.lecturer }}</p>\n\n        </ion-item>\n\n    </ion-item-group>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\timetable\timetable.html"*/,
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
+        __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__["a" /* AuthService */],
+        __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__["a" /* DiaryService */]])
+], TimetablePage);
+
+//# sourceMappingURL=timetable.js.map
 
 /***/ })
 

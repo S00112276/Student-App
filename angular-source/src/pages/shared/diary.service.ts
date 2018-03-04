@@ -12,11 +12,12 @@ export class DiaryService {
   entry: any;
 
   constructor(private _http: HttpClient, private http: Http) { }
-  // Returns data on selected collection
+  
+ /*  // Returns data on selected collection
   populateArrays(_url): Observable<any[]> {
     return this._http.get<any[]>(_url)
     .catch(this.handleError);
-  }
+  } */
 
   // Get Diary Entries
   getEntries(): Observable<any[]> {
@@ -56,6 +57,13 @@ export class DiaryService {
       .map(res => res.json());
   }
 
+  // Find Module based on groupId
+  getStudentModules(groupId) {
+    let ep = this.prepEndpoint('course/studentmodules/' + groupId);
+    return this.http.get(ep)
+      .map(res => res.json());
+  }
+
   // Handle Error
   private handleError(err: HttpErrorResponse) {
     console.log(err.message);
@@ -67,7 +75,7 @@ export class DiaryService {
     if(this.isDev) {
         return ep;
     } else {
-        return 'https://still-beach-80885.herokuapp.com/' + ep;
+        return 'http://localhost:3000/' + ep;
     }
 }
 }
