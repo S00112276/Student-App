@@ -18,33 +18,22 @@ export class DiaryPage {
     'https://image.flaticon.com/icons/svg/236/236816.svg',
     'https://image.flaticon.com/icons/svg/236/236830.svg'
   ];
-
   entries: any[] = [];
-
   lecturers: any[] = [];
-
   modules: any[] = [];
-
   courses: any[] = [];
 
   constructor(public navCtrl: NavController,
     private _diaryService: DiaryService,
     public modalCtrl: ModalController) {
     this.getLecturers();
-    this.getModules();
-    this.getCourses();
-  }
-
-  sortByDate(event1: any, event2: any) {
-    if (event1.dueDate > event2.dueDate) return 1;
-    else if (event1.dueDate === event2.dueDate) return 0;
-    else return -1;
   }
 
   // Get Lecturers
   getLecturers() {
     this._diaryService.getLecturers().subscribe(lecturers => {
       this.lecturers = lecturers;
+      this.getModules();
     }, 
     err => {
       console.log(err);
@@ -56,6 +45,7 @@ export class DiaryPage {
   getModules() {
     this._diaryService.getModules().subscribe(modules => {
       this.modules = modules;
+      this.getCourses();
     }, 
     err => {
       console.log(err);
@@ -77,9 +67,6 @@ export class DiaryPage {
 
   // Returns Diary Entries
   getEntries(entries, lecturers, modules, courses) {
-      console.log(this.lecturers);
-      console.log(modules);
-      console.log(courses);
       this._diaryService.getEntries().subscribe(data => {
         for (var i = 0; i < data.length; i++) {
           entries.push(data[i]);
@@ -95,10 +82,17 @@ export class DiaryPage {
               }
             }
           }
-        }
-      this.entries.sort(this.sortByDate);
-    },
-      error => this.errorMessage = <any>error);
+        }  
+        this.entries.sort(this.sortByDate);
+    },   
+    error => this.errorMessage = <any>error);  
+  }
+
+  // Sort By Date
+  sortByDate(event1: any, event2: any) {
+    if (event1.dueDate > event2.dueDate) return 1;
+    else if (event1.dueDate === event2.dueDate) return 0;
+    else return -1;
   }
 
   openModal(entry) {

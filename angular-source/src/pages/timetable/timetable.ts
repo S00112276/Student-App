@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import * as moment from 'moment';
 import { AuthService } from '../shared/auth.service';
 import { DiaryService } from '../shared/diary.service';
 
@@ -9,31 +10,34 @@ import { DiaryService } from '../shared/diary.service';
   templateUrl: 'timetable.html',
 })
 export class TimetablePage {
-
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams,
-    private _authService: AuthService,
-    private _diaryService: DiaryService) {
-      this.user = _authService.loadUser();
-      console.log("user: " + this.user);
-      this.getModules();
-  }
-    
   user: any;
+  userObj: any;
   modules: any[] = [];
+  lecturers: any[] = [];
   errorMessage: string;
-  groupId = "5a78f42853e0020c2cf5b22c"; // Should be from user in localStorage
+  groupId: string;
   mondayModules: any[] = [];
   tuesdayModules:any[] = [];
   wednesdayModules:any[] = [];
   thursdayModules:any[] = [];
   fridayModules:any[] = [];
+
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private _authService: AuthService,
+    private _diaryService: DiaryService) {
+      this.user = _authService.loadUser();   
+      this.userObj = JSON.parse(this.user);
+      this.getModules();
+  }
     
   // Return Modules for groupId
   getModules() {
+    this.groupId = this.userObj.groupId;
     this._diaryService.getStudentModules(this.groupId).subscribe(modules => {
       this.modules = modules;
-      this.filterModules();
+      this.groupId = this.user.groupId;
+      this.getLecturers();
     }, 
     err => {
       console.log(err);
@@ -59,6 +63,44 @@ export class TimetablePage {
       else if(this.modules[i].day.toLowerCase() == "friday") {
         this.fridayModules.push(this.modules[i]);
       }
+      let dateString = this.modules[i].startTime;
+      this.modules[i].startTime = moment(dateString).format("H:mm ");
     }
+    this.mondayModules.sort(this.sortModules);
+    this.tuesdayModules.sort(this.sortModules);
+    this.wednesdayModules.sort(this.sortModules);
+    this.thursdayModules.sort(this.sortModules);
+    this.fridayModules.sort(this.sortModules);
+  }
+
+  // Get Lecturers
+  getLecturers() {
+    this._diaryService.getLecturers().subscribe(lecturers => {
+      this.lecturers = lecturers;
+      this.lecturerNames();
+    }, 
+    err => {
+      console.log(err);
+        return false;
+    });
+  }
+
+  // Set Lecturer Names
+  lecturerNames() {
+    for (let i = 0; i < this.lecturers.length; i++) {
+      for (let j = 0; j < this.modules.length; j++) {
+        if(this.lecturers[i]._id == this.modules[j].lecturer){
+          this.modules[j].lecturer = this.lecturers[i].firstName + " " + this.lecturers[i].lastName;
+        }
+      }
+    }
+    this.filterModules();
+  }
+
+  // Sort Modules by Start Time
+  sortModules(module1: any, module2: any) {
+    if (module1.startTime > module2.startTime) return 1;
+    else if (module1.startTime === module2.startTime) return 0;
+    else return -1;
   }
 }
