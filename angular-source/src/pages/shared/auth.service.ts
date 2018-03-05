@@ -100,7 +100,8 @@ export class AuthService {
         if(this.isDev) {
             return ep;
         } else {
-            return 'http://localhost:3000/' + ep;
+            return 'http://still-beach-80885.herokuapp.com/' + ep;
+            //return 'http://localhost:3000/' + ep;
         }
     }
 
