@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, ModalController } from 'ionic-angular';
 import { AddEventPage } from '../add-event/add-event';
 import { DiaryService } from '../shared/diary.service';
+import { AuthService } from '../shared/auth.service';
 import { DiaryEntryPage } from '../diary-entry/diary-entry';
 
 @IonicPage()
@@ -18,6 +19,8 @@ export class DiaryPage {
     'https://image.flaticon.com/icons/svg/236/236816.svg',
     'https://image.flaticon.com/icons/svg/236/236830.svg'
   ];
+  user: any;
+  userObj: any;
   entries: any[] = [];
   lecturers: any[] = [];
   modules: any[] = [];
@@ -25,7 +28,11 @@ export class DiaryPage {
 
   constructor(public navCtrl: NavController,
     private _diaryService: DiaryService,
+    private _authService: AuthService,
     public modalCtrl: ModalController) {
+    this.user = _authService.loadUser();
+    this.userObj = JSON.parse(this.user);
+    console.log(this.userObj.username);
     this.getLecturers();
   }
 
@@ -34,11 +41,11 @@ export class DiaryPage {
     this._diaryService.getLecturers().subscribe(lecturers => {
       this.lecturers = lecturers;
       this.getModules();
-    }, 
-    err => {
-      console.log(err);
+    },
+      err => {
+        console.log(err);
         return false;
-    });
+      });
   }
 
   // Get Modules
@@ -46,46 +53,49 @@ export class DiaryPage {
     this._diaryService.getModules().subscribe(modules => {
       this.modules = modules;
       this.getCourses();
-    }, 
-    err => {
-      console.log(err);
+    },
+      err => {
+        console.log(err);
         return false;
-    });
+      });
   }
 
   // Get Courses
   getCourses() {
     this._diaryService.getCourses().subscribe(courses => {
       this.courses = courses;
-      this.getEntries(this.entries, this.lecturers, this.modules, this.courses);
-    }, 
-    err => {
-      console.log(err);
+      this.getEntries();
+    },
+      err => {
+        console.log(err);
         return false;
-    });
+      });
   }
 
   // Returns Diary Entries
-  getEntries(entries, lecturers, modules, courses) {
-      this._diaryService.getEntries().subscribe(data => {
-        for (var i = 0; i < data.length; i++) {
-          entries.push(data[i]);
-          for (var j = 0; j < entries.length; j++) {
-            for (var k = 0; k < lecturers.length; k++) {
-              if (entries[j].lecturer == lecturers[k]._id) {
-                entries[j].lecturer = (lecturers[k].firstName + " " + lecturers[k].lastName);
-              }
-            }
-            for (var l = 0; l < modules.length; l++) {
-              if (entries[j].module == modules[l]._id) {
-                entries[j].module = (modules[l].name);
-              }
+  getEntries() {
+    this._diaryService.getEntries().subscribe(data => {
+      for (var i = 0; i < data.length; i++) {
+        this.entries.push(data[i]);
+        for (var j = 0; j < this.entries.length; j++) {
+          for (var k = 0; k < this.lecturers.length; k++) {
+            if (this.entries[j].lecturer == this.lecturers[k]._id) {
+              this.entries[j].lecturer = (this.lecturers[k].firstName + " " + this.lecturers[k].lastName);
             }
           }
-        }  
-        this.entries.sort(this.sortByDate);
-    },   
-    error => this.errorMessage = <any>error);  
+          for (var l = 0; l < this.modules.length; l++) {
+            if (this.entries[j].module == this.modules[l]._id) {
+              this.entries[j].module = (this.modules[l].name);
+            }
+          }
+        }
+      }
+      if (this.entries.length === data.length) {
+        let sortedResults = [];
+        sortedResults = this.entries.sort(this.sortByDate);
+      }
+    },
+      error => this.errorMessage = <any>error);
   }
 
   // Sort By Date

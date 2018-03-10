@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { DiaryService } from '../shared/diary.service';
+import { DiaryPage } from '../diary/diary';
 
 @IonicPage()
 @Component({
@@ -57,14 +58,14 @@ export class AddEventPage {
     }
 
     this._diaryService.insertEntry(entry).subscribe(data =>  {
-      if (data.success) {
+      if (data.success) {       
           let alert = this.alertCtrl.create( {
             title:'Added to DB', 
             subTitle:'YAY', 
             buttons:['OK']
           }); 
           alert.present(); 
-    this.navCtrl.pop();
+    this.navCtrl.push(DiaryPage);
         } else {
           let alert = this.alertCtrl.create( {
             title:'Failed', 
@@ -79,7 +80,10 @@ export class AddEventPage {
     // Get Modules
     getModules() {
       this._diaryService.getModules().subscribe(modules => {
-        this.modules = modules;
+        for (let i = 0; i < modules.length; i++) {
+          this.modules[i] = modules[i];
+        }
+        this.modules = this.removeDuplicates(this.modules,'name');
       }, 
       err => {
         console.log(err);
@@ -98,47 +102,18 @@ export class AddEventPage {
       });
     }
 
-  // Returns data on selected collection
-/*   populateArrays(array, _url) {
-    this._diaryService.populateArrays(_url).subscribe(data => {
-      for (var i = 0; i < data.length; i++) {
-        array[i] = data[i];
-      }
-      // this.getGroups(this.groups); 
-    },
-      error => this.errorMessage = <any>error);
-  } */
-
-  /*   filterGroups(moduleID) {
-      for (let i = 0; i < this.modules.length; i++) {
-        if(this.modules[i].name == moduleID)
-            console.log(this.modules[i].groups);
-      }
-    }
-  
-    getGroups(module) {
-      for (let i = 0; i < this.courses.length; i++) {
-        for (let j = 0; j < this.courses[i].length; j++) {
-          this.groups.push(this.courses[i].groups[j]);
-        }
-      }
-    } */
-
   removeDuplicates(originalArray, objKey) {
-    this.removeDuplicates(this.groups, 'name');
     var trimmedArray = [];
     var values = [];
     var value;
 
     for (var i = 0; i < originalArray.length; i++) {
       value = originalArray[i][objKey];
-
       if (values.indexOf(value) === -1) {
         trimmedArray.push(originalArray[i]);
         values.push(value);
       }
     }
-
     return trimmedArray;
   }
 }
