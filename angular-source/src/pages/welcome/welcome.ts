@@ -76,9 +76,7 @@ export class WelcomePage  {
  
    // SignUp Button Clicked
    SignUp() {
-     const user =  {
-       /* firstName:this.firstName, 
-       lastName:this.lastName,  */ 
+     const user =  { 
        email: this.studentID + "@mail.itsligo.ie",
        username:this.username, 
        studentId:this.studentID.toLowerCase(), 

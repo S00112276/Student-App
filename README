@@ -2,7 +2,7 @@ How to run APP:
 cd into Student-App/angular-source
 ionic serve
 
-To run the api server:
+To run the api server: (No longer need to do as is now hosted)
 cd into Student-App
 nodemon index
 

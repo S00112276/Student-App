@@ -1,6 +1,6 @@
+import * as moment from 'moment';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import * as moment from 'moment';
 import { AuthService } from '../shared/auth.service';
 import { DiaryService } from '../shared/diary.service';
 
@@ -13,9 +13,11 @@ export class TimetablePage {
   user: any;
   userObj: any;
   modules: any[] = [];
+  groups: any[] = [];
   lecturers: any[] = [];
   errorMessage: string;
   groupId: string;
+  lecturerId: string;
   mondayModules: any[] = [];
   tuesdayModules:any[] = [];
   wednesdayModules:any[] = [];
@@ -28,11 +30,30 @@ export class TimetablePage {
     private _diaryService: DiaryService) {
       this.user = _authService.loadUser(); 
       this.userObj = JSON.parse(this.user);
-      this.getModules();
+      this.checkLogin();
+  }
+
+  // Check Lecturer or Student
+  checkLogin() {
+    if(this.userObj.email.startsWith("s"))
+    {
+      this.getStudentModules();
+    }
+    else if(this.userObj.email.startsWith("l"))
+    {
+
+    }
+  }
+  // Return Lecturers Modules for lectuerId
+  getLecturerModules() {
+    this.lecturerId = this.userObj.lectuerId;
+    this._diaryService.getLecturerModules(this.lecturerId).subscribe(modules => {
+      this.modules = modules;
+    });
   }
     
-  // Return Modules for groupId
-  getModules() {
+  // Return Students Modules for groupId
+  getStudentModules() {
     this.groupId = this.userObj.groupId;
     this._diaryService.getStudentModules(this.groupId).subscribe(modules => {
       this.modules = modules;

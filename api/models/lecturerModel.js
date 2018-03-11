@@ -34,10 +34,6 @@ const LecturerSchema = mongoose.Schema({
 
 const Lecturer = module.exports = mongoose.model('Lecturer', LecturerSchema);
 
-// module.exports.getUserById = function(id, callback) {
-//     Lecturer.findById(id, callback);
-// }
-
 module.exports.getUserByEmail = function(email, callback) {
     const query = { email : email }
     Lecturer.findOne(query, callback);

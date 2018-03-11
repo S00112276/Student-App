@@ -1,7 +1,7 @@
-import { Socket } from 'ng-socket-io';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Observable } from 'rxjs/Observable';
+import { Socket } from 'ng-socket-io';
 
 @IonicPage()
 @Component({

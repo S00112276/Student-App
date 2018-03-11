@@ -7,29 +7,7 @@ const config = require('../../config/database');
 const Student = require('../models/studentModel');
 const Lecturer = require('../models/lecturerModel');
 
-// Register Student
-/* router.post('/registerstudent', (req, res, next) => {
-    let newStudent = new Student({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.studentId + "@mail.itsligo.ie",
-        username: req.body.username,
-        studentId: req.body.studentId,
-        password: req.body.password
-    });
-
-    Student.addUser(newStudent, (err, user) => {
-        if(err){
-        res.json({ success: false, msg: 'Failed to register student: ' + err });
-        }
-        else {
-            res.json({ success: true, msg: 'Student registered!' });
-        }
-    });
-}); */
-// End Register Student
-
-// Check Student Exists
+// Check Student Exists & Register
 router.post('/registerstudent', (req, res, next) => {
     var email = req.body.studentId + "@mail.itsligo.ie";
     var pass;
@@ -86,31 +64,9 @@ router.post('/registerstudent', (req, res, next) => {
         }
     });
 });
-// End Check Student Exists
+// End Check Student Exists & Register
 
-// Register Lecturer
-/* router.post('/registerlecturer', (req, res, next) => {
-    let newLecturer = new Lecturer({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.studentId + "@mail.itsligo.ie",
-        username: req.body.username,
-        lecturerId: req.body.studentId,
-        password: req.body.password
-    });
-
-    Lecturer.addUser(newLecturer, (err, user) => {
-        if(err){
-        res.json({ success: false, msg: 'Failed to register lecturer: ' +  err});
-        }
-        else {
-            res.json({ success: true, msg: 'Lecturer registered!' });
-        }
-    });
-}); */
-// End Register Lecturer
-
-// Check Lecturer Exists
+// Check Lecturer Exists & Register
 router.post('/registerlecturer', (req, res, next) => {
     var email = req.body.studentId + "@mail.itsligo.ie";
     var pass;
@@ -166,7 +122,7 @@ router.post('/registerlecturer', (req, res, next) => {
         }
     });
 });
-//Check Lecturer Exists
+//Check Lecturer Exists & Register
 
 // Authenticate Lecturer
 router.post('/authenticatelecturer', (req, res, next) => {

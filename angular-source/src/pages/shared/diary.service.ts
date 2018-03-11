@@ -58,6 +58,13 @@ export class DiaryService {
       .map(res => res.json());
   }
 
+  // Find Module based on lecturerId
+  getLecturerModules(lecturerId) {
+    let ep = this.prepEndpoint('course/lecturermodules/' + lecturerId);
+    return this.http.get(ep)
+      .map(res => res.json());
+  }
+
   // Handle Error
   private handleError(err: HttpErrorResponse) {
     console.log(err.message);
