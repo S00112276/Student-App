@@ -11,6 +11,7 @@ import { DiaryPage } from '../diary/diary';
 export class AddEventPage {
   errorMessage: String;
 
+  id: string;
   title: string;
   dueDate: string;
   time: string;
@@ -37,6 +38,17 @@ export class AddEventPage {
   ) {
     this.getModules();
     this.getCourses();
+    if (navParams != null) {
+      this.id = navParams.get('id');
+      this.title = navParams.get('title');
+      this.dueDate = navParams.get('dueDate');
+      this.lecturer = navParams.get('lecturer');
+      this.groups = navParams.get('groups');
+      this.room = navParams.get('room');
+      this.module = navParams.get('module');
+      this.percentage = navParams.get('percentage');
+      this.description = navParams.get('description');
+    }
   }
 
   insertEntry() {
@@ -46,6 +58,7 @@ export class AddEventPage {
     var dueTime = time.concat(this.time)
     var due = this.dueDate.concat(dueTime);
     const entry = {
+      _id: this.id,
       title: this.title,
       startDate: new Date(),
       dueDate: due,
@@ -57,50 +70,89 @@ export class AddEventPage {
       description: this.description
     }
 
-    this._diaryService.insertEntry(entry).subscribe(data =>  {
-      if (data.success) {       
-          let alert = this.alertCtrl.create( {
-            title:'Added to DB', 
-            subTitle:'YAY', 
-            buttons:['OK']
-          }); 
-          alert.present(); 
-    this.navCtrl.push(DiaryPage);
-        } else {
-          let alert = this.alertCtrl.create( {
-            title:'Failed', 
-            subTitle:':(', 
-            buttons:['OK']
-          }); 
-          alert.present(); 
-        }
+    this._diaryService.insertEntry(entry).subscribe(data => {
+      if (data.success) {
+        let alert = this.alertCtrl.create({
+          title: 'Entry Added',
+          subTitle: 'Your entry has been added successfully',
+          buttons: ['OK']
+        });
+        alert.present();
+        this.refreshPage();
+      } else {
+        let alert = this.alertCtrl.create({
+          title: 'Something went wrong',
+          subTitle: 'Please try again',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+    });
+  }
+
+  updateEntry() {
+    this.groups = this.module.groups;
+    this.lecturer = this.module.lecturer;
+    var time = 'T'
+    var dueTime = time.concat(this.time)
+    var due = this.dueDate.concat(dueTime);
+    const entry = {
+      _id: this.id,
+      title: this.title,
+      startDate: new Date(),
+      dueDate: due,
+      lecturer: this.lecturer,
+      groups: this.groups,
+      room: this.room,
+      module: this.module._id,
+      percentage: this.percentage,
+      description: this.description
+    }
+
+    this._diaryService.updateEntry(entry).subscribe(data => {
+      if (data.success) {
+        let alert = this.alertCtrl.create({
+          title: 'Entry Edited',
+          subTitle: 'Your entry has been edited successfully',
+          buttons: ['OK']
+        });
+        alert.present();
+        this.refreshPage();
+      } else {
+        let alert = this.alertCtrl.create({
+          title: 'Something went wrong',
+          subTitle: 'Please try again',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+    });
+  }
+
+  // Get Modules
+  getModules() {
+    this._diaryService.getModules().subscribe(modules => {
+      for (let i = 0; i < modules.length; i++) {
+        this.modules[i] = modules[i];
+      }
+      this.modules = this.removeDuplicates(this.modules, 'name');
+    },
+      err => {
+        console.log(err);
+        return false;
       });
   }
 
-    // Get Modules
-    getModules() {
-      this._diaryService.getModules().subscribe(modules => {
-        for (let i = 0; i < modules.length; i++) {
-          this.modules[i] = modules[i];
-        }
-        this.modules = this.removeDuplicates(this.modules,'name');
-      }, 
+  // Get Courses
+  getCourses() {
+    this._diaryService.getCourses().subscribe(courses => {
+      this.courses = courses;
+    },
       err => {
         console.log(err);
-          return false;
+        return false;
       });
-    }
-  
-    // Get Courses
-    getCourses() {
-      this._diaryService.getCourses().subscribe(courses => {
-        this.courses = courses;
-      }, 
-      err => {
-        console.log(err);
-          return false;
-      });
-    }
+  }
 
   removeDuplicates(originalArray, objKey) {
     var trimmedArray = [];
@@ -115,5 +167,12 @@ export class AddEventPage {
       }
     }
     return trimmedArray;
+  }
+
+  refreshPage() {
+    const startIndex = this.navCtrl.getActive().index - 1;
+    this.navCtrl.remove(startIndex, 2).then(() => {
+      this.navCtrl.push(DiaryPage);
+    });
   }
 }

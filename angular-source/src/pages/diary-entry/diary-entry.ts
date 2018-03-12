@@ -30,6 +30,14 @@ export class DiaryEntryPage {
       this.entry = this.params.get('entry');
   }
 
+  // Check overdue
+  checkOverdue(entry) {
+    entry = new Date(entry.dueDate);
+    if (entry < new Date()) {
+      return true;
+    };
+  }
+
   dismiss() {
     this.viewCtrl.dismiss();
   }

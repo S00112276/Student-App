@@ -22,4 +22,13 @@ page-diary {
     position: absolute;
     display: inline-block;
   }
+
+  .edit {
+    color: #ffffff;
+    width: 70px;
+  }
+
+  .overdue {
+    color: red;
+  }
 }

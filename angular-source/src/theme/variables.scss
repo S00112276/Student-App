@@ -39,7 +39,9 @@ $colors: (
   lightprimary:     #B5B5B7,
   light:      #f4f4f4,
   dark:       #222,
-  energy:     #2072f7
+  energy:     #2072f7,
+  danger:     #ff0000,
+  caution:    #FFCC00
 );
 
 $toolbar-background: color($colors, primary);

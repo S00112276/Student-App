@@ -23,6 +23,7 @@ import { DiaryEntryPage } from '../pages/diary-entry/diary-entry';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { HeaderColor } from '@ionic-native/header-color';
 import { Calendar } from '@ionic-native/calendar';
 
 import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
@@ -66,6 +67,7 @@ const config: SocketIoConfig = { url: 'https://obscure-escarpment-51111.herokuap
     DiaryService,
     StatusBar,
     SplashScreen,
+    HeaderColor,
     Calendar,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

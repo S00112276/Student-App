@@ -30,6 +30,20 @@ export class DiaryService {
       .map(res => res.json());
   }
 
+  // Delete Entry
+  deleteEntry(entryId) {
+    let ep = this.prepEndpoint('diary/removefromdiary/' + entryId);
+    return this.http.delete(ep)
+    .map(res => res.json());
+  }
+
+  // Update Entry
+  updateEntry(entry) {
+    let ep = this.prepEndpoint('diary/updateentry/' + entry._id);
+    return this.http.put(ep,entry)
+    .map(res => res.json());
+  }
+
   // Get Lecturers
   getLecturers() {
     let ep = this.prepEndpoint('users/lecturers');

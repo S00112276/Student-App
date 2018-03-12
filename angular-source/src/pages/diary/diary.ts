@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController, AlertController } from 'ionic-angular';
 import { AddEventPage } from '../add-event/add-event';
 import { DiaryService } from '../shared/diary.service';
 import { AuthService } from '../shared/auth.service';
@@ -26,7 +26,9 @@ export class DiaryPage {
   modules: any[] = [];
   courses: any[] = [];
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public alertCtrl: AlertController,
+    public navCtrl: NavController,
     private _diaryService: DiaryService,
     private _authService: AuthService,
     public modalCtrl: ModalController) {
@@ -34,6 +36,14 @@ export class DiaryPage {
     this.userObj = JSON.parse(this.user);
     console.log(this.userObj.username);
     this.getLecturers();
+  }
+
+  // Check overdue
+  checkOverdue(entry) {
+    entry = new Date(entry.dueDate);
+    if (entry < new Date()) {
+      return true;
+    };
   }
 
   // Get Lecturers
@@ -74,9 +84,9 @@ export class DiaryPage {
 
   // Returns Diary Entries
   getEntries() {
-    this._diaryService.getEntries().subscribe(data => {
-      for (var i = 0; i < data.length; i++) {
-        this.entries.push(data[i]);
+    this._diaryService.getEntries().subscribe(entries => {
+      for (var i = 0; i < entries.length; i++) {
+        this.entries.push(entries[i]);
         for (var j = 0; j < this.entries.length; j++) {
           for (var k = 0; k < this.lecturers.length; k++) {
             if (this.entries[j].lecturer == this.lecturers[k]._id) {
@@ -90,12 +100,37 @@ export class DiaryPage {
           }
         }
       }
-      if (this.entries.length === data.length) {
+      if (this.entries.length === entries.length) {
         let sortedResults = [];
         sortedResults = this.entries.sort(this.sortByDate);
       }
     },
       error => this.errorMessage = <any>error);
+  }
+
+  deleteEntry(entry) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm delete',
+      message: 'Are you sure you want to delete this entry?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Confirm',
+          handler: () => {
+            this._diaryService.deleteEntry(entry._id).subscribe(() => {
+              this.refreshPage();
+            });
+          }
+        }
+      ]
+    });
+    alert.present();
   }
 
   // Sort By Date
@@ -112,5 +147,26 @@ export class DiaryPage {
 
   addEvent() {
     this.navCtrl.push(AddEventPage);
+  }
+
+  editEntry(entry) {
+    this.navCtrl.push(AddEventPage, {
+      id: entry._id,
+      title: entry.title,
+      startDate: new Date(),
+      dueDate: entry.due,
+      lecturer: entry.lecturer,
+      groups: entry.groups,
+      room: entry.room,
+      module: entry.module._id,
+      percentage: entry.percentage,
+      description: entry.description
+    });
+  }
+
+  refreshPage() {
+    this.navCtrl.remove(1, 1).then(() => {
+      this.navCtrl.push(DiaryPage);
+    });
   }
 }

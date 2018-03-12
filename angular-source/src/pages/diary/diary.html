@@ -10,21 +10,27 @@
 </ion-header>
 
 <ion-content class="list-avatar-page">
-
-    <ion-list>
-
-        <ion-item (click)="openModal({entry: entry})" *ngFor="let entry of entries">
-            <ion-avatar item-start>
-                <img *ngIf="entry.title.toLowerCase() == 'assessment'" src="{{entryType[0]}}">
-                <img *ngIf="entry.title.toLowerCase() == 'presentation'" src="{{entryType[1]}}">
-                <img *ngIf="entry.title.toLowerCase() == 'assignment'" src="{{entryType[2]}}">
-                <img *ngIf="entry.title.toLowerCase() == 'event'" src="{{entryType[3]}}">
-                <img *ngIf="entry.title.toLowerCase() == 'report'" src="{{entryType[4]}}">
-            </ion-avatar>
-            <h2>{{entry.dueDate | date: 'EEEE, MMMM d, h:mm a'}}</h2>
-            <h3>{{entry.module | uppercase}}</h3>
-            <p>{{entry.title}}</p>
-        </ion-item>
+    <div *ngIf="entries == 0" class="customSpinner"></div>
+    <ion-list *ngIf="entries != 0">
+        <ion-item-sliding *ngFor="let entry of entries">
+            <ion-item (click)="openModal({entry: entry})">
+                <ion-avatar item-start>
+                    <img *ngIf="entry.title.toLowerCase() == 'assessment'" src="{{entryType[0]}}">
+                    <img *ngIf="entry.title.toLowerCase() == 'presentation'" src="{{entryType[1]}}">
+                    <img *ngIf="entry.title.toLowerCase() == 'assignment'" src="{{entryType[2]}}">
+                    <img *ngIf="entry.title.toLowerCase() == 'event'" src="{{entryType[3]}}">
+                    <img *ngIf="entry.title.toLowerCase() == 'report'" src="{{entryType[4]}}">
+                </ion-avatar>
+                <h2>{{entry.dueDate | date: 'EEEE, MMMM d, h:mm a'}}</h2>
+                <h3>{{entry.module | uppercase}}</h3>
+                <p>{{entry.title}}</p>
+                <span *ngIf="checkOverdue(entry)" class="overdue" item-end>Overdue</span>
+            </ion-item>
+            <ion-item-options side="right">
+                <button ion-button color="caution" class="edit" (click)="editEntry(entry)">Edit</button>
+                <button ion-button color="danger" (click)="deleteEntry(entry)">Delete</button>
+            </ion-item-options>
+        </ion-item-sliding>
 
     </ion-list>
 

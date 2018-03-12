@@ -14,14 +14,15 @@
   <ion-list>
     <ion-item>
       <ion-avatar item-start>
-          <img *ngIf="entry.title.toLowerCase() == 'assessment'" src="{{entryType[0]}}">
-          <img *ngIf="entry.title.toLowerCase() == 'presentation'" src="{{entryType[1]}}">
-          <img *ngIf="entry.title.toLowerCase() == 'assignment'" src="{{entryType[2]}}">
-          <img *ngIf="entry.title.toLowerCase() == 'event'" src="{{entryType[3]}}">
-          <img *ngIf="entry.title.toLowerCase() == 'report'" src="{{entryType[4]}}">
+        <img *ngIf="entry.title.toLowerCase() == 'assessment'" src="{{entryType[0]}}">
+        <img *ngIf="entry.title.toLowerCase() == 'presentation'" src="{{entryType[1]}}">
+        <img *ngIf="entry.title.toLowerCase() == 'assignment'" src="{{entryType[2]}}">
+        <img *ngIf="entry.title.toLowerCase() == 'event'" src="{{entryType[3]}}">
+        <img *ngIf="entry.title.toLowerCase() == 'report'" src="{{entryType[4]}}">
       </ion-avatar>
       <h2>{{entry.module | uppercase}}</h2>
       <p>{{entry.title}}</p>
+      <span *ngIf="checkOverdue(entry)" class="overdue" item-end>Overdue</span>
     </ion-item>
 
     <ion-item>
@@ -60,7 +61,10 @@
     </ion-item>
 
     <ion-item>
-      <div><h3>{{entry.description}}</h3></div>
+      Notes:
+      <div>
+        <h3>{{entry.description}}</h3>
+      </div>
     </ion-item>
   </ion-list>
 </ion-content>
