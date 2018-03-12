@@ -1,6 +1,6 @@
 webpackJsonp([6],{
 
-/***/ 119:
+/***/ 117:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33,17 +33,6 @@ var AddEventPage = (function () {
         this.groups = [];
         this.getModules();
         this.getCourses();
-        if (navParams != null) {
-            this.id = navParams.get('id');
-            this.title = navParams.get('title');
-            this.dueDate = navParams.get('dueDate');
-            this.lecturer = navParams.get('lecturer');
-            this.groups = navParams.get('groups');
-            this.room = navParams.get('room');
-            this.module = navParams.get('module');
-            this.percentage = navParams.get('percentage');
-            this.description = navParams.get('description');
-        }
     }
     AddEventPage.prototype.insertEntry = function () {
         var _this = this;
@@ -53,7 +42,6 @@ var AddEventPage = (function () {
         var dueTime = time.concat(this.time);
         var due = this.dueDate.concat(dueTime);
         var entry = {
-            _id: this.id,
             title: this.title,
             startDate: new Date(),
             dueDate: due,
@@ -67,59 +55,20 @@ var AddEventPage = (function () {
         this._diaryService.insertEntry(entry).subscribe(function (data) {
             if (data.success) {
                 var alert_1 = _this.alertCtrl.create({
-                    title: 'Entry Added',
-                    subTitle: 'Your entry has been added successfully',
+                    title: 'Added to DB',
+                    subTitle: 'YAY',
                     buttons: ['OK']
                 });
                 alert_1.present();
-                _this.refreshPage();
+                _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__diary_diary__["a" /* DiaryPage */]);
             }
             else {
                 var alert_2 = _this.alertCtrl.create({
-                    title: 'Something went wrong',
-                    subTitle: 'Please try again',
+                    title: 'Failed',
+                    subTitle: ':(',
                     buttons: ['OK']
                 });
                 alert_2.present();
-            }
-        });
-    };
-    AddEventPage.prototype.updateEntry = function () {
-        var _this = this;
-        this.groups = this.module.groups;
-        this.lecturer = this.module.lecturer;
-        var time = 'T';
-        var dueTime = time.concat(this.time);
-        var due = this.dueDate.concat(dueTime);
-        var entry = {
-            _id: this.id,
-            title: this.title,
-            startDate: new Date(),
-            dueDate: due,
-            lecturer: this.lecturer,
-            groups: this.groups,
-            room: this.room,
-            module: this.module._id,
-            percentage: this.percentage,
-            description: this.description
-        };
-        this._diaryService.updateEntry(entry).subscribe(function (data) {
-            if (data.success) {
-                var alert_3 = _this.alertCtrl.create({
-                    title: 'Entry Edited',
-                    subTitle: 'Your entry has been edited successfully',
-                    buttons: ['OK']
-                });
-                alert_3.present();
-                _this.refreshPage();
-            }
-            else {
-                var alert_4 = _this.alertCtrl.create({
-                    title: 'Something went wrong',
-                    subTitle: 'Please try again',
-                    buttons: ['OK']
-                });
-                alert_4.present();
             }
         });
     };
@@ -159,18 +108,11 @@ var AddEventPage = (function () {
         }
         return trimmedArray;
     };
-    AddEventPage.prototype.refreshPage = function () {
-        var _this = this;
-        var startIndex = this.navCtrl.getActive().index - 1;
-        this.navCtrl.remove(startIndex, 2).then(function () {
-            _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_3__diary_diary__["a" /* DiaryPage */]);
-        });
-    };
     return AddEventPage;
 }());
 AddEventPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-add-event',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\add-event\add-event.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Add entry</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n\n      <ion-label>Type</ion-label>\n\n      <ion-select [(ngModel)]="title">\n\n        <ion-option value="Assessment">Assessment</ion-option>\n\n        <ion-option value="Presentation">Presentation</ion-option>\n\n        <ion-option value="Report">Report</ion-option>\n\n        <ion-option value="Assignment">Assignment</ion-option>\n\n        <ion-option value="Event">Event</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Module</ion-label>\n\n      <ion-select [(ngModel)]="module"><!--(ngModelChange)="filterGroups($event)"-->\n\n        <ion-option *ngFor="let module of modules" [value]="module" >{{module.name | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <!-- <ion-item *ngIf="module != null">\n\n      <ion-label>Group</ion-label>\n\n      <ion-select [(ngModel)]="groups">\n\n        <ion-option *ngFor="let group of module.groups" ngValue="group" >{{group\ | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item> -->\n\n    <ion-item>\n\n      <ion-label floating>Description</ion-label>\n\n      <ion-textarea type="text" [(ngModel)]="description" name="notes"></ion-textarea>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Room</ion-label>\n\n      <ion-input type="text" [(ngModel)]="room" name="room"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Due Date</ion-label>\n\n      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="dueDate" name="dueDate"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Time</ion-label>\n\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="time" name="time"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Percentage</ion-label>\n\n      <ion-input type="text" [(ngModel)]="percentage" name="percentage"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <button ion-button (click)="insertEntry()" full round>Add Entry</button>\n\n      <button ion-button (click)="updateEntry()" full round>Save</button>\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\add-event\add-event.html"*/,
+        selector: 'page-add-event',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\add-event\add-event.html"*/'<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Add entry</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n  <ion-list>\n\n    <ion-item>\n\n      <ion-label>Type</ion-label>\n\n      <ion-select [(ngModel)]="title">\n\n        <ion-option value="Assessment">Assessment</ion-option>\n\n        <ion-option value="Presentation">Presentation</ion-option>\n\n        <ion-option value="Report">Report</ion-option>\n\n        <ion-option value="Assignment">Assignment</ion-option>\n\n        <ion-option value="Event">Event</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label>Module</ion-label>\n\n      <ion-select [(ngModel)]="module"><!--(ngModelChange)="filterGroups($event)"-->\n\n        <ion-option *ngFor="let module of modules" [value]="module" >{{module.name | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <!-- <ion-item *ngIf="module != null">\n\n      <ion-label>Group</ion-label>\n\n      <ion-select [(ngModel)]="groups">\n\n        <ion-option *ngFor="let group of module.groups" ngValue="group" >{{group\ | uppercase}}</ion-option>\n\n      </ion-select>\n\n    </ion-item> -->\n\n    <ion-item>\n\n      <ion-label floating>Description</ion-label>\n\n      <ion-textarea type="text" [(ngModel)]="description" name="notes"></ion-textarea>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Room</ion-label>\n\n      <ion-input type="text" [(ngModel)]="room" name="room"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Due Date</ion-label>\n\n      <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="MM/DD/YYYY" [(ngModel)]="dueDate" name="dueDate"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Time</ion-label>\n\n      <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="time" name="time"></ion-datetime>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Percentage</ion-label>\n\n      <ion-input type="text" [(ngModel)]="percentage" name="percentage"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n      <button ion-button (click)="insertEntry()" full round>Add Entry</button>\n\n      <button ion-button (click)="updateEntry()" full round>Save</button>\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\add-event\add-event.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
@@ -182,7 +124,7 @@ AddEventPage = __decorate([
 
 /***/ }),
 
-/***/ 120:
+/***/ 118:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -220,14 +162,6 @@ var DiaryEntryPage = (function () {
         ];
         this.entry = this.params.get('entry');
     }
-    // Check overdue
-    DiaryEntryPage.prototype.checkOverdue = function (entry) {
-        entry = new Date(entry.dueDate);
-        if (entry < new Date()) {
-            return true;
-        }
-        ;
-    };
     DiaryEntryPage.prototype.dismiss = function () {
         this.viewCtrl.dismiss();
     };
@@ -235,7 +169,7 @@ var DiaryEntryPage = (function () {
 }());
 DiaryEntryPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-diary-entry',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\diary-entry\diary-entry.html"*/'<ion-header>\n\n  <ion-toolbar>\n\n    <ion-title>\n\n      Event\n\n    </ion-title>\n\n    <ion-buttons start>\n\n      <button ion-button icon-only (click)="dismiss()">\n\n        <ion-icon name="md-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content>\n\n  <ion-list>\n\n    <ion-item>\n\n      <ion-avatar item-start>\n\n        <img *ngIf="entry.title.toLowerCase() == \'assessment\'" src="{{entryType[0]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'presentation\'" src="{{entryType[1]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'assignment\'" src="{{entryType[2]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'event\'" src="{{entryType[3]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'report\'" src="{{entryType[4]}}">\n\n      </ion-avatar>\n\n      <h2>{{entry.module | uppercase}}</h2>\n\n      <p>{{entry.title}}</p>\n\n      <span *ngIf="checkOverdue(entry)" class="overdue" item-end>Overdue</span>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Lecturer\n\n      <ion-note item-end>\n\n        {{entry.lecturer}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Room\n\n      <ion-note item-end>\n\n        {{entry.room}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Date Due\n\n      <ion-note item-end>\n\n        {{entry.dueDate | date: \'EEEE, MMMM d\'}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Time\n\n      <ion-note item-end>\n\n        {{entry.dueDate | date: \'HH:mm a\'}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Percentage\n\n      <ion-note item-end>\n\n        {{entry.percentage}}%\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Notes:\n\n      <div>\n\n        <h3>{{entry.description}}</h3>\n\n      </div>\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\diary-entry\diary-entry.html"*/,
+        selector: 'page-diary-entry',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary-entry\diary-entry.html"*/'<ion-header>\n\n  <ion-toolbar>\n\n    <ion-title>\n\n      Event\n\n    </ion-title>\n\n    <ion-buttons start>\n\n      <button ion-button icon-only (click)="dismiss()">\n\n        <ion-icon name="md-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-toolbar>\n\n</ion-header>\n\n<ion-content>\n\n  <ion-list>\n\n    <ion-item>\n\n      <ion-avatar item-start>\n\n        <img *ngIf="entry.title.toLowerCase() == \'assessment\'" src="{{entryType[0]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'presentation\'" src="{{entryType[1]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'assignment\'" src="{{entryType[2]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'event\'" src="{{entryType[3]}}">\n\n        <img *ngIf="entry.title.toLowerCase() == \'report\'" src="{{entryType[4]}}">\n\n      </ion-avatar>\n\n      <h2>{{entry.module | uppercase}}</h2>\n\n      <p>{{entry.title}}</p>\n\n      <span *ngIf="checkOverdue(entry)" class="overdue" item-end>Overdue</span>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Lecturer\n\n      <ion-note item-end>\n\n        {{entry.lecturer}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Room\n\n      <ion-note item-end>\n\n        {{entry.room}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Date Due\n\n      <ion-note item-end>\n\n        {{entry.dueDate | date: \'EEEE, MMMM d\'}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Time\n\n      <ion-note item-end>\n\n        {{entry.dueDate | date: \'HH:mm a\'}}\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Percentage\n\n      <ion-note item-end>\n\n        {{entry.percentage}}%\n\n      </ion-note>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      Notes:\n\n      <div>\n\n        <h3>{{entry.description}}</h3>\n\n      </div>\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary-entry\diary-entry.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */],
@@ -246,14 +180,14 @@ DiaryEntryPage = __decorate([
 
 /***/ }),
 
-/***/ 121:
+/***/ 119:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WelcomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__shared_auth_service__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_validate_service__ = __webpack_require__(313);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -468,7 +402,7 @@ __decorate([
 ], WelcomePage.prototype, "innerSlider", void 0);
 WelcomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-welcome',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\welcome\welcome.html"*/'<ion-content class="transparent-header" [ngStyle]="{\'background-color\': \'#2072f7\'}">\n\n\n\n  <!-- Initial Welcome Page -->\n\n  <ion-slides #slider class="content-slider" direction="vertical">\n\n\n\n    <!-- Logo -->\n\n    <ion-slide class="swiper-no-swiping">\n\n      <div padding class="landing">\n\n        <img class="logo" src="assets/imgs/icon.png" />\n\n        <ion-row>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToLogin()">LOGIN</button>\n\n          </ion-col>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToSignup()">SIGN UP</button>\n\n          </ion-col>\n\n        </ion-row>\n\n      </div>\n\n    </ion-slide>\n\n\n\n    <!-- Login Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <ion-slides #innerSlider class="content-slider">\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n              <ion-item>\n\n                <ion-label floating>Email</ion-label>\n\n                <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>\n\n              </ion-item>\n\n              <ion-item>\n\n                <ion-label floating>Password</ion-label>\n\n                <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n              </ion-item>\n\n              <button ion-button block round (click)="Login()" color="light" class="login-button">Login</button>\n\n              <button ion-button clear (click)="slideNext()" color="light" class="forgot-button">FORGOT PASSWORD?</button>\n\n          </div>\n\n          <!-- Switch Page to Sign Up -->\n\n          <button ion-button clear (click)="goToSignup()" class="slide-button position-bottom">GO TO SIGNUP\n\n            <ion-icon name="arrow-down"></ion-icon>\n\n          </button>\n\n        </ion-slide>\n\n\n\n        <!-- Forgot Password -->\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n            <ion-item>\n\n              <ion-label floating>E-mail</ion-label>\n\n              <ion-input type="email"></ion-input>\n\n            </ion-item>\n\n            <button ion-button block round (click)="resetPassword()" color="light" class="login-button">RESET PASSWORD</button>\n\n            <button ion-button clear (click)="slidePrevious()" color="light" class="goback-button">\n\n              <ion-icon name="arrow-back"></ion-icon> GO BACK</button>\n\n          </div>\n\n        </ion-slide>\n\n      </ion-slides>\n\n    </ion-slide>\n\n\n\n    <!-- Sign Up Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <button ion-button clear (click)="goToLogin()" class="slide-button">\n\n        GO TO LOGIN\n\n        <ion-icon name="arrow-up"></ion-icon>\n\n      </button>\n\n      <div style="padding: 32px">\n\n          <ion-item> \n\n            <ion-label floating>Username</ion-label>\n\n            <ion-input type="text" name="username" [(ngModel)]="username"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Student ID</ion-label>\n\n            <ion-input type="text" name="studentID" [(ngModel)]="studentID"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="margin-bottom">\n\n            <ion-label floating>Confirm Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="confirmPassword"></ion-input>\n\n          </ion-item>\n\n          <button ion-button block round (click)="SignUp()" color="light" class="login-button">SIGN UP</button>\n\n      </div>\n\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\welcome\welcome.html"*/,
+        selector: 'page-welcome',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\welcome\welcome.html"*/'<ion-content class="transparent-header" [ngStyle]="{\'background-color\': \'#2072f7\'}">\n\n\n\n  <!-- Initial Welcome Page -->\n\n  <ion-slides #slider class="content-slider" direction="vertical">\n\n\n\n    <!-- Logo -->\n\n    <ion-slide class="swiper-no-swiping">\n\n      <div padding class="landing">\n\n        <img class="logo" src="assets/imgs/icon.png" />\n\n        <ion-row>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToLogin()">LOGIN</button>\n\n          </ion-col>\n\n          <ion-col col-6>\n\n            <button ion-button round color="light" class="login-button" (click)="goToSignup()">SIGN UP</button>\n\n          </ion-col>\n\n        </ion-row>\n\n      </div>\n\n    </ion-slide>\n\n\n\n    <!-- Login Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <ion-slides #innerSlider class="content-slider">\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n              <ion-item>\n\n                <ion-label floating>Email</ion-label>\n\n                <ion-input type="text" name="email" [(ngModel)]="email"></ion-input>\n\n              </ion-item>\n\n              <ion-item>\n\n                <ion-label floating>Password</ion-label>\n\n                <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n              </ion-item>\n\n              <button ion-button block round (click)="Login()" color="light" class="login-button">Login</button>\n\n              <button ion-button clear (click)="slideNext()" color="light" class="forgot-button">FORGOT PASSWORD?</button>\n\n          </div>\n\n          <!-- Switch Page to Sign Up -->\n\n          <button ion-button clear (click)="goToSignup()" class="slide-button position-bottom">GO TO SIGNUP\n\n            <ion-icon name="arrow-down"></ion-icon>\n\n          </button>\n\n        </ion-slide>\n\n\n\n        <!-- Forgot Password -->\n\n        <ion-slide class="swiper-no-swiping">\n\n          <div style="padding: 20% 32px 32px 32px">\n\n            <ion-item>\n\n              <ion-label floating>E-mail</ion-label>\n\n              <ion-input type="email"></ion-input>\n\n            </ion-item>\n\n            <button ion-button block round (click)="resetPassword()" color="light" class="login-button">RESET PASSWORD</button>\n\n            <button ion-button clear (click)="slidePrevious()" color="light" class="goback-button">\n\n              <ion-icon name="arrow-back"></ion-icon> GO BACK</button>\n\n          </div>\n\n        </ion-slide>\n\n      </ion-slides>\n\n    </ion-slide>\n\n\n\n    <!-- Sign Up Page -->\n\n    <ion-slide class="zoom swiper-no-swiping">\n\n      <button ion-button clear (click)="goToLogin()" class="slide-button">\n\n        GO TO LOGIN\n\n        <ion-icon name="arrow-up"></ion-icon>\n\n      </button>\n\n      <div style="padding: 32px">\n\n          <ion-item> \n\n            <ion-label floating>Username</ion-label>\n\n            <ion-input type="text" name="username" [(ngModel)]="username"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Student ID</ion-label>\n\n            <ion-input type="text" name="studentID" [(ngModel)]="studentID"></ion-input>\n\n          </ion-item>\n\n          <ion-item>\n\n            <ion-label floating>Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>\n\n          </ion-item>\n\n          <ion-item class="margin-bottom">\n\n            <ion-label floating>Confirm Password</ion-label>\n\n            <ion-input type="password" name="password" [(ngModel)]="confirmPassword"></ion-input>\n\n          </ion-item>\n\n          <button ion-button block round (click)="SignUp()" color="light" class="login-button">SIGN UP</button>\n\n      </div>\n\n    </ion-slide>\n\n\n\n  </ion-slides>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\welcome\welcome.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* LoadingController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */],
@@ -505,27 +439,27 @@ webpackEmptyAsyncContext.id = 130;
 
 var map = {
 	"../pages/add-event/add-event.module": [
-		473,
+		463,
 		5
 	],
 	"../pages/chat-room/chat-room.module": [
-		474,
+		464,
 		4
 	],
 	"../pages/diary-entry/diary-entry.module": [
-		475,
+		466,
 		3
 	],
 	"../pages/diary/diary.module": [
-		476,
+		465,
 		2
 	],
 	"../pages/timetable/timetable.module": [
-		477,
+		467,
 		1
 	],
 	"../pages/welcome/welcome.module": [
-		478,
+		468,
 		0
 	]
 };
@@ -607,11 +541,11 @@ ValidateService = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return HomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timetable_timetable__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__timetable_timetable__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__diary_diary__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_ng_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_auth_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__shared_auth_service__ = __webpack_require__(38);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -657,7 +591,7 @@ var HomePage = (function () {
 }());
 HomePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar hideBackButton color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title> Home </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="card-background-page">\n\n\n\n  <ion-card [navPush]="timetablePage" class="timetable">\n\n    <div class="card-title">Timetable</div>\n\n    <div class="card-subtitle">Classes and Exams</div>\n\n  </ion-card>\n\n\n\n  <ion-card (click)="joinChat()" class="chat">\n\n    <div class="card-title">Chat</div>\n\n    <div class="card-subtitle">Talk with friends</div>\n\n  </ion-card>\n\n\n\n  <ion-card [navPush]="diaryPage" class="diary">\n\n    <div class="card-title">Diary</div>\n\n    <div class="card-subtitle">Track your schedule</div>\n\n  </ion-card>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\home\home.html"*/
+        selector: 'page-home',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar hideBackButton color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title> Home </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="card-background-page">\n\n\n\n  <ion-card [navPush]="timetablePage" class="timetable">\n\n    <div class="card-title">Timetable</div>\n\n    <div class="card-subtitle">Classes and Exams</div>\n\n  </ion-card>\n\n\n\n  <ion-card (click)="joinChat()" class="chat">\n\n    <div class="card-title">Chat</div>\n\n    <div class="card-subtitle">Talk with friends</div>\n\n  </ion-card>\n\n\n\n  <ion-card [navPush]="diaryPage" class="diary">\n\n    <div class="card-title">Diary</div>\n\n    <div class="card-subtitle">Track your schedule</div>\n\n  </ion-card>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\home\home.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* App */], __WEBPACK_IMPORTED_MODULE_4_ng_socket_io__["Socket"], __WEBPACK_IMPORTED_MODULE_5__shared_auth_service__["a" /* AuthService */]])
 ], HomePage);
@@ -673,9 +607,9 @@ HomePage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChatRoomPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io__ = __webpack_require__(90);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_ng_socket_io__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -775,7 +709,7 @@ var ChatRoomPage = (function () {
 }());
 ChatRoomPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-chat-room',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\chat-room\chat-room.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Chat</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<!-- Messages -->\n\n<ion-content padding>\n\n  <ion-grid>\n\n    <ion-row *ngFor="let message of messages">\n\n\n\n      <!-- Message from someone -->\n\n      <ion-col col-9 *ngIf="message.from !== username" class="message" [ngClass]="{\'my_message\': message.from === username, \'other_message\': message.from !== username}">\n\n        <span class="user_name">{{ message.from }}:</span>\n\n        <br>\n\n        <span>{{ message.text }}</span>\n\n        <div class="time">{{ message.created | date:\'dd.MM hh:MM\' }}</div>\n\n      </ion-col>\n\n\n\n      <!-- Message to someone -->\n\n      <ion-col offset-3 col-9 *ngIf="message.from === username" class="message" [ngClass]="{\'my_message\': message.from === username, \'other_message\': message.from !== username}">\n\n        <span class="user_name">{{ message.from }}:</span>\n\n        <br>\n\n        <span>{{ message.text }}</span>\n\n        <div class="time">{{ message.created | date:\'dd.MM hh:MM\' }}</div>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n\n\n<!-- Input message -->\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-row class="message_row">\n\n\n\n      <ion-col col-9>\n\n        <ion-item no-lines>\n\n          <ion-input type="text" placeholder="Message" [(ngModel)]="message"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-3>\n\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="message === \'\'">\n\n          Send\n\n        </button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\chat-room\chat-room.html"*/,
+        selector: 'page-chat-room',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\chat-room\chat-room.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title>Chat</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<!-- Messages -->\n\n<ion-content padding>\n\n  <ion-grid>\n\n    <ion-row *ngFor="let message of messages">\n\n\n\n      <!-- Message from someone -->\n\n      <ion-col col-9 *ngIf="message.from !== username" class="message" [ngClass]="{\'my_message\': message.from === username, \'other_message\': message.from !== username}">\n\n        <span class="user_name">{{ message.from }}:</span>\n\n        <br>\n\n        <span>{{ message.text }}</span>\n\n        <div class="time">{{ message.created | date:\'dd.MM hh:MM\' }}</div>\n\n      </ion-col>\n\n\n\n      <!-- Message to someone -->\n\n      <ion-col offset-3 col-9 *ngIf="message.from === username" class="message" [ngClass]="{\'my_message\': message.from === username, \'other_message\': message.from !== username}">\n\n        <span class="user_name">{{ message.from }}:</span>\n\n        <br>\n\n        <span>{{ message.text }}</span>\n\n        <div class="time">{{ message.created | date:\'dd.MM hh:MM\' }}</div>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </ion-grid>\n\n</ion-content>\n\n\n\n<!-- Input message -->\n\n<ion-footer>\n\n  <ion-toolbar>\n\n    <ion-row class="message_row">\n\n\n\n      <ion-col col-9>\n\n        <ion-item no-lines>\n\n          <ion-input type="text" placeholder="Message" [(ngModel)]="message"></ion-input>\n\n        </ion-item>\n\n      </ion-col>\n\n\n\n      <ion-col col-3>\n\n        <button ion-button clear color="primary" (click)="sendMessage()" [disabled]="message === \'\'">\n\n          Send\n\n        </button>\n\n      </ion-col>\n\n\n\n    </ion-row>\n\n  </ion-toolbar>\n\n</ion-footer>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\chat-room\chat-room.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["n" /* ToastController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3_ng_socket_io__["Socket"]])
 ], ChatRoomPage);
@@ -804,29 +738,28 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__ = __webpack_require__(30);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(453);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_http__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_common_http__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_forms__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_shared_auth_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_shared_auth_service__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_shared_validate_service__ = __webpack_require__(313);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_shared_diary_service__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_welcome_welcome__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_about_about__ = __webpack_require__(469);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_contact_contact__ = __webpack_require__(470);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_welcome_welcome__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_about_about__ = __webpack_require__(460);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_contact_contact__ = __webpack_require__(461);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pages_home_home__ = __webpack_require__(356);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_timetable_timetable__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pages_timetable_timetable__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_diary_diary__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_add_event_add_event__ = __webpack_require__(119);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_diary_entry_diary_entry__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_add_event_add_event__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_diary_entry_diary_entry__ = __webpack_require__(118);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_native_status_bar__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__ionic_native_splash_screen__ = __webpack_require__(355);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_header_color__ = __webpack_require__(471);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_calendar__ = __webpack_require__(472);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__ = __webpack_require__(93);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22_ng_socket_io__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_calendar__ = __webpack_require__(462);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng_socket_io__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21_ng_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21_ng_socket_io__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -845,7 +778,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 
 
 // Components
-
 
 
 
@@ -880,13 +812,13 @@ AppModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_6__angular_forms__["a" /* FormsModule */],
             __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_22_ng_socket_io__["SocketIoModule"].forRoot(config),
+            __WEBPACK_IMPORTED_MODULE_21_ng_socket_io__["SocketIoModule"].forRoot(config),
             __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_3__app_component__["a" /* MyApp */], {}, {
                 links: [
                     { loadChildren: '../pages/add-event/add-event.module#AddEventPageModule', name: 'AddEventPage', segment: 'add-event', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/chat-room/chat-room.module#ChatRoomPageModule', name: 'ChatRoomPage', segment: 'chat-room', priority: 'low', defaultHistory: [] },
-                    { loadChildren: '../pages/diary-entry/diary-entry.module#DiaryEntryPageModule', name: 'DiaryEntryPage', segment: 'diary-entry', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/diary/diary.module#DiaryPageModule', name: 'DiaryPage', segment: 'diary', priority: 'low', defaultHistory: [] },
+                    { loadChildren: '../pages/diary-entry/diary-entry.module#DiaryEntryPageModule', name: 'DiaryEntryPage', segment: 'diary-entry', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/timetable/timetable.module#TimetablePageModule', name: 'TimetablePage', segment: 'timetable', priority: 'low', defaultHistory: [] },
                     { loadChildren: '../pages/welcome/welcome.module#WelcomePageModule', name: 'WelcomePage', segment: 'welcome', priority: 'low', defaultHistory: [] }
                 ]
@@ -912,8 +844,7 @@ AppModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_9__pages_shared_diary_service__["a" /* DiaryService */],
             __WEBPACK_IMPORTED_MODULE_18__ionic_native_status_bar__["a" /* StatusBar */],
             __WEBPACK_IMPORTED_MODULE_19__ionic_native_splash_screen__["a" /* SplashScreen */],
-            __WEBPACK_IMPORTED_MODULE_20__ionic_native_header_color__["a" /* HeaderColor */],
-            __WEBPACK_IMPORTED_MODULE_21__ionic_native_calendar__["a" /* Calendar */],
+            __WEBPACK_IMPORTED_MODULE_20__ionic_native_calendar__["a" /* Calendar */],
             { provide: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["d" /* IonicErrorHandler */] }
         ]
     })
@@ -923,7 +854,7 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 39:
+/***/ 38:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1339,14 +1270,12 @@ webpackContext.id = 435;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(353);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(355);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_timetable_timetable__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_timetable_timetable__ = __webpack_require__(63);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_diary_diary__ = __webpack_require__(49);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_home_home__ = __webpack_require__(356);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_chat_room_chat_room__ = __webpack_require__(357);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_shared_auth_service__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_welcome_welcome__ = __webpack_require__(121);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_observable_timer__ = __webpack_require__(460);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_rxjs_observable_timer___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10_rxjs_observable_timer__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_shared_auth_service__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_welcome_welcome__ = __webpack_require__(119);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1366,18 +1295,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var MyApp = (function () {
     function MyApp(_authService, platform, statusBar, splashScreen) {
-        var _this = this;
         this._authService = _authService;
-        this.showSplash = true;
         platform.ready().then(function () {
             // Okay, so the platform is ready and our plugins are available.
             // Here you can do any higher level native things you might need.
-            statusBar.styleBlackOpaque();
+            statusBar.styleDefault();
             splashScreen.hide();
-            Object(__WEBPACK_IMPORTED_MODULE_10_rxjs_observable_timer__["timer"])(3000).subscribe(function () { return _this.showSplash = false; });
         });
     }
     MyApp.prototype.ngAfterContentInit = function () {
@@ -1415,7 +1340,7 @@ __decorate([
     __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Nav */])
 ], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\app\app.html"*/'<div *ngIf="showSplash" class="splashBackground">\n\n    <div class="splash">\n\n        <div class="splashSpinner">\n\n            <div class="double-bounce1"></div>\n\n            <div class="double-bounce2"></div>\n\n        </div>\n\n    </div>\n\n    <img class="logo" src="assets/imgs/icon.png" />\n\n</div>\n\n\n\n<ion-menu type="overlay" [content]="content">\n\n\n\n    <ion-header>\n\n        <ion-toolbar color="primary">\n\n            <ion-title>Menu</ion-title>\n\n        </ion-toolbar>\n\n    </ion-header>\n\n\n\n    <!-- Burger Menu Content -->\n\n    <ion-content>\n\n        <ion-list>\n\n            <button ion-item menuClose (click)="openPage(\'TimetablePage\')">\n\n                Timetable\n\n            </button>\n\n            <button ion-item menuClose (click)="openPage(\'ChatRoomPage\')">\n\n                Chat\n\n            </button>\n\n            <button ion-item menuClose (click)="openPage(\'DiaryPage\')">\n\n                Diary\n\n            </button>\n\n            <button ion-button menuClose color="primary" (click)="logout()">\n\n                Logout\n\n            </button>\n\n        </ion-list>\n\n    </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<ion-nav id="nav" #content swipeBackEnabled="false" [root]="rootPage"></ion-nav>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\app\app.html"*/
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\app\app.html"*/'<div *ngIf="showSplash" class="splashBackground">\n\n    <div class="splash">\n\n        <div class="splashSpinner">\n\n            <div class="double-bounce1"></div>\n\n            <div class="double-bounce2"></div>\n\n        </div>\n\n    </div>\n\n    <img class="logo" src="assets/imgs/icon.png" />\n\n</div>\n\n\n\n<ion-menu type="overlay" [content]="content">\n\n\n\n    <ion-header>\n\n        <ion-toolbar color="primary">\n\n            <ion-title>Menu</ion-title>\n\n        </ion-toolbar>\n\n    </ion-header>\n\n\n\n    <!-- Burger Menu Content -->\n\n    <ion-content>\n\n        <ion-list>\n\n            <button ion-item menuClose (click)="openPage(\'TimetablePage\')">\n\n                Timetable\n\n            </button>\n\n            <button ion-item menuClose (click)="openPage(\'ChatRoomPage\')">\n\n                Chat\n\n            </button>\n\n            <button ion-item menuClose (click)="openPage(\'DiaryPage\')">\n\n                Diary\n\n            </button>\n\n            <button ion-button menuClose color="primary" (click)="logout()">\n\n                Logout\n\n            </button>\n\n        </ion-list>\n\n    </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<ion-nav id="nav" #content swipeBackEnabled="false" [root]="rootPage"></ion-nav>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_8__pages_shared_auth_service__["a" /* AuthService */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* Platform */],
@@ -1427,7 +1352,7 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 469:
+/***/ 460:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1453,7 +1378,7 @@ var AboutPage = (function () {
 }());
 AboutPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-about',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\about\about.html"*/'<ion-header>\n\n  <ion-navbar>\n\n      <img src="assets/imgs/logo.png" class="navbarLogo"/><ion-title>About</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\about\about.html"*/
+        selector: 'page-about',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\about\about.html"*/'<ion-header>\n\n  <ion-navbar>\n\n      <img src="assets/imgs/logo.png" class="navbarLogo"/><ion-title>About</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\about\about.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]])
 ], AboutPage);
@@ -1462,7 +1387,7 @@ AboutPage = __decorate([
 
 /***/ }),
 
-/***/ 470:
+/***/ 461:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1488,7 +1413,7 @@ var ContactPage = (function () {
 }());
 ContactPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-contact',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\contact\contact.html"*/'<ion-header>\n\n  <ion-navbar>\n\n      <img src="assets/imgs/logo.png" class="navbarLogo"/><ion-title>Contact</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list>\n\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n\n    <ion-item>\n\n      <ion-icon name="ionic" item-start></ion-icon>\n\n      @ionicframework\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\contact\contact.html"*/
+        selector: 'page-contact',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\contact\contact.html"*/'<ion-header>\n\n  <ion-navbar>\n\n      <img src="assets/imgs/logo.png" class="navbarLogo"/><ion-title>Contact</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list>\n\n    <ion-list-header>Follow us on Twitter</ion-list-header>\n\n    <ion-item>\n\n      <ion-icon name="ionic" item-start></ion-icon>\n\n      @ionicframework\n\n    </ion-item>\n\n  </ion-list>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\contact\contact.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */]])
 ], ContactPage);
@@ -1504,10 +1429,10 @@ ContactPage = __decorate([
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiaryPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_event_add_event__ = __webpack_require__(119);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_event_add_event__ = __webpack_require__(117);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_auth_service__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__diary_entry_diary_entry__ = __webpack_require__(120);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_auth_service__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__diary_entry_diary_entry__ = __webpack_require__(118);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1523,9 +1448,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-var DiaryPage = DiaryPage_1 = (function () {
-    function DiaryPage(alertCtrl, navCtrl, _diaryService, _authService, modalCtrl) {
-        this.alertCtrl = alertCtrl;
+var DiaryPage = (function () {
+    function DiaryPage(navCtrl, _diaryService, _authService, modalCtrl) {
         this.navCtrl = navCtrl;
         this._diaryService = _diaryService;
         this._authService = _authService;
@@ -1543,17 +1467,8 @@ var DiaryPage = DiaryPage_1 = (function () {
         this.courses = [];
         this.user = _authService.loadUser();
         this.userObj = JSON.parse(this.user);
-        console.log(this.userObj.username);
         this.getLecturers();
     }
-    // Check overdue
-    DiaryPage.prototype.checkOverdue = function (entry) {
-        entry = new Date(entry.dueDate);
-        if (entry < new Date()) {
-            return true;
-        }
-        ;
-    };
     // Get Lecturers
     DiaryPage.prototype.getLecturers = function () {
         var _this = this;
@@ -1590,9 +1505,9 @@ var DiaryPage = DiaryPage_1 = (function () {
     // Returns Diary Entries
     DiaryPage.prototype.getEntries = function () {
         var _this = this;
-        this._diaryService.getEntries().subscribe(function (entries) {
-            for (var i = 0; i < entries.length; i++) {
-                _this.entries.push(entries[i]);
+        this._diaryService.getEntries().subscribe(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                _this.entries.push(data[i]);
                 for (var j = 0; j < _this.entries.length; j++) {
                     for (var k = 0; k < _this.lecturers.length; k++) {
                         if (_this.entries[j].lecturer == _this.lecturers[k]._id) {
@@ -1606,36 +1521,11 @@ var DiaryPage = DiaryPage_1 = (function () {
                     }
                 }
             }
-            if (_this.entries.length === entries.length) {
+            if (_this.entries.length === data.length) {
                 var sortedResults = [];
                 sortedResults = _this.entries.sort(_this.sortByDate);
             }
         }, function (error) { return _this.errorMessage = error; });
-    };
-    DiaryPage.prototype.deleteEntry = function (entry) {
-        var _this = this;
-        var alert = this.alertCtrl.create({
-            title: 'Confirm delete',
-            message: 'Are you sure you want to delete this entry?',
-            buttons: [
-                {
-                    text: 'Cancel',
-                    role: 'cancel',
-                    handler: function () {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Confirm',
-                    handler: function () {
-                        _this._diaryService.deleteEntry(entry._id).subscribe(function () {
-                            _this.refreshPage();
-                        });
-                    }
-                }
-            ]
-        });
-        alert.present();
     };
     // Sort By Date
     DiaryPage.prototype.sortByDate = function (event1, event2) {
@@ -1653,40 +1543,18 @@ var DiaryPage = DiaryPage_1 = (function () {
     DiaryPage.prototype.addEvent = function () {
         this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__add_event_add_event__["a" /* AddEventPage */]);
     };
-    DiaryPage.prototype.editEntry = function (entry) {
-        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_2__add_event_add_event__["a" /* AddEventPage */], {
-            id: entry._id,
-            title: entry.title,
-            startDate: new Date(),
-            dueDate: entry.due,
-            lecturer: entry.lecturer,
-            groups: entry.groups,
-            room: entry.room,
-            module: entry.module._id,
-            percentage: entry.percentage,
-            description: entry.description
-        });
-    };
-    DiaryPage.prototype.refreshPage = function () {
-        var _this = this;
-        this.navCtrl.remove(1, 1).then(function () {
-            _this.navCtrl.push(DiaryPage_1);
-        });
-    };
     return DiaryPage;
 }());
-DiaryPage = DiaryPage_1 = __decorate([
+DiaryPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'page-diary',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\diary\diary.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>Diary</ion-title>\n\n        <ion-buttons end>\n\n            <button ion-button icon-only (click)="addEvent()">\n\n                <ion-icon name="md-add-circle"></ion-icon>\n\n            </button>\n\n        </ion-buttons>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="list-avatar-page">\n\n    <div *ngIf="entries == 0" class="customSpinner"></div>\n\n    <ion-list *ngIf="entries != 0">\n\n        <ion-item-sliding *ngFor="let entry of entries">\n\n            <ion-item (click)="openModal({entry: entry})">\n\n                <ion-avatar item-start>\n\n                    <img *ngIf="entry.title.toLowerCase() == \'assessment\'" src="{{entryType[0]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'presentation\'" src="{{entryType[1]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'assignment\'" src="{{entryType[2]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'event\'" src="{{entryType[3]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'report\'" src="{{entryType[4]}}">\n\n                </ion-avatar>\n\n                <h2>{{entry.dueDate | date: \'EEEE, MMMM d, h:mm a\'}}</h2>\n\n                <h3>{{entry.module | uppercase}}</h3>\n\n                <p>{{entry.title}}</p>\n\n                <span *ngIf="checkOverdue(entry)" class="overdue" item-end>Overdue</span>\n\n            </ion-item>\n\n            <ion-item-options side="right">\n\n                <button ion-button color="caution" class="edit" (click)="editEntry(entry)">Edit</button>\n\n                <button ion-button color="danger" (click)="deleteEntry(entry)">Delete</button>\n\n            </ion-item-options>\n\n        </ion-item-sliding>\n\n\n\n    </ion-list>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\diary\diary.html"*/,
+        selector: 'page-diary',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary\diary.html"*/'<ion-header>\n\n    <ion-navbar>\n\n        <ion-title>Diary</ion-title>\n\n        <ion-buttons end>\n\n            <button ion-button icon-only (click)="addEvent()">\n\n                <ion-icon name="md-add-circle"></ion-icon>\n\n            </button>\n\n        </ion-buttons>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content class="list-avatar-page">\n\n    <div *ngIf="entries == 0" class="customSpinner"></div>\n\n    <ion-list *ngIf="entries != 0">\n\n        <ion-item-sliding *ngFor="let entry of entries">\n\n            <ion-item (click)="openModal({entry: entry})">\n\n                <ion-avatar item-start>\n\n                    <img *ngIf="entry.title.toLowerCase() == \'assessment\'" src="{{entryType[0]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'presentation\'" src="{{entryType[1]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'assignment\'" src="{{entryType[2]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'event\'" src="{{entryType[3]}}">\n\n                    <img *ngIf="entry.title.toLowerCase() == \'report\'" src="{{entryType[4]}}">\n\n                </ion-avatar>\n\n                <h2>{{entry.dueDate | date: \'EEEE, MMMM d, h:mm a\'}}</h2>\n\n                <h3>{{entry.module | uppercase}}</h3>\n\n                <p>{{entry.title}}</p>\n\n                <span *ngIf="checkOverdue(entry)" class="overdue" item-end>Overdue</span>\n\n            </ion-item>\n\n            <ion-item-options side="right">\n\n                <button ion-button color="caution" class="edit" (click)="editEntry(entry)">Edit</button>\n\n                <button ion-button color="danger" (click)="deleteEntry(entry)">Delete</button>\n\n            </ion-item-options>\n\n        </ion-item-sliding>\n\n\n\n    </ion-list>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\diary\diary.html"*/,
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_3__shared_diary_service__["a" /* DiaryService */],
         __WEBPACK_IMPORTED_MODULE_4__shared_auth_service__["a" /* AuthService */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* ModalController */]])
 ], DiaryPage);
 
-var DiaryPage_1;
 //# sourceMappingURL=diary.js.map
 
 /***/ }),
@@ -1698,7 +1566,7 @@ var DiaryPage_1;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DiaryService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_Observable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_Observable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_add_observable_throw__ = __webpack_require__(399);
@@ -1741,18 +1609,6 @@ var DiaryService = (function () {
         var ep = this.prepEndpoint('diary/addtodiary');
         this.entry = entry;
         return this.http.post(ep, entry, { headers: headers })
-            .map(function (res) { return res.json(); });
-    };
-    // Delete Entry
-    DiaryService.prototype.deleteEntry = function (entryId) {
-        var ep = this.prepEndpoint('diary/removefromdiary/' + entryId);
-        return this.http.delete(ep)
-            .map(function (res) { return res.json(); });
-    };
-    // Update Entry
-    DiaryService.prototype.updateEntry = function (entry) {
-        var ep = this.prepEndpoint('diary/updateentry/' + entry._id);
-        return this.http.put(ep, entry)
             .map(function (res) { return res.json(); });
     };
     // Get Lecturers
@@ -1811,7 +1667,7 @@ DiaryService = __decorate([
 
 /***/ }),
 
-/***/ 64:
+/***/ 63:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1820,7 +1676,7 @@ DiaryService = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_auth_service__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__shared_auth_service__ = __webpack_require__(38);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_diary_service__ = __webpack_require__(55);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1843,6 +1699,8 @@ var TimetablePage = (function () {
         this._authService = _authService;
         this._diaryService = _diaryService;
         this.modules = [];
+        this.courses = [];
+        this.moduleGroups = [];
         this.groups = [];
         this.lecturers = [];
         this.mondayModules = [];
@@ -1857,17 +1715,24 @@ var TimetablePage = (function () {
     // Check Lecturer or Student
     TimetablePage.prototype.checkLogin = function () {
         if (this.userObj.email.startsWith("s")) {
+            this.isLecturer = false;
             this.getStudentModules();
         }
         else if (this.userObj.email.startsWith("l")) {
+            this.isLecturer = true;
+            this.getLecturerModules();
         }
     };
     // Return Lecturers Modules for lectuerId
     TimetablePage.prototype.getLecturerModules = function () {
         var _this = this;
-        this.lecturerId = this.userObj.lectuerId;
+        this.lecturerId = this.userObj.id;
         this._diaryService.getLecturerModules(this.lecturerId).subscribe(function (modules) {
             _this.modules = modules;
+            _this.getCourses();
+        }, function (err) {
+            console.log(err);
+            return false;
         });
     };
     // Return Students Modules for groupId
@@ -1921,6 +1786,50 @@ var TimetablePage = (function () {
             return false;
         });
     };
+    // Get Courses
+    TimetablePage.prototype.getCourses = function () {
+        var _this = this;
+        this._diaryService.getCourses().subscribe(function (courses) {
+            for (var i = 0; i < courses.length; i++) {
+                _this.courses.push(courses[i]);
+            }
+            _this.getGroups();
+        }, function (err) {
+            console.log(err);
+            return false;
+        });
+    };
+    // Get Module Groups
+    TimetablePage.prototype.getModuleGroups = function () {
+        for (var i = 0; i < this.modules.length; i++) {
+            for (var j = 0; j < this.modules[i].groups.length; j++) {
+                for (var k = 0; k < this.groups.length; k++) {
+                    if (k == 0) {
+                        console.log("this.groups: ");
+                        console.log(this.groups[k]);
+                    }
+                    for (var l = 0; l < this.groups[k].length; l++) {
+                        console.log("the thing after this.groups");
+                        if (this.groups[k][l]._id == this.modules[i].groups[j]) {
+                            this.modules[i].groups[j].name = this.groups[k].name;
+                            if (l == 0) {
+                                console.log("this.modules[i].groups[j].name: " + this.modules[i].groups[j].name);
+                                console.log("this.groups[k][l]._id: " + this.groups[k][l]._id);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        this.filterModules();
+    };
+    // Get Groups
+    TimetablePage.prototype.getGroups = function () {
+        for (var i = 0; i < this.courses.length; i++) {
+            this.groups.push(this.courses[i].groups);
+        }
+        this.getModuleGroups();
+    };
     // Set Lecturer Names
     TimetablePage.prototype.lecturerNames = function () {
         for (var i = 0; i < this.lecturers.length; i++) {
@@ -1945,7 +1854,7 @@ var TimetablePage = (function () {
 }());
 TimetablePage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
-        selector: 'page-timetable',template:/*ion-inline-start:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\timetable\timetable.html"*/'<ion-header>\n\n    <ion-navbar color="primary">\n\n        <ion-title center>Timetable</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<!-- Timtable -->\n\n<ion-content padding>\n\n    <div *ngIf="modules == 0" class="customSpinner"></div>\n\n    <ion-list *ngIf="modules != 0">\n\n        <!-- Monday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Monday</ion-item-divider>\n\n            <ion-item *ngFor="let module of mondayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Tuesday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Tuesday</ion-item-divider>\n\n            <ion-item *ngFor="let module of tuesdayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Wednesday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Wednesday</ion-item-divider>\n\n            <ion-item *ngFor="let module of wednesdayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Thursday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Thursday</ion-item-divider>\n\n            <ion-item *ngFor="let module of thursdayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Friday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Friday</ion-item-divider>\n\n            <ion-item *ngFor="let module of fridayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Daniel\Desktop\Student-App\angular-source\src\pages\timetable\timetable.html"*/,
+        selector: 'page-timetable',template:/*ion-inline-start:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\timetable\timetable.html"*/'<ion-header>\n\n    <ion-navbar color="primary">\n\n        <ion-title center>Timetable</ion-title>\n\n    </ion-navbar>\n\n</ion-header>\n\n\n\n<!-- Timtable -->\n\n<ion-content padding>\n\n    <div *ngIf="modules == 0" class="customSpinner"></div>\n\n    <ion-list *ngIf="modules != 0">\n\n        <!-- Monday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Monday</ion-item-divider>\n\n            <ion-item *ngFor="let module of mondayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Tuesday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Tuesday</ion-item-divider>\n\n            <ion-item *ngFor="let module of tuesdayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Wednesday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Wednesday</ion-item-divider>\n\n            <ion-item *ngFor="let module of wednesdayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Thursday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Thursday</ion-item-divider>\n\n            <ion-item *ngFor="let module of thursdayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n        <!-- Friday -->\n\n        <ion-item-group>\n\n            <ion-item-divider color="secondary">Friday</ion-item-divider>\n\n            <ion-item *ngFor="let module of fridayModules">\n\n                <h2>{{ module.name }}</h2>\n\n                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>\n\n                <p>{{ module.lecturer }}</p>\n\n            </ion-item>\n\n        </ion-item-group>\n\n    </ion-list>\n\n</ion-content>'/*ion-inline-end:"C:\Users\Sophia Price\Documents\CollegeWork\Y3\Student-App\angular-source\src\pages\timetable\timetable.html"*/,
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["j" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["k" /* NavParams */],
