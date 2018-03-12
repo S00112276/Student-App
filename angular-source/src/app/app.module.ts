@@ -5,7 +5,7 @@ import { MyApp } from './app.component';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 // Services
 import { AuthService } from '../pages/shared/auth.service';
 import { ValidateService } from '../pages/shared/validate.service';
@@ -69,6 +69,7 @@ const config: SocketIoConfig = { url: 'https://obscure-escarpment-51111.herokuap
     SplashScreen,
     HeaderColor,
     Calendar,
+    InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

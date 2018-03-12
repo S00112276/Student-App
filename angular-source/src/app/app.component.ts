@@ -3,6 +3,7 @@ import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HeaderColor } from '@ionic-native/header-color';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 import { TimetablePage } from '../pages/timetable/timetable';
 import { DiaryPage } from '../pages/diary/diary';
@@ -18,15 +19,22 @@ import { timer } from 'rxjs/observable/timer';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav; // https://forum.ionicframework.com/t/how-to-add-sidebar-menu-to-my-existing-ionic-project/56481/2
-  
+  user: any;
+  userObj: any;
+
   rootPage: any;
 
   showSplash = true;
 
-  constructor(private _authService: AuthService,
-    platform: Platform, 
-    statusBar: StatusBar, 
+  constructor(
+    private _authService: AuthService,
+    private inAppBrowser: InAppBrowser,
+    platform: Platform,
+    statusBar: StatusBar,
     splashScreen: SplashScreen) {
+    this.user = _authService.loadUser();
+    console.log(this.user);
+    this.userObj = JSON.parse(this.user);
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -39,15 +47,15 @@ export class MyApp {
   ngAfterContentInit() {
     // Listen to authNotifier
     this._authService.isAuthed
-    //.filter(res => res !== null)
+      //.filter(res => res !== null)
       .subscribe(status => {
-        if(!status){ // when not auth'd
-        this.rootPage = WelcomePage;
+        if (!status) { // when not auth'd
+          this.rootPage = WelcomePage;
         }
         else {
           this.rootPage = HomePage;
         }
-        });
+      });
   }
 
   logout() {
@@ -65,5 +73,9 @@ export class MyApp {
     else if (page === 'DiaryPage') {
       this.nav.push(DiaryPage);
     }
+  }
+
+  openITSligo() {
+    this.inAppBrowser.create('https://www.itsligo.ie');
   }
 }

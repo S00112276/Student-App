@@ -6,7 +6,8 @@
 
 <!-- Timtable -->
 <ion-content padding>
-  <ion-list>
+        <div *ngIf="loaded == false" class="customSpinner"></div>
+        <ion-list *ngIf="loaded == true">
     <!-- Monday -->
     <ion-item-group>
         <ion-item-divider color="secondary">Monday</ion-item-divider>

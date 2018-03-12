@@ -12,6 +12,8 @@ import { DiaryEntryPage } from '../diary-entry/diary-entry';
 })
 export class DiaryPage {
   isLecturer: boolean;
+  lecturerId: any;
+  groupId: any;
   errorMessage: string;
   entryType: string[] = [
     'https://drslash.com/wp-content/uploads/2014/07/Notes.png',
@@ -25,6 +27,8 @@ export class DiaryPage {
   entries: any[] = [];
   lecturers: any[] = [];
   modules: any[] = [];
+  studentModules: any[] = [];
+  lecturerModules: any[] = [];
   courses: any[] = [];
 
   constructor(
@@ -40,16 +44,14 @@ export class DiaryPage {
   }
 
   checkLogin() {
-    if(this.userObj.email.startsWith("s"))
-    {
+    if (this.userObj.email.startsWith("s")) {
       this.isLecturer = false;
     }
-    else if(this.userObj.email.startsWith("l"))
-    {
+    else if (this.userObj.email.startsWith("l")) {
       this.isLecturer = true;
     }
   }
-  
+
   // Check overdue
   checkOverdue(entry) {
     entry = new Date(entry.dueDate);
@@ -74,7 +76,12 @@ export class DiaryPage {
   getModules() {
     this._diaryService.getModules().subscribe(modules => {
       this.modules = modules;
-      this.getCourses();
+      if (this.isLecturer) {
+        this.getLecturerModules();
+      }
+      else {
+        this.getStudentModules();
+      }
     },
       err => {
         console.log(err);
@@ -82,11 +89,25 @@ export class DiaryPage {
       });
   }
 
-  // Get Courses
-  getCourses() {
-    this._diaryService.getCourses().subscribe(courses => {
-      this.courses = courses;
-      this.getEntries();
+  // Return Lecturers Modules for lectuerId
+  getLecturerModules() {
+    this.lecturerId = this.userObj.id;
+    this._diaryService.getLecturerModules(this.lecturerId).subscribe(modules => {
+      this.lecturerModules = modules;
+      this.getEntries(this.lecturerModules);
+    },
+      err => {
+        console.log(err);
+        return false;
+      });
+  }
+
+  // Return Students Modules for groupId
+  getStudentModules() {
+    this.groupId = this.userObj.groupId;
+    this._diaryService.getStudentModules(this.groupId).subscribe(modules => {
+      this.studentModules = modules;
+      this.getEntries(this.studentModules);
     },
       err => {
         console.log(err);
@@ -95,10 +116,14 @@ export class DiaryPage {
   }
 
   // Returns Diary Entries
-  getEntries() {
+  getEntries(userModules) {
     this._diaryService.getEntries().subscribe(entries => {
       for (var i = 0; i < entries.length; i++) {
-        this.entries.push(entries[i]);
+        for (let m = 0; m < userModules.length; m++) {
+          if (entries[i].module == userModules[m]._id) {
+            this.entries.push(entries[i]);
+          }
+        }
         for (var j = 0; j < this.entries.length; j++) {
           for (var k = 0; k < this.lecturers.length; k++) {
             if (this.entries[j].lecturer == this.lecturers[k]._id) {

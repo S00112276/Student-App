@@ -10,6 +10,7 @@ import { DiaryService } from '../shared/diary.service';
   templateUrl: 'timetable.html',
 })
 export class TimetablePage {
+  loaded = false;
   user: any;
   userObj: any;
   isLecturer: boolean;
@@ -31,6 +32,9 @@ export class TimetablePage {
     public navParams: NavParams,
     private _authService: AuthService,
     private _diaryService: DiaryService) {
+      setTimeout(() => {
+        this.loaded = true;
+      }, 1000);
       this.user = _authService.loadUser(); 
       this.userObj = JSON.parse(this.user);
       this.checkLogin();
