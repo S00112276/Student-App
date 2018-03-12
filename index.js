@@ -7,8 +7,6 @@ const mongoose = require('mongoose');
 const path = require('path');
 // Set port on 3000
 const port = process.env.PORT || 3000;
-// Heroku
-//const port = process.env.PORT || 8080;
 // Database
 const config = require('./config/database');
 // Routes
@@ -16,10 +14,6 @@ const userRoutes = require('./api/routes/userRoutes');
 const emailRoutes = require('./api/routes/emailRoutes');
 const diaryRoutes = require('./api/routes/diaryRoutes');
 const courseRoutes = require('./api/routes/courseRoutes');
-
-// Model
-//const userModel = require('./api/models/userModel');
-
 
 // Connect to Database
 mongoose.connect(config.database);

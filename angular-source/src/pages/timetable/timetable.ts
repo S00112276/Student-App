@@ -12,7 +12,10 @@ import { DiaryService } from '../shared/diary.service';
 export class TimetablePage {
   user: any;
   userObj: any;
+  isLecturer: boolean;
   modules: any[] = [];
+  courses: any[] = [];
+  moduleGroups: any[] = [];
   groups: any[] = [];
   lecturers: any[] = [];
   errorMessage: string;
@@ -37,18 +40,26 @@ export class TimetablePage {
   checkLogin() {
     if(this.userObj.email.startsWith("s"))
     {
+      this.isLecturer = false;
       this.getStudentModules();
     }
     else if(this.userObj.email.startsWith("l"))
     {
-
+      this.isLecturer = true;
+      this.getLecturerModules();
     }
   }
+
   // Return Lecturers Modules for lectuerId
   getLecturerModules() {
-    this.lecturerId = this.userObj.lectuerId;
+    this.lecturerId = this.userObj.id;
     this._diaryService.getLecturerModules(this.lecturerId).subscribe(modules => {
       this.modules = modules;
+      this.getCourses();
+    }, 
+    err => {
+      console.log(err);
+        return false;
     });
   }
     
@@ -104,6 +115,44 @@ export class TimetablePage {
       console.log(err);
         return false;
     });
+  }
+
+  // Get Courses
+  getCourses() {
+    this._diaryService.getCourses().subscribe(courses => {
+      for (let i = 0; i < courses.length; i++) {
+        this.courses.push(courses[i]);
+      }
+      this.getGroups();
+    }, 
+    err => {
+      console.log(err);
+        return false;
+    });
+  }
+
+  // Get Module Groups
+  getModuleGroups(){
+    for (let i = 0; i < this.modules.length; i++) {
+      for (let j = 0; j < this.modules[i].groups.length; j++) {
+        for(let k = 0; k < this.groups.length; k++) {
+          for(let l = 0; l < this.groups[k].length; l++){
+            if(this.groups[k][l]._id == this.modules[i].groups[j]) {
+              this.modules[i].groups[j] = this.groups[k][l].name;
+            }
+          }
+        }
+      }
+    }
+    this.filterModules();
+  }
+
+  // Get Groups
+  getGroups() {
+    for (let i = 0; i < this.courses.length; i++) {
+      this.groups.push(this.courses[i].groups);
+    }
+    this.getModuleGroups();
   }
 
   // Set Lecturer Names

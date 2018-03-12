@@ -11,6 +11,7 @@ import { DiaryEntryPage } from '../diary-entry/diary-entry';
   templateUrl: 'diary.html',
 })
 export class DiaryPage {
+  isLecturer: boolean;
   errorMessage: string;
   entryType: string[] = [
     'https://drslash.com/wp-content/uploads/2014/07/Notes.png',
@@ -34,10 +35,21 @@ export class DiaryPage {
     public modalCtrl: ModalController) {
     this.user = _authService.loadUser();
     this.userObj = JSON.parse(this.user);
-    console.log(this.userObj.username);
+    this.checkLogin();
     this.getLecturers();
   }
 
+  checkLogin() {
+    if(this.userObj.email.startsWith("s"))
+    {
+      this.isLecturer = false;
+    }
+    else if(this.userObj.email.startsWith("l"))
+    {
+      this.isLecturer = true;
+    }
+  }
+  
   // Check overdue
   checkOverdue(entry) {
     entry = new Date(entry.dueDate);

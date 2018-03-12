@@ -6,52 +6,56 @@
 
 <!-- Timtable -->
 <ion-content padding>
-    <div *ngIf="modules == 0" class="customSpinner"></div>
-    <ion-list *ngIf="modules != 0">
-        <!-- Monday -->
-        <ion-item-group>
-            <ion-item-divider color="secondary">Monday</ion-item-divider>
-            <ion-item *ngFor="let module of mondayModules">
-                <h2>{{ module.name }}</h2>
-                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
-                <p>{{ module.lecturer }}</p>
-            </ion-item>
-        </ion-item-group>
-        <!-- Tuesday -->
-        <ion-item-group>
-            <ion-item-divider color="secondary">Tuesday</ion-item-divider>
-            <ion-item *ngFor="let module of tuesdayModules">
-                <h2>{{ module.name }}</h2>
-                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
-                <p>{{ module.lecturer }}</p>
-            </ion-item>
-        </ion-item-group>
-        <!-- Wednesday -->
-        <ion-item-group>
-            <ion-item-divider color="secondary">Wednesday</ion-item-divider>
-            <ion-item *ngFor="let module of wednesdayModules">
-                <h2>{{ module.name }}</h2>
-                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
-                <p>{{ module.lecturer }}</p>
-            </ion-item>
-        </ion-item-group>
-        <!-- Thursday -->
-        <ion-item-group>
-            <ion-item-divider color="secondary">Thursday</ion-item-divider>
-            <ion-item *ngFor="let module of thursdayModules">
-                <h2>{{ module.name }}</h2>
-                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
-                <p>{{ module.lecturer }}</p>
-            </ion-item>
-        </ion-item-group>
-        <!-- Friday -->
-        <ion-item-group>
-            <ion-item-divider color="secondary">Friday</ion-item-divider>
-            <ion-item *ngFor="let module of fridayModules">
-                <h2>{{ module.name }}</h2>
-                <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
-                <p>{{ module.lecturer }}</p>
-            </ion-item>
-        </ion-item-group>
-    </ion-list>
+  <ion-list>
+    <!-- Monday -->
+    <ion-item-group>
+        <ion-item-divider color="secondary">Monday</ion-item-divider>
+        <ion-item *ngFor="let module of mondayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p *ngIf="isLecturer; else elseBlock">{{ module.groups }}</p>
+            <ng-template #elseBlock>{{ module.lecturer }}</ng-template>
+        </ion-item>
+    </ion-item-group>
+    <!-- Tuesday -->
+    <ion-item-group>
+        <ion-item-divider color="secondary">Tuesday</ion-item-divider>
+        <ion-item *ngFor="let module of tuesdayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p *ngIf="isLecturer; else elseBlock">{{ module.groups }}</p>
+            <ng-template #elseBlock>{{ module.lecturer }}</ng-template>
+        </ion-item>
+    </ion-item-group>
+    <!-- Wednesday -->
+    <ion-item-group>
+        <ion-item-divider color="secondary">Wednesday</ion-item-divider>
+        <ion-item *ngFor="let module of wednesdayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p *ngIf="isLecturer; else elseBlock">{{ module.groups }}</p>
+            <ng-template #elseBlock>{{ module.lecturer }}</ng-template>
+        </ion-item>
+    </ion-item-group>
+    <!-- Thursday -->
+    <ion-item-group>
+        <ion-item-divider color="secondary">Thursday</ion-item-divider>
+        <ion-item *ngFor="let module of thursdayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p *ngIf="isLecturer; else elseBlock">{{ module.groups }}</p>
+            <ng-template #elseBlock>{{ module.lecturer }}</ng-template>
+        </ion-item>
+    </ion-item-group>
+    <!-- Friday -->
+    <ion-item-group>
+        <ion-item-divider color="secondary">Friday</ion-item-divider>
+        <ion-item *ngFor="let module of fridayModules">
+            <h2>{{ module.name }}</h2>
+            <h3>{{ module.room }} // {{ module.startTime }} - {{ module.endTime }}</h3>
+            <p *ngIf="isLecturer; else elseBlock">{{ module.groups }}</p>
+            <ng-template #elseBlock>{{ module.lecturer }}</ng-template>
+        </ion-item>
+    </ion-item-group>
+  </ion-list>
 </ion-content>

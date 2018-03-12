@@ -19,3 +19,4 @@ const CourseSchema = mongoose.Schema({
 });
 
 const Course = module.exports = mongoose.model('Course', CourseSchema);
+const StudentGroup = module.exports = mongoose.model('StudentGroup', StudentGroup);

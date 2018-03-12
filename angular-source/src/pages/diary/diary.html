@@ -2,7 +2,7 @@
     <ion-navbar>
         <ion-title>Diary</ion-title>
         <ion-buttons end>
-            <button ion-button icon-only (click)="addEvent()">
+            <button *ngIf="isLecturer" ion-button icon-only (click)="addEvent()">
                 <ion-icon name="md-add-circle"></ion-icon>
             </button>
         </ion-buttons>
@@ -26,12 +26,10 @@
                 <p>{{entry.title}}</p>
                 <span *ngIf="checkOverdue(entry)" class="overdue" item-end>Overdue</span>
             </ion-item>
-            <ion-item-options side="right">
+            <ion-item-options *ngIf="isLecturer" side="right">
                 <button ion-button color="caution" class="edit" (click)="editEntry(entry)">Edit</button>
                 <button ion-button color="danger" (click)="deleteEntry(entry)">Delete</button>
             </ion-item-options>
         </ion-item-sliding>
-
     </ion-list>
-
 </ion-content>
